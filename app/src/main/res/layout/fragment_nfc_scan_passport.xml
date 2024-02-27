@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".feature.onBoarding.CameraScanPassportFragment">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loader"
+            android:visibility="gone"
+            android:layout_width="168dp"
+            android:layout_height="168dp"
+            android:layout_marginTop="87dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loader"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView9" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextView8"
+            style="@style/Theme.Voting.PrimaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@string/nfc_scan_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextView9"
+            style="@style/Theme.Voting.SecondaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/nfc_scan_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView8" />
+
+<!--        <pl.droidsonroids.gif.GifImageView-->
+<!--            android:id="@+id/imagePreview"-->
+<!--            android:layout_width="250dp"-->
+<!--            android:layout_height="250dp"-->
+<!--            android:layout_marginStart="32dp"-->
+<!--            android:layout_marginTop="78dp"-->
+<!--            android:layout_marginEnd="32dp"-->
+<!--            android:background="@drawable/gif_scan_nfc"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/materialTextView9" />-->
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imagePreview"
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="32dp"
+            android:src="@drawable/section_scan_nfc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView9" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/nfc_tip_scanning"
+                    style="@style/Theme.Voting.SecondaryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="52dp"
+                    android:gravity="center"
+                    android:text="@string/nfc_scan_tip"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imagePreview" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </layout>

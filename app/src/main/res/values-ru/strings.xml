@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Freedom Tool</string>
+    <string name="secure_and_decentralized">Безопасно и децентрализовано</string>
+    <string name="let_s_start">Начнем</string>
+
+    <string name="slid_header_1">Инструмент свободы</string>
+    <string name="slide_description_1">Опросы с полной защитой конфиденциальности</string>
+
+    <string name="slide_header_2">Шаг 1</string>
+    <string name="slide_description_2">Когда вы сканируете свой паспорт, приложение обрабатывает данные непосредственно на вашем устройстве. Персональные данные не покидают ваш телефон, обеспечивая полную конфиденциальность.</string>
+    <string name="slider_footer_2">Делаем вас неотслеживаемым</string>
+    <string name="slider_header_4">Шаг 3</string>
+    <string name="slider_description_4">Ваш голос ананимно и безопасно сохраняется на блокчейне. Право голоса невозможно отследить и подделать, что обеспечивает полную конфиденциальность.</string>
+    <string name="slide_footer_4">Чтобы ваш голос был услышан!</string>
+    <string name="slider_header_3">Шаг 2</string>
+    <string name="slider_description_3">Для участия в голосовании система генерирует специальный \'пропуск\', гарантируя полную конфиденциальность вашей личности и предотвращая множественное голосование.</string>
+    <string name="slider_footer_3">Делаем вас уникальным и анонимным!</string>
+    <string name="participate">Участвовать</string>
+    <string name="participate_description">Полностью защищенная конфиденциальная\nдецентрализованная система голосования</string>
+    <string name="title_activity_scan">ScanActivity</string>
+    <!-- Строки, используемые для фрагментов для навигации -->
+
+    <string name="scan_your_passport">Отсканируйте ваш Документ\nили служебную карту</string>
+    <string name="scan_passport_description">Данные хранятся только на устройстве</string>
+    <string name="passport_camera_tip">Наведите камеру на ваш паспорт</string>
+    <string name="nfc_scan_tip">Приложите обложку документа к\nзадней части телефона</string>
+    <string name="permission_title">Требуется разрешение</string>
+    <string name="permission_description">Нам нужно ваше разрешение на доступ к камере для сканирования паспорта.</string>
+    <string name="button_ok">OK</string>
+    <string name="nfc_scan_title">Сканирование NFC</string>
+    <string name="nfc_scan_description">Чтение данных</string>
+    <string name="confirm_your_data">Данные для анонимизации</string>
+    <string name="confitm_data_description">Будет создан анонимный отпечаток</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="polls">Опросы</string>
+    <string name="please_wait">Пожалуйста, подождите…</string>
+    <string name="comfirm_proof_description">Создаем анонимизированного\nудостоверения личности</string>
+    <string name="generating_proof_tip"><b>Помните:</b> Ваши данные хранятся только на этом устройстве и никогда не раскрываются и не передаются третьим лицам</string>
+    <string name="all_done">Все готово!</string>
+    <string name="all_done_description">Вы будете перенаправлены\nчерез 5 секунд</string>
+    <string name="active">Активные</string>
+    <string name="completed">Завершенные</string>
+
+    <string name="pool_1">Выборы президента России 2024 года станут восьмыми президентскими выборами.</string>
+    <string name="begins_in_x_days">Начнется через %1$s дней</string>
+    <string name="pool_1_header">Выборы президента России 2024</string>
+    <string name="non_traceable_identity">Безопасная идентификация</string>
+    <string name="anonymized_voting">Анонимизированный выбор</string>
+    <string name="decentralized_vote_casting">Неизменяемые результаты</string>
+    <string name="audited_open_source_codebase">Проверенный, открытый исходный код</string>
+    <string name="document_class_mode">Тип документа</string>
+    <string name="issuing_state_code">Код эмитента</string>
+    <string name="document_number">Номер документа</string>
+    <string name="date_of_expiry">Дата истечения срока</string>
+    <string name="date_of_birth">Дата рождения</string>
+    <string name="personal_number">Персональный номер</string>
+    <string name="surname">Фамилия</string>
+    <string name="given_name">Имя</string>
+    <string name="nationality">Национальность</string>
+    <string name="steps">Шаг %1$s/3</string>
+    <string name="error_while_reading">NFC не отсканировано, попробуйте снова</string>
+    <string name="voting_criteria">Критерии</string>
+    <string name="you_can_t_vote">Не подходящий</string>
+    <string name="your_status">Ваш статус:</string>
+    <string name="is_citizen">Являетесь гражданином %1$s</string>
+    <string name="are_x_years_old_on_or_before_election_day">Вам исполнилось %1$s лет</string>
+    <string name="you_can_vote">Подходящий</string>
+    <string name="no_votes">Нет доступных голосований</string>
+
+     <string name="male">Мужчина</string>
+    <string name="female">Женщина</string>
+    <string name="you_are_already_authorized">Вы уже отсканировали свой паспорт</string>
+    <string name="pool_2_header">Популярность спорта</string>
+    <string name="pool_2">Занимаетесь ли вы спортом?</string>
+    <string name="no_passport_message">Чтобы проголосовать, вам необходимо отсканировать паспорт</string>
+    <string name="participate_btn">Участвовать</string>
+    <string name="request_scan_header">Создать Digital Identity?</string>
+    <string name="request_scan_descrition">Чтобы участвовать в этом опросе создайте свой Digital Identity</string>
+    <string name="didnt_voted">Вы еще не голосовали</string>
+    <string name="always_available">Доступно всегда</string>
+    <string name="yes">1. Да</string>
+    <string name="no">2. Нет</string>
+
+    <string name="periodically">3. Периодически</string>
+    <string name="vote">Проголосовать</string>
+    <string name="done">Готово</string>
+    <string name="submited_vote_header">Ваш голос отправлен</string>
+    <string name="submited_vote_description">Пожалуйста дождитесь окончания голосования</string>
+    <string name="enrolled">Enrolled</string>
+    <string name="button_no">Нет</string>
+    <string name="privacyPolicy">Политика Конфиденциальности</string>
+    <string name="formation_of_the_ballot">Формирование бюллетеня</string>
+    <string name="loading">Загрузка...</string>
+    <string name="vote_anonymization">Анонимизация голосования</string>
+    <string name="loading_text">Загрузка...</string>
+    <string name="sending_your_vote">"  Отправка вашего голоса"</string>
+    <string name="finalizing">Завершение</string>
+    <string name="processing_hint">Помните: ваша личность не может быть вычислена, ваш голос может быть сопоставлен с ней</string>
+    <string name="your_vote_is_non_traceable">Ваш голос не поддается трассировке</string>
+    <string name="button_yes">Да</string>
+    <string name="turms_of_use">Условия Использования</string>
+
+    <string name="localization_name">РУС</string>
+    <string name="expiry_date_error">Срок действия паспорта истек</string>
+    <string name="not_able_to_generate_proof">Не получается сгенерировать proof</string>
+    <string name="authorize">Авторизация</string>
+    <string name="delete_all_data_header">Удалить все данные</string>
+    <string name="delete_all_data_message">Вы уверены, что хотите удалить все данные? Это действие нельзя отменить.</string>
+    <string name="decline">Отмена</string>
+    <string name="sign">Подписать</string>
+</resources>

@@ -1,0 +1,3 @@
+/Users/apik/AndroidStudioProjects/AndroidApp/app/.cxx/RelWithDebInfo/4k4io40y/arm64-v8a/CMakeFiles/freedomtool.dir
+/Users/apik/AndroidStudioProjects/AndroidApp/app/.cxx/RelWithDebInfo/4k4io40y/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/apik/AndroidStudioProjects/AndroidApp/app/.cxx/RelWithDebInfo/4k4io40y/arm64-v8a/CMakeFiles/rebuild_cache.dir

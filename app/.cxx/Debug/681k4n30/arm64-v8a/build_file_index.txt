@@ -1,0 +1,1 @@
+/Users/apik/work/FreedomToolAndroid/app/src/main/cpp/CMakeLists.txt

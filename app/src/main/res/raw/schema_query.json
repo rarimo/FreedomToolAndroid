@@ -1,0 +1,144 @@
+{
+  "$metadata": {
+    "uris": {
+      "jsonLdContext": "https://ipfs.rarimo.com/ipfs/QmXz9iwDsniNjTxyhYBQqbQFRMGRkyTyWQVSdEUuMRhaeP"
+    },
+    "version": "1.0",
+    "type": "VotingCredential"
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Stores the data required to prove voting eligibility",
+  "title": "VotingCredential",
+  "properties": {
+    "credentialSubject": {
+      "description": "Stores the data of the credential",
+      "title": "Credential subject",
+      "properties": {
+        "id": {
+          "description": "Stores the DID of the subject that owns the credential",
+          "title": "Credential subject ID",
+          "format": "uri",
+          "type": "string"
+        },
+        "isAdult": {
+          "description": "Is eligible to vote by age",
+          "title": "isAdult",
+          "type": "boolean"
+        },
+        "issuingAuthority": {
+          "description": "An authority that issued voter's document",
+          "title": "IssuingAuthority",
+          "type": "number"
+        },
+        "documentNullifier": {
+          "description": "The Poseidon Hash of the passport second data group (DG2). It is used to prevent double voting.",
+          "title": "DocumentNullifier",
+          "type": "string"
+        },
+        "credentialHash": {
+          "description": "The Poseidon Hash of the credential fields (isAdult, issuingAuthority, documentNullifier)",
+          "title": "CredentialHash",
+          "type": "string"
+        }
+      },
+      "required": [
+        "isAdult",
+        "issuingAuthority",
+        "documentNullifier",
+        "credentialHash"
+      ],
+      "type": "object"
+    },
+    "@context": {
+      "type": [
+        "string",
+        "array",
+        "object"
+      ]
+    },
+    "expirationDate": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "issuanceDate": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "issuer": {
+      "type": [
+        "string",
+        "object"
+      ],
+      "format": "uri",
+      "properties": {
+        "id": {
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "type": {
+      "type": [
+        "string",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "credentialSchema": {
+      "properties": {
+        "id": {
+          "format": "uri",
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "type": "object"
+    },
+    "credentialStatus": {
+      "description": "Allows the discovery of information about the current status of the credential, such as whether it is suspended or revoked.",
+      "title": "Credential Status",
+      "properties": {
+        "id": {
+          "description": "Id URL of the credentialStatus.",
+          "title": "Id",
+          "format": "uri",
+          "type": "string"
+        },
+        "type": {
+          "description": "Expresses the credential status type (method). The value should provide enough information to determine the current status of the credential.",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "credentialSubject",
+    "@context",
+    "id",
+    "issuanceDate",
+    "issuer",
+    "type",
+    "credentialSchema"
+  ],
+  "type": "object"
+}

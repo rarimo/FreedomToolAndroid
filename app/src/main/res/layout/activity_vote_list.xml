@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".feature.voting.VoteListActivity">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:layout_marginStart="-2dp"
+            android:layout_marginTop="-2dp"
+            android:layout_marginEnd="-2dp"
+            android:background="@drawable/ic_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextView11"
+            style="@style/Theme.Voting.PrimaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/polls"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/changeLanguage"
+            style="@style/Theme.Voting.TextButton.ChangeLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:text="@string/localization_name"
+            app:layout_constraintBottom_toBottomOf="@+id/materialTextView11"
+            app:layout_constraintEnd_toStartOf="@+id/clear_all_data"
+            app:layout_constraintTop_toTopOf="@+id/materialTextView11"
+             />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/clear_all_data"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="24dp"
+            android:background="@null"
+            android:padding="20dp"
+            android:scaleType="fitCenter"
+            android:scaleX="2"
+            android:scaleY="2"
+
+            android:src="@drawable/ic_exit"
+            app:layout_constraintBottom_toBottomOf="@+id/changeLanguage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/changeLanguage"
+            app:layout_constraintVertical_bias="0.38" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="26dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView11">
+
+            <com.addisonelliott.segmentedbutton.SegmentedButtonGroup
+                android:id="@+id/buttonGroup_roundSelectedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="#7AE191"
+                android:elevation="2dp"
+                app:layout_constraintTop_toBottomOf="@+id/materialTextView11"
+                app:position="0"
+                app:radius="30dp"
+                app:ripple="false"
+                app:selectedBackground="@color/white"
+                app:selectedBorderColor="#7AE191"
+                app:selectedButtonRadius="30dp">
+
+                <com.addisonelliott.segmentedbutton.SegmentedButton
+                    style="@style/Theme.Voting.PrimaryText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    app:text="@string/active"
+                    app:textColor="@color/black" />
+
+
+                <com.addisonelliott.segmentedbutton.SegmentedButton
+                    style="@style/Theme.Voting.PrimaryText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    app:textColor="@color/black"
+                    app:text="@string/completed" />
+
+            </com.addisonelliott.segmentedbutton.SegmentedButtonGroup>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewVote"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:listitem="@layout/layout_card_voting" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/no_polls_text"
+            style="@style/Theme.Voting.PrimaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:text="@string/no_votes"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/querry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="querry"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/vote"
+            android:layout_width="wrap_content"
+            android:text="vote"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

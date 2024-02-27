@@ -1,0 +1,7 @@
+# ninja log v5
+0	6	0	clean	39bf123e06120f38
+1	596	1709053124533043080	build.ninja	52f6d21193334b2d
+0	881	1708362520808770964	CMakeFiles/freedomtool.dir/freedomtool.cpp.o	a1681e0796f78480
+1	448	1708442006023266822	/Users/apik/AndroidStudioProjects/AndroidApp/app/build/intermediates/cxx/RelWithDebInfo/4k4io40y/obj/arm64-v8a/libfreedomtool.so	3ffa9bfab6d5ad7d
+0	1205	1709053125928683618	CMakeFiles/freedomtool.dir/freedomtool.cpp.o	a1681e0796f78480
+1205	1499	1709053126224062228	/Users/apik/AndroidStudioProjects/AndroidApp/app/build/intermediates/cxx/RelWithDebInfo/4k4io40y/obj/arm64-v8a/libfreedomtool.so	d0d4348b43b5a76

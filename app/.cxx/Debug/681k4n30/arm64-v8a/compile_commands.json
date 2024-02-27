@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/apik/work/FreedomToolAndroid/app/.cxx/Debug/681k4n30/arm64-v8a",
+  "command": "/Users/apik/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android27 --sysroot=/Users/apik/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dfreedomtool_EXPORTS -I/Users/apik/work/FreedomToolAndroid/app/src/main/cpp/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -fexceptions -frtti -std=c++11 -fno-limit-debug-info  -fPIC -o CMakeFiles/freedomtool.dir/freedomtool.cpp.o -c /Users/apik/work/FreedomToolAndroid/app/src/main/cpp/freedomtool.cpp",
+  "file": "/Users/apik/work/FreedomToolAndroid/app/src/main/cpp/freedomtool.cpp"
+}
+]

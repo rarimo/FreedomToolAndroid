@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".feature.onBoarding.CameraScanPassportFragment">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextView8"
+            style="@style/Theme.Voting.PrimaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@string/scan_your_passport"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextView9"
+            style="@style/Theme.Voting.SecondaryText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/scan_passport_description"
+            app:layout_constraintEnd_toEndOf="@+id/materialTextView8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView8" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:translationZ="2dp"
+            app:lottie_rawRes="@raw/passport_scan_animation"
+            app:lottie_autoPlay="true"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            app:lottie_loop="true"
+            app:layout_constraintBottom_toBottomOf="@+id/camera_source_preview"
+            app:layout_constraintEnd_toEndOf="@+id/camera_source_preview"
+            app:layout_constraintStart_toStartOf="@+id/camera_source_preview"
+            app:layout_constraintTop_toTopOf="@+id/camera_source_preview" />
+
+        <org.freedomtool.mlkit.camera.CameraSourcePreview
+            android:id="@+id/camera_source_preview"
+            android:layout_width="0dp"
+            android:layout_height="305dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView9">
+
+            <org.freedomtool.mlkit.other.GraphicOverlay
+                android:id="@+id/graphics_overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </org.freedomtool.mlkit.camera.CameraSourcePreview>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/privacy_text"
+            style="@style/Theme.Voting.SecondaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="@string/privacyPolicy"
+            android:drawableStart="@drawable/ic_shield_locked"
+            android:drawablePadding="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,1 @@
+/Users/apik/AndroidStudioProjects/AndroidApp/app/src/main/cpp/CMakeLists.txt

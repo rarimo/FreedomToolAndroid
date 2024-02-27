@@ -1,0 +1,38 @@
+{
+  "buildFiles": [
+    "/Users/apik/AndroidStudioProjects/AndroidApp/app/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/apik/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/apik/AndroidStudioProjects/AndroidApp/app/.cxx/RelWithDebInfo/6v3395d1/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/apik/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/apik/AndroidStudioProjects/AndroidApp/app/.cxx/RelWithDebInfo/6v3395d1/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "freedomtool::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "x86",
+      "artifactName": "freedomtool",
+      "output": "/Users/apik/AndroidStudioProjects/AndroidApp/app/build/intermediates/cxx/RelWithDebInfo/6v3395d1/obj/x86/libfreedomtool.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/apik/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Users/apik/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

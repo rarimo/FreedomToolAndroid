@@ -1,0 +1,1 @@
+/Users/apik/AndroidStudioProjects/AndroidApp/app/build/intermediates/cxx/RelWithDebInfo/4k4io40y/obj/arm64-v8a

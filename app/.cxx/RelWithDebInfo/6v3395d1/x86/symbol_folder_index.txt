@@ -1,0 +1,1 @@
+/Users/apik/AndroidStudioProjects/AndroidApp/app/build/intermediates/cxx/RelWithDebInfo/6v3395d1/obj/x86

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#fff</color>
+    <color name="primary_text_color">#000000</color>
+    <color name="secondary_text_color">#80000000</color>
+    <color name="primary_button_color">#80ED99</color>
+    <color name="primary_progress_bar_color">#0906061A</color>
+    <color name="unselected_button_color">#F2F2F2</color>
+    <color name="secondary_progress_bar_color">#000</color>
+    <color name="inactive_color">#F2F2F2</color>
+    <color name="error_color">#EF6351</color>
+    <color name="warning_color">#FFEC73</color>
+</resources>

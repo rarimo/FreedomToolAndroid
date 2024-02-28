@@ -11,10 +11,17 @@ data class VotingData(
     val isPassportRequired: Boolean,
     val dueDate: Long?,
     val requirements: RequirementsForVoting? = null,
-    val isManifest: Boolean = false
+    val isManifest: Boolean = false,
+    val options: List<OptionsData>? = null,
 ) : Parcelable
 @Parcelize
 data class RequirementsForVoting(
     val nationality: String? =null,
     val age: Int? = null,
+) : Parcelable
+
+@Parcelize
+data class OptionsData(
+    val name: String,
+    val number: Int
 ) : Parcelable

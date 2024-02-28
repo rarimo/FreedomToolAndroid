@@ -42,9 +42,9 @@
     <string name="active">Активные</string>
     <string name="completed">Завершенные</string>
 
-    <string name="pool_1">Выборы президента России 2024 года станут восьмыми президентскими выборами.</string>
-    <string name="begins_in_x_days">Начнется через %1$s дней</string>
-    <string name="pool_1_header">Выборы президента России 2024</string>
+    <string name="pool_1">Начинаются выборы нового генерального директора компании</string>
+    <string name="begins_in_x_days">Заканчивается через %1$s дней</string>
+    <string name="pool_1_header">Выборы нового генерального директора компании</string>
     <string name="non_traceable_identity">Безопасная идентификация</string>
     <string name="anonymized_voting">Анонимизированный выбор</string>
     <string name="decentralized_vote_casting">Неизменяемые результаты</string>
@@ -87,14 +87,14 @@
     <string name="done">Готово</string>
     <string name="submited_vote_header">Ваш голос отправлен</string>
     <string name="submited_vote_description">Пожалуйста дождитесь окончания голосования</string>
-    <string name="enrolled">Enrolled</string>
+    <string name="enrolled">Зачтено</string>
     <string name="button_no">Нет</string>
     <string name="privacyPolicy">Политика Конфиденциальности</string>
     <string name="formation_of_the_ballot">Формирование бюллетеня</string>
     <string name="loading">Загрузка...</string>
     <string name="vote_anonymization">Анонимизация голосования</string>
     <string name="loading_text">Загрузка...</string>
-    <string name="sending_your_vote">"  Отправка вашего голоса"</string>
+    <string name="sending_your_vote">"Отправка вашего голоса"</string>
     <string name="finalizing">Завершение</string>
     <string name="processing_hint">Помните: ваша личность не может быть вычислена, ваш голос может быть сопоставлен с ней</string>
     <string name="your_vote_is_non_traceable">Ваш голос не поддается трассировке</string>
@@ -109,4 +109,7 @@
     <string name="delete_all_data_message">Вы уверены, что хотите удалить все данные? Это действие нельзя отменить.</string>
     <string name="decline">Отмена</string>
     <string name="sign">Подписать</string>
+    <string name="name1">Sam Anderson</string>
+    <string name="name2">Alexander Schmidt</string>
+    <string name="name3">Olga Drake</string>
 </resources>

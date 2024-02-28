@@ -63,7 +63,7 @@
             android:layout_marginEnd="24dp"
             android:drawableStart="@drawable/ic_calendar"
             android:drawablePadding="16dp"
-            android:text="@string/always_available"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialTextView16" />
@@ -76,7 +76,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="24dp"
-            android:text="@string/yes"
+            android:text="@{data.options[0].name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/data_of_voting" />
@@ -120,7 +120,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
-            android:text="@string/no"
+            android:text="@{data.options[1].name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/option_1" />
@@ -163,7 +163,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
-            android:text="@string/periodically"
+            android:text="@{data.options[2].name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/option_2" />

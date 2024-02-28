@@ -20,9 +20,11 @@ import org.freedomtool.databinding.LayoutRequirementItemBinding
 import org.freedomtool.databinding.LayoutRequirementOkItemBinding
 import org.freedomtool.logic.persistance.SecureSharedPrefs
 import org.freedomtool.utils.Navigator
+import org.freedomtool.utils.daysBetween
 import org.freedomtool.utils.nfc.PermissionUtil
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class VotePageActivity : BaseActivity() {
@@ -33,7 +35,6 @@ class VotePageActivity : BaseActivity() {
     private var age: Int = 0
     private var issuerAuthority: String = ""
 
-    private var isMustAuthorise: Boolean = false
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_vote_page)
         binding.lifecycleOwner = this
@@ -44,7 +45,16 @@ class VotePageActivity : BaseActivity() {
         initButtons()
         initAddData()
 
+        binding.dataOfVoting.text = this.getString(R.string.begins_in_x_days, daysBetween(Date(votingData.dueDate!! * 1000)).toString())
+
         checkPermissions()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(SecureSharedPrefs.getVoteResult(this) > -1) {
+            setVoted()
+        }
     }
 
     private fun addPassedReq(text: String) {
@@ -96,6 +106,10 @@ class VotePageActivity : BaseActivity() {
                     addPassedReq(nationalityMessage)
                 }
             }
+        }
+
+        if(SecureSharedPrefs.getVoteResult(this) != -1) {
+            setVoted()
         }
 
         if (isCanPromote) {
@@ -171,10 +185,7 @@ class VotePageActivity : BaseActivity() {
                 }
 
                 binding.mainButton.id -> {
-                    if (isMustAuthorise) {
-                        requestPermissionForCamera()
-                        return@setOnClickListener
-                    }
+                    Navigator.from(this).openOptionVoting(votingData)
                 }
             }
         }
@@ -227,6 +238,14 @@ class VotePageActivity : BaseActivity() {
         } else {
             Navigator.from(this).openScan()
         }
+    }
+
+    private fun setVoted(){
+        binding.mainButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.unselected_button_color)
+        binding.mainButton.icon = getDrawable(R.drawable.ic_check)
+        binding.mainButton.text = resources.getText(R.string.enrolled)
+        binding.mainButton.setTextColor(resources.getColor(R.color.black))
+        binding.mainButton.iconTint = ContextCompat.getColorStateList(this, R.color.black)
     }
 
     companion object {

@@ -1,1 +1,0 @@
-/Users/apik/work/FreedomToolAndroid/app/build/intermediates/cxx/Debug/681k4n30/obj/arm64-v8a

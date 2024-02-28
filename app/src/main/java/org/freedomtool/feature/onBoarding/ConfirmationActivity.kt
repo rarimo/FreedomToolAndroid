@@ -1,6 +1,7 @@
 package org.freedomtool.feature.onBoarding
 
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.airbnb.lottie.LottieDrawable
 import io.reactivex.rxkotlin.addTo
@@ -33,7 +34,8 @@ class ConfirmationActivity : BaseActivity() {
                 setReady()
             }, {
                 toastManager.long(R.string.not_able_to_generate_proof)
-                throw it
+                Log.e("Error", it.message.toString())
+                finish()
             })
             .addTo(compositeDisposable)
 

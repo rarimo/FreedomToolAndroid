@@ -2,6 +2,7 @@ package org.freedomtool.data.datasource.api
 
 import android.content.Context
 import org.freedomtool.R
+import org.freedomtool.data.models.OptionsData
 import org.freedomtool.data.models.RequirementsForVoting
 import org.freedomtool.data.models.VotingData
 
@@ -13,18 +14,15 @@ object VotingProvider {
             description = context.resources.getString(R.string.pool_1),
             dueDate = 1710453600L,
             isPassportRequired = true,
-            requirements = RequirementsForVoting("RUS", 18)
+            requirements = RequirementsForVoting("RUS", 18),
+            options = listOf(
+                OptionsData(context.getString(R.string.name1), 0),
+                OptionsData(context.getString(R.string.name2), 1),
+                OptionsData(context.getString(R.string.name3), 2)
+            )
         )
 
-        val vote2 = VotingData(
-            header = context.resources.getString(R.string.pool_2_header),
-            description = context.resources.getString(R.string.pool_2),
-            dueDate = 1709441600L,
-            isPassportRequired = true,
-            isManifest = true,
-            requirements = RequirementsForVoting(age = 21)
-        )
-        return  listOf(vote1, vote2)
+        return listOf(vote1)
 
     }
 }

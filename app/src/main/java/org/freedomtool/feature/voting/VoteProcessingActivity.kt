@@ -51,15 +51,16 @@ class VoteProcessingActivity : BaseActivity() {
                     handleEndOfHandler()
                 }
 
-            }, (index + 1) * 500L) // Delay in milliseconds (500 milliseconds = 0.5 seconds)
+            }, (index + 1) * 500L) //
         }
     }
 
     private fun handleEndOfHandler() {
         binding.header.text = resources.getString(R.string.submited_vote_header)
-        binding.description.text = resources.getString(R.string.submited_vote_description)
-        binding.icon.setImageDrawable(resources.getDrawable(R.drawable.ic_done))
-        SecureSharedPrefs.saveVoteResult(this, voteNumber)
+        //binding.description.text = resources.getString(R.string.submited_vote_description)
+        binding.icon.setAnimation(R.raw.checkbox_succes)
+        binding.icon.repeatCount = 0
+        binding.icon.playAnimation()
     }
 
 

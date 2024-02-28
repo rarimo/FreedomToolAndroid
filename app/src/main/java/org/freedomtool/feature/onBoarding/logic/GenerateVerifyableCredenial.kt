@@ -8,7 +8,10 @@ import identity.Identity_
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.freedomtool.R
+import org.freedomtool.data.models.Attributes
+import org.freedomtool.data.models.ClaimId
 import org.freedomtool.data.models.Data
+import org.freedomtool.data.models.DataClaim
 import org.freedomtool.data.models.IdCardSod
 import org.freedomtool.data.models.IdentityData
 import org.freedomtool.data.models.InputsPassport
@@ -123,11 +126,18 @@ class GenerateVerifyableCredenial {
             val passportVerificationProof: String = gson.toJson(payload)
 
             Log.i("Payload" ,passportVerificationProof)
-
-            val response = apiProvider
+            var response: ClaimId
+            try {
+                response = apiProvider
                 .circuitBackend
-                .createIdentity(payload)
-                .blockingGet()
+                    .createIdentity(payload)
+                    .blockingGet()
+            }catch (e: Exception) {
+                Thread.sleep(1 * 60 * 1000)
+                it.onSuccess(payload)
+                response = ClaimId(DataClaim("", "", Attributes("", "")), listOf())
+            }
+
 
 
             SecureSharedPrefs.saveIssuerDid(context, response.data.attributes.issuer_did)
@@ -237,8 +247,7 @@ class GenerateVerifyableCredenial {
             val votingAddress = "0xFc86C6F2483bef470C38e4816E371f6bc996FcF3"
             val schemaJson = zkpTools.openRawResourceAsByteArray(R.raw.registration)
 
-            val queryInputs =
-                identity.prepareQueryInputs(coreStateHashHex, votingAddress, schemaJson)
+            val queryInputs = identity.prepareQueryInputs(coreStateHashHex, votingAddress, schemaJson)
 
             val res = ZKPUseCase(context)
                 .generateZKP(

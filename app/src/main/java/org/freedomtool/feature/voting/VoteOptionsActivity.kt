@@ -17,6 +17,8 @@ class VoteOptionsActivity : BaseActivity() {
     private lateinit var votingData: VotingData
 
     private var selectedOption = -1
+
+
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(
             this, R.layout.activity_vote_options
@@ -28,7 +30,7 @@ class VoteOptionsActivity : BaseActivity() {
         votingData = intent?.getParcelableExtra(VOTING_DATA)!!
 
         binding.data = votingData
-        if(selectedOptionSc > 0) {
+        if(selectedOptionSc > -1) {
             binding.firstPercentage.visibility = View.VISIBLE
             binding.secondPercentage.visibility = View.VISIBLE
             binding.thirdPercentage.visibility = View.VISIBLE
@@ -100,6 +102,7 @@ class VoteOptionsActivity : BaseActivity() {
                     SecureSharedPrefs.saveVoteResult(this, selectedOption)
                     finish()
                     Navigator.from(this).openOptionVoting(votingData)
+                    Navigator.from(this).openVoteProcessing(2)
                 }
 
                 binding.backButton.id -> {

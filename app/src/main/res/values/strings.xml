@@ -38,9 +38,9 @@
     <string name="all_done_description">You will be redirected\nin 5 sec</string>
     <string name="active">Active</string>
     <string name="completed">Completed</string>
-    <string name="pool_1">The 2024 Russian presidential election will be the eighth presidential election.</string>
-    <string name="begins_in_x_days">Begins in %1$s days</string>
-    <string name="pool_1_header">Russian presidential elections 2024</string>
+    <string name="pool_1">The election of a new CEO to the company begins</string>
+    <string name="begins_in_x_days">Ends in %1$s days</string>
+    <string name="pool_1_header">Сhoosing a new CEO</string>
     <string name="non_traceable_identity">Secure identification</string>
     <string name="anonymized_voting">Anonymized choice</string>
     <string name="decentralized_vote_casting">Immutable results</string>
@@ -105,5 +105,8 @@
     <string name="delete_all_data_message">Are you sure you want to delete all data? This action cannot be undone.</string>
     <string name="decline">Decline</string>
     <string name="sign">Sign</string>
+    <string name="name1">Sam Anderson</string>
+    <string name="name2">Alexander Schmidt</string>
+    <string name="name3">Olga Drake</string>
 
 </resources>

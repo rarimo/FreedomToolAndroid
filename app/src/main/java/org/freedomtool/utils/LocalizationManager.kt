@@ -7,7 +7,7 @@ import java.util.Locale
 object LocalizationManager {
     fun getLocale(context: Context?): Locale? {
         if(context == null) return null
-        val currentLocale= SecureSharedPrefs.getSavedLocale(context)
+        val currentLocale = SecureSharedPrefs.getSavedLocale(context)
         if (currentLocale.isNullOrBlank()) {
             return context.resources.configuration.locales.get(0)
         }

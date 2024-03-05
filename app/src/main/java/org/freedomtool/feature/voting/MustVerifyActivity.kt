@@ -232,11 +232,22 @@ class MustVerifyActivity : BaseActivity() {
     }
 
     private fun isAllowedToSign() {
+
+        if (SecureSharedPrefs.getIsPassportScanned(this)) {
+            if (!voteData.isActive) {
+                binding.mainButton.visibility = View.GONE
+                return
+            }
+        }
+
         if (!isAllowedToSign) {
             declineToUser()
             binding.mainButton.visibility = View.GONE
             return
         }
+
+
+
         if (SecureSharedPrefs.getIsPassportScanned(this)) {
             allowToUser()
         }

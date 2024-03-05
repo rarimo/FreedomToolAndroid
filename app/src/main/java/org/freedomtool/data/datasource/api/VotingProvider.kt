@@ -17,7 +17,7 @@ object VotingProvider {
 
             val web3j = apiProvider.web3
             val ecKeyPair = Keys.createEcKeyPair()
-            val contractAddress = "0x1cd9be5BBD91c07aA31180834e48cf4838992317"
+            val contractAddress = "0x1d84cFd4839fE92dAe8E1F8F777010c08a60013C"
             val proposalAddress = "0xF5Ca28acbBC7DFFfFFf714e1F306A803037Bdad2"
             val credentials = Credentials.create(ecKeyPair)
             val gasProvider = DefaultGasProvider()
@@ -64,7 +64,8 @@ object VotingProvider {
                     isPassportRequired = true,
                     requirements = RequirementsForVoting("UKR", 18),
                     isManifest = true,
-                    votingCount = registeredCount.totalRegistrations.toLong()
+                    votingCount = registeredCount.totalRegistrations.toLong(),
+                    isActive = registrationData.isActive
                 )
 
                 if (isEnded(time.commitmentEndTime.toLong())) {

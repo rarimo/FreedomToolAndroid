@@ -7,7 +7,8 @@ data class RegistrationData(
     val name: String,
     val description: String,
     val excerpt: String,
-    val external_url: String
+    val external_url: String,
+    val isActive: Boolean
 )
 
 

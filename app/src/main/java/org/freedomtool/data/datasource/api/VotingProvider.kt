@@ -1,5 +1,6 @@
 package org.freedomtool.data.datasource.api
 
+import android.util.Log
 import io.reactivex.Single
 import org.freedomtool.contracts.Registration
 import org.freedomtool.data.models.RequirementsForVoting
@@ -64,6 +65,7 @@ object VotingProvider {
                     isPassportRequired = true,
                     requirements = RequirementsForVoting("UKR", 18),
                     isManifest = true,
+                    isActive = registrationData.isActive == true,
                     votingCount = registeredCount.totalRegistrations.toLong()
                 )
 

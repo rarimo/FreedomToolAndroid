@@ -18,6 +18,7 @@ data class VotingData(
     val isManifest: Boolean = false,
     val options: List<OptionsData>? = null,
     val votingCount: Long = 0,
+    val isActive: Boolean = true,
 ) : Parcelable
 @Parcelize
 @Serializable

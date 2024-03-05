@@ -280,15 +280,16 @@ class GenerateVerifyableCredenial {
 
             if(!SecureSharedPrefs.checkFinalizes(context, votingAddress)) {
 
+                Log.i("HERE", "HELP ME")
                 val callData: ByteArray = identity.register(
                     "https://rpc-api.node1.mainnet-beta.rarimo.com",
                     issuerDid,
                     votingAddress,
                     schemaJson,
-                    getIssuingAuthorityCode(issuerAuthority!!)
+                    "4903594"//getIssuingAuthorityCode(issuerAuthority!!)
                 )
 
-
+                Log.i("HERE", "HELP ME pls")
 
                 val calldataRequest =
                     SendCalldataRequest(SendCalldataRequestData("0x" + callData.toHexString()))

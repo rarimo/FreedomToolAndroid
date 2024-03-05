@@ -43,6 +43,7 @@ class VoteProcessingActivity : BaseActivity() {
                 updateLoading(statusList[it])
             }, {
 
+                throw it
                 if (it.message.isNullOrEmpty()) {
                     handleUnknownError()
                     return@subscribe

@@ -3,23 +3,20 @@ package org.freedomtool.feature.onBoarding.logic
 import android.content.Context
 import android.nfc.tech.IsoDep
 import android.os.AsyncTask
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import io.reactivex.subjects.PublishSubject
 import net.sf.scuba.smartcards.CardService
 import org.bouncycastle.asn1.cms.SignedData
 import org.bouncycastle.jce.provider.BouncyCastleProvider
-import org.freedomtool.logic.persistance.SecureSharedPrefs
-import org.freedomtool.utils.nfc.model.AdditionalPersonDetails
-import org.freedomtool.utils.nfc.model.DocType
-import org.freedomtool.utils.nfc.model.EDocument
-import org.freedomtool.utils.nfc.model.PersonDetails
 import org.freedomtool.utils.nfc.DateUtil
-import org.freedomtool.utils.nfc.model.Image
 import org.freedomtool.utils.nfc.ImageUtil
 import org.freedomtool.utils.nfc.SecurityUtil
 import org.freedomtool.utils.nfc.StringUtil
+import org.freedomtool.utils.nfc.model.AdditionalPersonDetails
+import org.freedomtool.utils.nfc.model.DocType
+import org.freedomtool.utils.nfc.model.EDocument
+import org.freedomtool.utils.nfc.model.Image
+import org.freedomtool.utils.nfc.model.PersonDetails
 import org.jmrtd.BACKeySpec
 import org.jmrtd.PassportService
 import org.jmrtd.Util
@@ -43,7 +40,7 @@ import java.security.Security
 import java.util.Arrays
 
 @OptIn(ExperimentalStdlibApi::class)
-class NfcReaderTask (
+class NfcReaderTask(
     private val isoDep: IsoDep,
     private val bacKey: BACKeySpec,
     val context: Context
@@ -74,7 +71,6 @@ class NfcReaderTask (
         //loadingInfo.setText(values[0])
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun doInBackground(vararg params: Void?): Exception? {
         try {
             val cardService = CardService.getInstance(isoDep)
@@ -123,12 +119,13 @@ class NfcReaderTask (
             publishProgress("Reading sod file")
             val sodIn1 = service.getInputStream(PassportService.EF_SOD)
 
-            var byteArray = ByteArray(1024*1024)
+            val byteArray = ByteArray(1024 * 1024)
 
             val byteLen = sodIn1.read(byteArray)
 
-            SecureSharedPrefs.saveSOD(context, cropByteArray(byteArray, byteLen).toHexString())
 
+            val sod = cropByteArray(byteArray, byteLen).toHexString()
+            eDocument.sod = sod
 
             val sodIn = service.getInputStream(PassportService.EF_SOD)
 
@@ -165,7 +162,6 @@ class NfcReaderTask (
             publishProgress("Reading Personal Details")
 
 
-
             // -- Personal Details -- //
             val dg1In = service.getInputStream(PassportService.EF_DG1)
             val dg1File = DG1File(dg1In)
@@ -183,7 +179,9 @@ class NfcReaderTask (
             personDetails.nationality = mrzInfo.nationality;
             personDetails.issuerAuthority = mrzInfo.issuingState;
 
-            SecureSharedPrefs.saveDG1(context, encodedDg1File)
+            //TODO: don't save this
+
+            eDocument.dg1 = encodedDg1File
 
             if ("I" == mrzInfo.documentCode) {
                 docType = DocType.ID_CARD
@@ -224,6 +222,7 @@ class NfcReaderTask (
                 "DG2 Computed Hash: " + StringUtil.byteArrayToHex(dg2ComputedHash)
             )
             if (Arrays.equals(dg2StoredHash, dg2ComputedHash)) {
+                eDocument.dg2Hash = dg2ComputedHash.toHexString()
                 Log.d("", "DG2 Hashes are matched")
             } else {
                 hashesMatched = false
@@ -405,7 +404,6 @@ class NfcReaderTask (
                 }
                 val publicKey = dg15File.publicKey
                 val publicKeyAlgorithm = publicKey.algorithm
-                eDocument.docPublicKey = publicKey
 
                 // Active Authentication
                 if ("EC" == publicKeyAlgorithm || "ECDSA" == publicKeyAlgorithm) {
@@ -443,7 +441,7 @@ class NfcReaderTask (
             eDocument.isActiveAuth = activeAuth;
             eDocument.isChipAuth = chipAuth;
 
-            //                eDocument.setDocSignatureValid(docSignatureValid);
+
         } catch (e: Exception) {
             return e
         }
@@ -459,8 +457,6 @@ class NfcReaderTask (
             resultSubject.onError(Throwable("Error with reading task"))
         }
     }
-
-
 }
 
 
@@ -469,7 +465,7 @@ class SODFileOwn(inputStream: InputStream?) : SODFile(inputStream) {
         val a = SODFile::class.java.getDeclaredField("signedData");
         a.isAccessible = true
 
-        val v : SignedData = a.get(this) as SignedData
+        val v: SignedData = a.get(this) as SignedData
 
         return v.encapContentInfo.content.toASN1Primitive().encoded
     }

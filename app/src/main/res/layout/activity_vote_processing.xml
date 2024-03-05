@@ -28,14 +28,12 @@
             android:layout_width="168dp"
             android:layout_height="168dp"
             android:layout_marginTop="8dp"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/loader"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/back_button" />
-
-
+            app:layout_constraintTop_toBottomOf="@+id/back_button"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loader" />
 
 
         <com.google.android.material.textview.MaterialTextView
@@ -106,13 +104,13 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/option_1"
+                    style="@style/Theme.Voting.SecondaryText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Theme.Voting.SecondaryText"
-                    android:text="@string/loading"
+                    android:drawableStart="@drawable/ic_check"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="4dp"
-                    android:drawableStart="@drawable/ic_check"
+                    android:text="@string/loading"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -145,13 +143,13 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/option_2"
+                    style="@style/Theme.Voting.SecondaryText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Theme.Voting.SecondaryText"
-                    android:text="@string/loading"
+                    android:drawableStart="@drawable/ic_check"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="4dp"
-                    android:drawableStart="@drawable/ic_check"
+                    android:text="@string/loading"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -185,13 +183,13 @@
                 <com.google.android.material.textview.MaterialTextView
 
                     android:id="@+id/option_3"
+                    style="@style/Theme.Voting.SecondaryText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/loading"
+                    android:drawableStart="@drawable/ic_check"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="4dp"
-                    android:drawableStart="@drawable/ic_check"
-                    style="@style/Theme.Voting.SecondaryText"
+                    android:text="@string/loading"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -223,14 +221,14 @@
                 <com.google.android.material.textview.MaterialTextView
 
                     android:id="@+id/option_4"
+                    style="@style/Theme.Voting.SecondaryText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/loading"
+                    android:drawableStart="@drawable/ic_check"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="4dp"
+                    android:text="@string/loading"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:drawableStart="@drawable/ic_check"
-                    style="@style/Theme.Voting.SecondaryText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -239,19 +237,19 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
-            android:id="@+id/view32"
+            android:id="@+id/separator"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
             android:background="#E5E5E5"
-            app:layout_constraintBottom_toTopOf="@+id/materialTextView22"
+            app:layout_constraintBottom_toTopOf="@+id/hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView22"
+            android:id="@+id/hint"
             style="@style/Theme.Voting.SecondaryText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -260,6 +258,19 @@
             android:layout_marginBottom="16dp"
             android:gravity="center"
             android:text="@string/processing_hint"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/view_petition"
+            style="@style/Theme.Voting.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:visibility="gone"
+            android:layout_marginEnd="32dp"
+            android:text="@string/view_petition"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

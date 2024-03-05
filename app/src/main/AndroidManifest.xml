@@ -24,14 +24,17 @@
         android:theme="@style/Theme.Voting"
         tools:targetApi="31">
         <activity
-            android:name=".feature.voting.MustVerifyActivity"
+            android:name=".feature.voting.SignedManifest"
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
+            android:name=".feature.voting.MustVerifyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".feature.voting.ManifestSigning"
-
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".feature.intro.StartActivity"
             android:exported="false"

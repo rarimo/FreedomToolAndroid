@@ -14,20 +14,7 @@ class AppLocaleManager(
     private val defaultLocale = "en"
         .let(::Locale)
 
-    val availableLocales = listOf(
-        Locale("en"),
-        Locale("ru"),
-    )
-
-    fun getLocale(): Locale = loadLocale() ?: defaultLocale
-
-    fun setLocale(locale: Locale) {
-        if (locale == getLocale()) {
-            return
-        }
-        saveLocale(locale)
-        applyLocale(locale)
-    }
+    private fun getLocale(): Locale = loadLocale() ?: defaultLocale
 
     /**
      * Applies locale based on the stored or default one.
@@ -54,13 +41,6 @@ class AppLocaleManager(
             .getString(CURRENT_LOCALE_KEY, "")
             ?.takeIf(String::isNotEmpty)
             ?.let { Locale(it) }
-    }
-
-    fun saveLocale(locale: Locale) {
-        preferences
-            .edit()
-            .putString(CURRENT_LOCALE_KEY, locale.language)
-            .apply()
     }
 
     private companion object {

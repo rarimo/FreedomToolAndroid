@@ -105,4 +105,7 @@ dependencies {
     implementation("com.google.dagger:dagger:2.28.3")
     kapt("com.google.dagger:dagger-compiler:2.13")
     kapt("com.google.dagger:dagger-android-processor:2.11")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
 }

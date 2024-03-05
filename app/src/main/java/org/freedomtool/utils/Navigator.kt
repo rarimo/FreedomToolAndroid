@@ -19,11 +19,13 @@ import org.freedomtool.feature.onBoarding.InfoActivity
 import org.freedomtool.feature.onBoarding.ScanActivity
 import org.freedomtool.feature.voting.ManifestSigning
 import org.freedomtool.feature.voting.MustVerifyActivity
+import org.freedomtool.feature.voting.SignedManifest
 import org.freedomtool.feature.voting.VoteListActivity
 import org.freedomtool.feature.voting.VoteOptionsActivity
 import org.freedomtool.feature.voting.VotePageActivity
 import org.freedomtool.feature.voting.VotePassportlessActivity
 import org.freedomtool.feature.voting.VoteProcessingActivity
+import org.freedomtool.utils.nfc.model.EDocument
 
 
 /**
@@ -127,15 +129,22 @@ class Navigator private constructor() {
         performIntent(intent)
     }
 
-    fun openConfirmation(dateOfExpiry: String) {
+    fun openConfirmation(eDocument: EDocument) {
         val intent = Intent(context, ConfirmationActivity::class.java)
-        intent.putExtra(ConfirmationActivity.EXPIRY_DATE, dateOfExpiry)
+        eDocument.personDetails = null
+        intent.putExtra(ConfirmationActivity.E_DOCUMENT, eDocument)
         performIntent(intent)
     }
 
-    fun openVoteProcessing(voteNumber: Int) {
+    fun openVoteProcessing(voteData: VotingData) {
         val intent = Intent(context, VoteProcessingActivity::class.java)
-        intent.putExtra(VoteProcessingActivity.VOTE_NUMBER, voteNumber)
+        intent.putExtra(VoteProcessingActivity.VOTE_DATA, voteData)
+        performIntent(intent)
+    }
+
+    fun openSignedManifest(voteData: VotingData) {
+        val intent = Intent(context, SignedManifest::class.java)
+        intent.putExtra(SignedManifest.VOTE_DATA, voteData)
         performIntent(intent)
     }
 

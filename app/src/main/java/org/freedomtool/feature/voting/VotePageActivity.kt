@@ -16,16 +16,12 @@ import org.freedomtool.base.view.BaseActivity
 import org.freedomtool.data.models.VotingData
 import org.freedomtool.databinding.ActivityVotePageBinding
 import org.freedomtool.databinding.LayoutRequirementDeclineItemBinding
-import org.freedomtool.databinding.LayoutRequirementItemBinding
 import org.freedomtool.databinding.LayoutRequirementOkItemBinding
 import org.freedomtool.logic.persistance.SecureSharedPrefs
 import org.freedomtool.utils.Navigator
-import org.freedomtool.utils.daysBetween
+import org.freedomtool.utils.calculateAge
 import org.freedomtool.utils.nfc.PermissionUtil
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import org.freedomtool.utils.resolveDays
 
 class VotePageActivity : BaseActivity() {
 
@@ -45,14 +41,15 @@ class VotePageActivity : BaseActivity() {
         initButtons()
         initAddData()
 
-        binding.dataOfVoting.text = this.getString(R.string.begins_in_x_days, daysBetween(Date(votingData.dueDate!! * 1000)).toString())
+        val time = resolveDays(this, votingData.dueDate!!)
+        binding.dataOfVoting.text = time
 
         checkPermissions()
     }
 
     override fun onResume() {
         super.onResume()
-        if(SecureSharedPrefs.getVoteResult(this) > -1) {
+        if (SecureSharedPrefs.getVoteResult(this) > -1) {
             setVoted()
         }
     }
@@ -108,7 +105,7 @@ class VotePageActivity : BaseActivity() {
             }
         }
 
-        if(SecureSharedPrefs.getVoteResult(this) != -1) {
+        if (SecureSharedPrefs.getVoteResult(this) != -1) {
             setVoted()
         }
 
@@ -139,31 +136,6 @@ class VotePageActivity : BaseActivity() {
         binding.mainButton.visibility = View.INVISIBLE
     }
 
-    private fun calculateAge(birthdate: String): Int {
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-
-        try {
-            val birthDate = dateFormat.parse(birthdate)
-            val currentDate = Calendar.getInstance().time
-
-            val calendarBirth = Calendar.getInstance()
-            calendarBirth.time = birthDate
-
-            val calendarCurrent = Calendar.getInstance()
-            calendarCurrent.time = currentDate
-
-            var age = calendarCurrent.get(Calendar.YEAR) - calendarBirth.get(Calendar.YEAR)
-
-            if (calendarBirth.get(Calendar.DAY_OF_YEAR) > calendarCurrent.get(Calendar.DAY_OF_YEAR)) {
-                age--
-            }
-
-            return age
-        } catch (e: Exception) {
-
-            return -1
-        }
-    }
 
     private fun initAddData() {
         val date = SecureSharedPrefs.getDateOfBirth(this)!!
@@ -240,8 +212,9 @@ class VotePageActivity : BaseActivity() {
         }
     }
 
-    private fun setVoted(){
-        binding.mainButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.unselected_button_color)
+    private fun setVoted() {
+        binding.mainButton.backgroundTintList =
+            ContextCompat.getColorStateList(this, R.color.unselected_button_color)
         binding.mainButton.icon = getDrawable(R.drawable.ic_check)
         binding.mainButton.text = resources.getText(R.string.enrolled)
         binding.mainButton.setTextColor(resources.getColor(R.color.black))

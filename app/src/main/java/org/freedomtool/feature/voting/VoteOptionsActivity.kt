@@ -10,6 +10,7 @@ import org.freedomtool.data.models.VotingData
 import org.freedomtool.databinding.ActivityVoteOptionsBinding
 import org.freedomtool.logic.persistance.SecureSharedPrefs
 import org.freedomtool.utils.Navigator
+import org.freedomtool.utils.resolveDays
 
 class VoteOptionsActivity : BaseActivity() {
 
@@ -18,6 +19,14 @@ class VoteOptionsActivity : BaseActivity() {
 
     private var selectedOption = -1
 
+    //TODO: make unified function for options
+    private fun parseOptions() {
+        val options = votingData.options!!
+
+        options.map {
+
+        }
+    }
 
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(
@@ -28,6 +37,7 @@ class VoteOptionsActivity : BaseActivity() {
         val selectedOptionSc = SecureSharedPrefs.getVoteResult(this)
 
         votingData = intent?.getParcelableExtra(VOTING_DATA)!!
+        binding.dataOfVoting.text = resolveDays(this, votingData.dueDate!!)
 
         binding.data = votingData
         if(selectedOptionSc > -1) {
@@ -102,7 +112,7 @@ class VoteOptionsActivity : BaseActivity() {
                     SecureSharedPrefs.saveVoteResult(this, selectedOption)
                     finish()
                     Navigator.from(this).openOptionVoting(votingData)
-                    Navigator.from(this).openVoteProcessing(2)
+                    Navigator.from(this).openVoteProcessing(votingData)
                 }
 
                 binding.backButton.id -> {

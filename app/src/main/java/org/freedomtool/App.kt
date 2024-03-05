@@ -3,6 +3,9 @@ package org.freedomtool
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
+import io.reactivex.exceptions.UndeliverableException
+import io.reactivex.plugins.RxJavaPlugins
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.freedomtool.di.ApiProviderModule
 import org.freedomtool.di.AppComponent
@@ -10,6 +13,7 @@ import org.freedomtool.di.DaggerAppComponent
 import org.freedomtool.di.LocaleManagerModule
 import org.freedomtool.di.UtilsModule
 import org.freedomtool.utils.AppLocaleManager
+import java.io.IOException
 import java.security.Security
 
 class App : Application() {
@@ -27,6 +31,7 @@ class App : Application() {
         initLocale()
         initDi()
         Security.insertProviderAt(BouncyCastleProvider(), 1)
+        initRxErrorHandler()
         setupBouncyCastle()
     }
 
@@ -55,6 +60,38 @@ class App : Application() {
 
     private fun getAppPreferences(): SharedPreferences {
         return getSharedPreferences("App", Context.MODE_PRIVATE)
+    }
+
+    private fun initRxErrorHandler() {
+        RxJavaPlugins.setErrorHandler {
+            var e = it
+            if (e is UndeliverableException) {
+                e = e.cause
+            }
+            if (e is IOException) {
+                // fine, irrelevant network problem or API that throws on cancellation
+                return@setErrorHandler
+            }
+            if (e is InterruptedException) {
+                // fine, some blocking code was interrupted by a dispose call
+                return@setErrorHandler
+            }
+            if ((e is NullPointerException) || (e is IllegalArgumentException)) {
+                // that's likely a bug in the application
+                Thread.currentThread().uncaughtExceptionHandler?.uncaughtException(
+                    Thread.currentThread(), e
+                )
+                return@setErrorHandler
+            }
+            if (e is IllegalStateException) {
+                // that's a bug in RxJava or in a custom operator
+                Thread.currentThread().uncaughtExceptionHandler?.uncaughtException(
+                    Thread.currentThread(), e
+                )
+                return@setErrorHandler
+            }
+            Log.w("RxErrorHandler", "Undeliverable exception received, not sure what to do", e)
+        }
     }
 
     private fun initDi() {

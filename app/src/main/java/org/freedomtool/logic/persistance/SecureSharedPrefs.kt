@@ -7,15 +7,12 @@ import androidx.security.crypto.MasterKey
 
 
 object SecureSharedPrefs {
-    private const val PREFS_FILE_NAME = "secure_file"
+    private const val PREFS_FILE_NAME = "irpgeojk;flp[oiogpj"
+    private var sharedPref: SharedPreferences? = null
 
 
     private val tags = mapOf(
         "accessToken" to "access_token",
-        "DG7" to "DG7",
-        "DG2" to "DG2",
-        "DG1" to "DG1",
-        "SOD" to "SOD",
         "DATE_OF_BIRTH" to "DATE_OF_BIRTH",
         "ISSUE_AUTHORITY" to "ISSUE_AUTHORITY",
         "CERTIFICATE_PEM" to "CERTIFICATE_PEM",
@@ -26,18 +23,71 @@ object SecureSharedPrefs {
         "PRIVATE_KEY" to "PRIVATE_KEY",
         "ISSUER_DID" to "ISSUER_DID",
         "IDENTITY" to "IDENTITY",
+        "SAVED_VOTING" to "SAVED_VOTING",
+        "FINALIZATION_VOTE" to "FINALIZATION_VOTE",
+        "VC" to "VC"
     )
 
     private fun getSharedPreferences(context: Context): SharedPreferences {
-        val masterKey = MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-        return EncryptedSharedPreferences.create(
-            context,
-            PREFS_FILE_NAME, masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
+        if (sharedPref == null) {
+            val masterKey = MasterKey.Builder(context)
+                .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                .build()
+            sharedPref = EncryptedSharedPreferences.create(
+                context,
+                PREFS_FILE_NAME, masterKey,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+            return sharedPref!!
+        }
+
+        return sharedPref!!
+
+    }
+
+    fun addVoted(context: Context, address: String) {
+        val sharedPreferences = getSharedPreferences(context)
+        val editor = sharedPreferences.edit()
+        val currentSavedData =
+            sharedPreferences.getStringSet(tags["SAVED_VOTING"], HashSet<String>())
+
+        currentSavedData!!.add(address)
+
+        editor.putStringSet(tags["SAVED_VOTING"], currentSavedData)
+        editor.apply()
+    }
+
+    private fun getFinalizationVote(context: Context) : Set<String> {
+        val sharedPreferences = getSharedPreferences(context)
+        return sharedPreferences.getStringSet(tags["FINALIZATION_VOTE"], HashSet<String>()).orEmpty()
+    }
+
+    fun addFinalizationVote(context: Context, address: String) {
+        val sharedPreferences = getSharedPreferences(context)
+        val editor = sharedPreferences.edit()
+        val currentSavedData =
+            sharedPreferences.getStringSet(tags["FINALIZATION_VOTE"], HashSet<String>())
+
+        currentSavedData!!.add(address)
+
+        editor.putStringSet(tags["SAVED_VOTING"], currentSavedData)
+        editor.apply()
+    }
+
+    fun checkFinalizes(context: Context, address: String): Boolean {
+        val set = getFinalizationVote(context)
+        return set.contains(address)
+    }
+
+    private fun getVoted(context: Context) : Set<String> {
+        val sharedPreferences = getSharedPreferences(context)
+        return sharedPreferences.getStringSet(tags["SAVED_VOTING"], HashSet<String>()).orEmpty()
+    }
+
+    fun checkIsVoted(context: Context, address: String): Boolean {
+        val set = getVoted(context)
+        return set.contains(address)
     }
 
     fun getIssuerDid(context: Context): String? {
@@ -106,7 +156,7 @@ object SecureSharedPrefs {
         editor.apply()
     }
 
-    fun getIdentityData(context: Context) : String? {
+    fun getIdentityData(context: Context): String? {
         val sharedPreferences = getSharedPreferences(context)
         return sharedPreferences.getString(tags["IDENTITY"], "")
     }
@@ -138,11 +188,6 @@ object SecureSharedPrefs {
         return sharedPreferences.getString(tags["DATE_OF_BIRTH"], "")
     }
 
-    fun readSOD(context: Context): String? {
-        val sharedPreferences = getSharedPreferences(context)
-        return sharedPreferences.getString(tags["SOD"], "")
-    }
-
     fun saveVoteResult(context: Context, string: Int) {
         val sharedPreferences = getSharedPreferences(context)
         val editor = sharedPreferences.edit()
@@ -155,38 +200,29 @@ object SecureSharedPrefs {
         return sharedPreferences.getInt(tags["VOTE_RESULT"], -1)
     }
 
-
-    fun saveSOD(context: Context, sod: String) {
-        val sharedPreferences = getSharedPreferences(context)
-        val editor = sharedPreferences.edit()
-        editor.putString(tags["SOD"], sod)
-        editor.apply()
-    }
-
-    fun saveDG1(context: Context, string: String) {
-        val sharedPreferences = getSharedPreferences(context)
-        val editor = sharedPreferences.edit()
-        editor.putString(tags["DG1"], string)
-        editor.apply()
-    }
-
-    fun readDG1(context: Context): String? {
-        val sharedPreferences = getSharedPreferences(context)
-        return sharedPreferences.getString(tags["DG1"], "")
-    }
-
-    fun savePassportData(context: Context) {
+    fun saveIsPassportScanned(context: Context) {
         val sharedPreferences = getSharedPreferences(context)
         val editor = sharedPreferences.edit()
         editor.putBoolean(tags["accessToken"], true)
         editor.apply()
     }
 
-    fun getPassportData(context: Context): Boolean {
+    fun getIsPassportScanned(context: Context): Boolean {
         val sharedPreferences = getSharedPreferences(context)
         return sharedPreferences.getBoolean(tags["accessToken"], false)
     }
 
+    fun getVC(context: Context): String? {
+        val sharedPreferences = getSharedPreferences(context)
+        return sharedPreferences.getString(tags["VC"], null)
+    }
+
+    fun saveVC(context: Context, rawData: String) {
+        val sharedPreferences = getSharedPreferences(context)
+        val editor = sharedPreferences.edit()
+        editor.putString(tags["VC"], rawData)
+        editor.apply()
+    }
 
 
 }

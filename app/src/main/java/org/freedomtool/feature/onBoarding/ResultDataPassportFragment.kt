@@ -11,9 +11,9 @@ import org.freedomtool.R
 import org.freedomtool.base.view.BaseFragment
 import org.freedomtool.databinding.FragmentResultDataPassportBinding
 import org.freedomtool.logic.persistance.SecureSharedPrefs
-import org.freedomtool.utils.nfc.model.EDocument
 import org.freedomtool.utils.Navigator
 import org.freedomtool.utils.nfc.ImageUtil
+import org.freedomtool.utils.nfc.model.EDocument
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -40,9 +40,9 @@ class ResultDataPassportFragment : BaseFragment() {
 
         binding.name.text = eDocumentData!!.personDetails!!.name
 
-        if(eDocumentData!!.personDetails!!.gender == "MALE") {
+        if (eDocumentData!!.personDetails!!.gender == "MALE") {
             binding.gender.text = resources.getString(R.string.male)
-        }else {
+        } else {
             binding.gender.text = resources.getString(R.string.female)
         }
 
@@ -51,8 +51,14 @@ class ResultDataPassportFragment : BaseFragment() {
         binding.dateOfBirth.text = eDocumentData!!.personDetails!!.birthDate
         binding.nationality.text = eDocumentData!!.personDetails!!.nationality
 
-        SecureSharedPrefs.saveDateOfBirth(requireContext() ,eDocumentData!!.personDetails!!.birthDate!!)
-        SecureSharedPrefs.saveIssuerAuthority(requireContext() ,eDocumentData!!.personDetails!!.issuerAuthority!!)
+        SecureSharedPrefs.saveDateOfBirth(
+            requireContext(),
+            eDocumentData!!.personDetails!!.birthDate!!
+        )
+        SecureSharedPrefs.saveIssuerAuthority(
+            requireContext(),
+            eDocumentData!!.personDetails!!.issuerAuthority!!
+        )
 
         if (checkExpiryDate(eDocumentData!!.personDetails!!.expiryDate!!)) {
             MaterialAlertDialogBuilder(requireActivity())
@@ -64,7 +70,6 @@ class ResultDataPassportFragment : BaseFragment() {
 
                     requireActivity().finish()
                 }
-
                 .show()
             binding.confirmButton.visibility = View.INVISIBLE
         }
@@ -84,9 +89,9 @@ class ResultDataPassportFragment : BaseFragment() {
     private fun initButtons() {
         clickHelper.addViews(binding.confirmButton)
         clickHelper.setOnClickListener {
-            when(it.id) {
+            when (it.id) {
                 binding.confirmButton.id -> {
-                    Navigator.from(this).openConfirmation(eDocumentData!!.personDetails!!.expiryDate!!)
+                    Navigator.from(this).openConfirmation(eDocumentData!!)
                     requireActivity().finish()
                 }
             }
@@ -95,8 +100,6 @@ class ResultDataPassportFragment : BaseFragment() {
     }
 
     companion object {
-        const val EDOCUMENT_PARAMS = "EDOCUMENT_PARAMS"
-
         @JvmStatic
         fun newInstance() =
             ResultDataPassportFragment()

@@ -6,7 +6,7 @@ data class IdentityData(
     val secretHex: String,
     val secretKeyHex: String,
     val nullifierHex: String,
-    val vCsJSON: String
+    val timeStamp: String
 ){
 
     fun toJson(): String {

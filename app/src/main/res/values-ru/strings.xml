@@ -24,7 +24,7 @@
     <string name="scan_your_passport">Отсканируйте ваш Документ\nили служебную карту</string>
     <string name="scan_passport_description">Данные хранятся только на устройстве</string>
     <string name="passport_camera_tip">Наведите камеру на ваш паспорт</string>
-    <string name="nfc_scan_tip">Приложите обложку документа к\nзадней части телефона</string>
+    <string name="nfc_scan_tip">Приложите обложку Документа к\nзадней части телефона</string>
     <string name="permission_title">Требуется разрешение</string>
     <string name="permission_description">Нам нужно ваше разрешение на доступ к камере для сканирования паспорта.</string>
     <string name="button_ok">OK</string>
@@ -36,14 +36,19 @@
     <string name="polls">Опросы</string>
     <string name="please_wait">Пожалуйста, подождите…</string>
     <string name="comfirm_proof_description">Создаем анонимизированного\nудостоверения личности</string>
-    <string name="generating_proof_tip"><b>Помните:</b> Ваши данные хранятся только на этом устройстве и никогда не раскрываются и не передаются третьим лицам</string>
+    <string name="generating_proof_tip"><b>Помните:</b> Ваши данные хранятся только на этом устройстве и никогда не раскрываются, и не передаются третьим лицам</string>
     <string name="all_done">Все готово!</string>
     <string name="all_done_description">Вы будете перенаправлены\nчерез 5 секунд</string>
     <string name="active">Активные</string>
     <string name="completed">Завершенные</string>
 
     <string name="pool_1">Начинаются выборы нового генерального директора компании</string>
-    <string name="begins_in_x_days">Заканчивается через %1$s дней</string>
+    <string name="endx_in_x_hours">Заканчивается через %1$s часов</string>
+    <string name="starts_in_x_hours">Начинается через %1$s часов</string>
+    <string name="ends_in_x_days">Заканчивается через %1$s дней</string>
+    <string name="begins_in_x_days">Начинается через %1$s дней</string>
+    <string name="ends_in_x_days_y_hours">Заканчивается через %1$s дней %2$s часов</string>
+    <string name="begins_in_x_days_y_hours">Начинается через %1$s дней %2$s часов</string>
     <string name="pool_1_header">Выборы нового генерального директора компании</string>
     <string name="non_traceable_identity">Безопасная идентификация</string>
     <string name="anonymized_voting">Анонимизированный выбор</string>
@@ -90,17 +95,16 @@
     <string name="enrolled">Зачтено</string>
     <string name="button_no">Нет</string>
     <string name="privacyPolicy">Политика Конфиденциальности</string>
-    <string name="formation_of_the_ballot">Формирование бюллетеня</string>
+    <string name="formation_of_the_ballot">Формирование подписи</string>
     <string name="loading">Загрузка...</string>
-    <string name="vote_anonymization">Анонимизация голосования</string>
+    <string name="vote_anonymization">Анонимизация</string>
     <string name="loading_text">Загрузка...</string>
     <string name="sending_your_vote">"Отправка вашего голоса"</string>
     <string name="finalizing">Завершение</string>
-    <string name="processing_hint">Помните: ваша личность не может быть вычислена, ваш голос может быть сопоставлен с ней</string>
-    <string name="your_vote_is_non_traceable">Ваш голос не поддается трассировке</string>
+    <string name="processing_hint">Помните: Ваши данные хранятся только на этом устройстве. Данные никогда не раскрываются и не передаються третьим сторонам.</string>
+    <string name="your_vote_is_non_traceable">This may take 5\-10 minutes</string>
     <string name="button_yes">Да</string>
     <string name="turms_of_use">Условия Использования</string>
-
     <string name="localization_name">РУС</string>
     <string name="expiry_date_error">Срок действия паспорта истек</string>
     <string name="not_able_to_generate_proof">Не получается сгенерировать proof</string>
@@ -112,4 +116,13 @@
     <string name="name1">Sam Anderson</string>
     <string name="name2">Alexander Schmidt</string>
     <string name="name3">Olga Drake</string>
+    <string name="_x_people_already_signed">%1$s человек уже подписало</string>
+    <string name="view_petition">View Petition</string>
+    <string name="you_and_x_other_people_already_signed">Вы и еще %1$s человек уже подписали</string>
+    <string name="you_already_registered">Вы уже подписывали это</string>
+    <string name="cant_verify_multiple_device">Вы не можете пройти верификацию на нескольких устройствах</string>
+    <string name="check_back_later">Зайдите позже</string>
+    <string name="completed_vote">Завершено</string>
+    <string name="heading">ЗАГОЛОВОК</string>
+    <string name="description">ОПИСАНИЕ</string>
 </resources>

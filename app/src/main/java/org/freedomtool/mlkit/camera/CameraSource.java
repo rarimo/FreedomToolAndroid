@@ -67,7 +67,7 @@ public class CameraSource {
 
     // These values may be requested by the caller.  Due to hardware limitations, we may need to
     // select close, but not exactly the same values for these.
-    private final float requestedFps = 20.0f;
+    private final float requestedFps = Float.MAX_VALUE;
     private final int requestedPreviewWidth = 1280;
     private final int requestedPreviewHeight = 960;
     private final boolean requestedAutoFocus = true;
@@ -690,7 +690,6 @@ public class CameraSource {
 
                 try {
                     synchronized (processorLock) {
-                        Log.d(TAG, "Process an image");
                         frameProcessor.process(
                                 data,
                                 new FrameMetadata.Builder()

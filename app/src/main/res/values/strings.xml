@@ -39,7 +39,12 @@
     <string name="active">Active</string>
     <string name="completed">Completed</string>
     <string name="pool_1">The election of a new CEO to the company begins</string>
-    <string name="begins_in_x_days">Ends in %1$s days</string>
+    <string name="endx_in_x_hours">Ends in %1$s hours</string>
+    <string name="starts_in_x_hours">Starts in %1$s hours</string>
+    <string name="ends_in_x_days">Ends in %1$s days</string>
+    <string name="begins_in_x_days">Starts in %1$s days</string>
+    <string name="ends_in_x_days_y_hours">Ends in %1$s days %2$s hours</string>
+    <string name="begins_in_x_days_y_hours">Starts in %1$s days %2$s hours</string>
     <string name="pool_1_header">Сhoosing a new CEO</string>
     <string name="non_traceable_identity">Secure identification</string>
     <string name="anonymized_voting">Anonymized choice</string>
@@ -86,14 +91,14 @@
     <string name="enrolled">Enrolled</string>
     <string name="button_no">No</string>
     <string name="privacyPolicy">Privacy Policy</string>
-    <string name="formation_of_the_ballot">Formation of the Ballot</string>
+    <string name="formation_of_the_ballot">Formation of the signature</string>
     <string name="loading">Loading...</string>
-    <string name="vote_anonymization">Vote Anonymization</string>
+    <string name="vote_anonymization">Anonymization</string>
     <string name="loading_text">Loading...</string>
     <string name="sending_your_vote">Sending your vote</string>
     <string name="finalizing">Finalizing</string>
     <string name="processing_hint">Remember: Neither your identity can be traced nor your vote matched to it</string>
-    <string name="your_vote_is_non_traceable">Your vote is non traceable</string>
+    <string name="your_vote_is_non_traceable">Your signature is non traceable</string>
     <string name="button_yes">Yes</string>
     <string name="turms_of_use">Terms of Use</string>
 
@@ -108,5 +113,14 @@
     <string name="name1">Sam Anderson</string>
     <string name="name2">Alexander Schmidt</string>
     <string name="name3">Olga Drake</string>
+    <string name="_x_people_already_signed">%1$s people already signed</string>
+    <string name="view_petition">View Petition</string>
+    <string name="you_and_x_other_people_already_signed">You and %1$s other people already signed</string>
+    <string name="you_already_registered">You\'ve already signed it</string>
+    <string name="cant_verify_multiple_device">You cannot be verified on multiple devices</string>
+    <string name="check_back_later">Check back later</string>
+    <string name="completed_vote">Completed</string>
+    <string name="heading">HEADING</string>
+    <string name="description">DESCRIPTION</string>
 
 </resources>

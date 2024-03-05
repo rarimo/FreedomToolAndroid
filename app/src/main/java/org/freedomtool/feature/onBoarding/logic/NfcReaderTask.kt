@@ -179,7 +179,6 @@ class NfcReaderTask(
             personDetails.nationality = mrzInfo.nationality;
             personDetails.issuerAuthority = mrzInfo.issuingState;
 
-            //TODO: don't save this
 
             eDocument.dg1 = encodedDg1File
 

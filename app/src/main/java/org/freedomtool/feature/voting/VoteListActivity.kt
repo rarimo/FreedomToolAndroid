@@ -49,8 +49,6 @@ class VoteListActivity : BaseActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = resources.getColor(R.color.primary_button_color)
 
-
-
         binding.recyclerViewVote.adapter = voteAdapter
         val manager = LinearLayoutManager(this)
         binding.recyclerViewVote.layoutManager = manager

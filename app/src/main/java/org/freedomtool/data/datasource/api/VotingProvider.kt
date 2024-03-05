@@ -17,8 +17,8 @@ object VotingProvider {
 
             val web3j = apiProvider.web3
             val ecKeyPair = Keys.createEcKeyPair()
-            val contractAddress = "0xECB5371C727a664160c4F4360af77F0Fe4aeb7F9"
-            val proposalAddress = "0xf41ceE234219D6cc3d90A6996dC3276aD378cfCF"
+            val contractAddress = "0x1cd9be5BBD91c07aA31180834e48cf4838992317"
+            val proposalAddress = "0xF5Ca28acbBC7DFFfFFf714e1F306A803037Bdad2"
             val credentials = Credentials.create(ecKeyPair)
             val gasProvider = DefaultGasProvider()
 

@@ -38,8 +38,6 @@ class MustVerifyActivity : BaseActivity() {
 
         //initViews()
         //isAllowedToSign()
-
-
     }
 
     override fun onResume() {
@@ -90,11 +88,11 @@ class MustVerifyActivity : BaseActivity() {
             )
         }
 
-        if (voteData.requirements?.nationality != null) {
+        if (voteData.requirements?.getNationality() != null) {
             addRequirements(
                 resources.getString(
                     R.string.is_citizen,
-                    voteData.requirements!!.nationality!!
+                    voteData.requirements!!.getNationality()
                 )
             )
         }
@@ -128,14 +126,14 @@ class MustVerifyActivity : BaseActivity() {
 
         }
 
-        if (voteData.requirements?.nationality != null) {
+        if (voteData.requirements?.nationality!!.isNotEmpty()) {
 
             val issuer = SecureSharedPrefs.getIssuerAuthority(this)!!
-            if (issuer == voteData.requirements!!.nationality!!) {
+            if (voteData.requirements!!.isInList(issuer)) {
                 addAccept(
                     resources.getString(
                         R.string.is_citizen,
-                        voteData.requirements!!.nationality!!
+                        voteData.requirements!!.getNationality()
                     )
                 )
             } else {
@@ -143,7 +141,7 @@ class MustVerifyActivity : BaseActivity() {
                 addDecline(
                     resources.getString(
                         R.string.is_citizen,
-                        voteData.requirements!!.nationality!!
+                        voteData.requirements!!.getNationality()
                     )
                 )
             }
@@ -232,6 +230,15 @@ class MustVerifyActivity : BaseActivity() {
     }
 
     private fun isAllowedToSign() {
+
+        if (SecureSharedPrefs.getIsPassportScanned(this)) {
+            if (!voteData.isActive) {
+                binding.mainButton.text = getString(R.string.sign)
+                declineToUser()
+                return
+            }
+        }
+
         if (!isAllowedToSign) {
             declineToUser()
             binding.mainButton.visibility = View.GONE

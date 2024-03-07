@@ -1,11 +1,14 @@
 package org.freedomtool.data.datasource.api
 
 import android.util.Log
+import io.reactivex.Observable
 import io.reactivex.Single
-import org.freedomtool.contracts.Registration
+import org.freedomtool.contracts.RegistrationVerifier
+import org.freedomtool.contracts.SRegistration
 import org.freedomtool.data.models.RequirementsForVoting
 import org.freedomtool.data.models.VotingData
 import org.freedomtool.di.providers.ApiProvider
+import org.freedomtool.utils.ObservableTransformers
 import org.freedomtool.utils.isEnded
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
@@ -33,43 +36,67 @@ object VotingProvider {
             val numberOfVoting = contract.poolCountByProposer(proposalAddress).send()
             val resp = contract.listPoolsByProposer(
                 proposalAddress,
-                numberOfVoting.min(BigInteger.ZERO),
+                BigInteger.ZERO, //numberOfVoting.minus(BigInteger.ONE),
                 BigInteger.TEN
             ).send()
 
             val voteList = mutableListOf<VotingData>()
             val voteListEnded = mutableListOf<VotingData>()
 
+            val registrationDataListSingle = Observable.fromIterable(resp)
+                .flatMapSingle { registrationAddress ->
+                    Single.fromCallable {
+                        val registration = SRegistration.load(
+                            registrationAddress as String,
+                            web3j,
+                            credentials,
+                            gasProvider
+                        )
 
-            resp.map { registrationAddress ->
-                val registration = Registration.load(
-                    registrationAddress as String,
-                    web3j,
-                    credentials,
-                    gasProvider
-                )
-                val data = registration.registrationInfo().send()
-                val (url, time, registeredCount) = data
+                        val addressVerifier = registration.registerVerifier().send()
+                        Log.i("Registration", addressVerifier)
+                        val registrationVerifier =
+                            RegistrationVerifier.load(
+                                addressVerifier,
+                                web3j,
+                                credentials,
+                                gasProvider
+                            )
 
+                        val arrayOfCountries = registrationVerifier.listIssuingAuthorityWhitelist(
+                            BigInteger.ZERO,
+                            BigInteger.valueOf(100L)
+                        ).send()
 
-                val registrationData =
-                    apiProvider.circuitBackend.getRegistrationData(url).blockingGet()
+                        val data = registration.registrationInfo().send()
+                        val (url, time, registeredCount) = data
 
+                        val registrationData =
+                            apiProvider.circuitBackend.getRegistrationData(url).blockingGet()
 
-                val votingData = VotingData(
-                    header = registrationData.name,
-                    excerpt = registrationData.excerpt,
-                    description = registrationData.description,
-                    contractAddress = registrationAddress,
-                    dueDate = time.commitmentEndTime.toLong(),
-                    isPassportRequired = true,
-                    requirements = RequirementsForVoting("UKR", 18),
-                    isManifest = true,
-                    isActive = registrationData.isActive == true,
-                    votingCount = registeredCount.totalRegistrations.toLong()
-                )
+                        VotingData(
+                            header = registrationData.name,
+                            excerpt = registrationData.excerpt,
+                            description = registrationData.description,
+                            contractAddress = registrationAddress,
+                            dueDate = time.commitmentEndTime.toLong(),
+                            isPassportRequired = true,
+                            requirements = RequirementsForVoting(
+                                arrayOfCountries as List<BigInteger>,
+                                18
+                            ),
+                            isManifest = true,
+                            isActive = registrationData.isActive == true && !isEnded(time.commitmentEndTime.toLong()),
+                            votingCount = registeredCount.totalRegistrations.toLong()
+                        )
+                    }.compose(ObservableTransformers.defaultSchedulersSingle())
+                }
+                .toList()
 
-                if (isEnded(time.commitmentEndTime.toLong())) {
+            val registrationDataList = registrationDataListSingle.blockingGet()
+
+            registrationDataList.forEach { votingData ->
+                if (isEnded(votingData.dueDate!!)) {
                     voteListEnded.add(votingData)
                 } else {
                     voteList.add(votingData)
@@ -79,6 +106,7 @@ object VotingProvider {
             Pair(voteList, voteListEnded)
         }
     }
+
 
 }
 

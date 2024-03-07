@@ -98,7 +98,7 @@
     <string name="sending_your_vote">Sending your vote</string>
     <string name="finalizing">Finalizing</string>
     <string name="processing_hint">Remember: Neither your identity can be traced nor your vote matched to it</string>
-    <string name="your_vote_is_non_traceable">Your signature is non traceable</string>
+    <string name="your_vote_is_non_traceable">This may take 5\-10 minutes</string>
     <string name="button_yes">Yes</string>
     <string name="turms_of_use">Terms of Use</string>
 

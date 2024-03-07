@@ -102,7 +102,7 @@
     <string name="sending_your_vote">"Отправка вашего голоса"</string>
     <string name="finalizing">Завершение</string>
     <string name="processing_hint">Помните: Ваши данные хранятся только на этом устройстве. Данные никогда не раскрываются и не передаються третьим сторонам.</string>
-    <string name="your_vote_is_non_traceable">This may take 5\-10 minutes</string>
+    <string name="your_vote_is_non_traceable">Это может занять 5\-10 минут.</string>
     <string name="button_yes">Да</string>
     <string name="turms_of_use">Условия Использования</string>
     <string name="localization_name">РУС</string>

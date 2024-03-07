@@ -2,8 +2,9 @@ package org.freedomtool.data.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import java.io.Serial
 import kotlinx.serialization.Serializable
+import org.freedomtool.utils.getIssuingAuthorityString
+import java.math.BigInteger
 
 @Parcelize
 @Serializable
@@ -20,12 +21,26 @@ data class VotingData(
     val votingCount: Long = 0,
     val isActive: Boolean = true,
 ) : Parcelable
+
 @Parcelize
 @Serializable
 data class RequirementsForVoting(
-    val nationality: String? =null,
+    val nationality: List<BigInteger>,
     val age: Int? = null,
-) : Parcelable
+) : Parcelable {
+    fun getNationality(): String? {
+        if (nationality.isEmpty())
+            return null
+
+        val nationalityStrings = nationality.map { getIssuingAuthorityString(it.toLong()) }
+        return nationalityStrings.joinToString(", ")
+    }
+
+    fun isInList(userNationality: String): Boolean {
+        val nationalityStrings = nationality.map { getIssuingAuthorityString(it.toLong()) }
+        return userNationality in nationalityStrings
+    }
+}
 
 @Parcelize
 @Serializable

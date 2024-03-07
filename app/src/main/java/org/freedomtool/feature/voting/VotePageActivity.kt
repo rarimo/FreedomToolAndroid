@@ -94,9 +94,10 @@ class VotePageActivity : BaseActivity() {
                 }
             }
 
-            requirements.nationality?.let { requiredNationality ->
-                val nationalityMessage = getString(R.string.is_citizen, requiredNationality)
-                if (requiredNationality != issuerAuthority) {
+            if (requirements.getNationality() != null) {
+                val nationalityMessage =
+                    getString(R.string.is_citizen, requirements.getNationality())
+                if (requirements.isInList(issuerAuthority)) {
                     addDeclineReq(nationalityMessage)
                     isCanPromote = false
                 } else {

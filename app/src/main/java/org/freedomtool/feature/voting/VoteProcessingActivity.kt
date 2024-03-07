@@ -1,6 +1,7 @@
 package org.freedomtool.feature.voting
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
@@ -43,7 +44,9 @@ class VoteProcessingActivity : BaseActivity() {
                 updateLoading(statusList[it])
             }, {
 
-                throw it
+
+                Log.e("Error during processing", it.message.toString(), it)
+
                 if (it.message.isNullOrEmpty()) {
                     handleUnknownError()
                     return@subscribe

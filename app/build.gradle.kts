@@ -15,8 +15,8 @@ android {
         applicationId = "org.freedomtool"
         minSdk = 27
         targetSdk = 34
-        versionCode = 5
-        versionName = "1.0.5"
+        versionCode = 7
+        versionName = "1.1.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -34,8 +34,6 @@ android {
     }
 
     buildTypes {
-
-
 
         release {
             isMinifyEnabled = false
@@ -90,7 +88,7 @@ dependencies {
     implementation("com.github.mhshams:jnbis:1.1.0")
     implementation("com.gemalto.jp2:jp2-android:1.0.3")
     implementation("com.google.mlkit:text-recognition:16.0.0")
-    implementation ("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
     implementation("org.web3j:core:4.8.8-android")
 

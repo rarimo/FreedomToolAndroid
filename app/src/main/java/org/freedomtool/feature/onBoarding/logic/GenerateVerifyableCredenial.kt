@@ -27,7 +27,6 @@ import org.freedomtool.utils.ZKPTools
 import org.freedomtool.utils.ZKPUseCase
 import org.freedomtool.utils.addCharAtIndex
 import org.freedomtool.utils.decodeHexString
-import org.freedomtool.utils.getIssuingAuthorityCode
 import org.freedomtool.utils.nfc.SecurityUtil
 import org.freedomtool.utils.nfc.model.EDocument
 import org.freedomtool.utils.toBitArray
@@ -269,7 +268,7 @@ class GenerateVerifyableCredenial {
 
                 identity.initVerifiableCredentials(rawClaimOfferResponse.toByteArray())
 
-            }else {
+            } else {
                 val vC = SecureSharedPrefs.getVC(context)!!.toByteArray()
                 identity.initVerifiableCredentials(vC)
             }
@@ -278,7 +277,7 @@ class GenerateVerifyableCredenial {
 
             val issuerAuthority = SecureSharedPrefs.getIssuerAuthority(context)
 
-            if(!SecureSharedPrefs.checkFinalizes(context, votingAddress)) {
+            if (!SecureSharedPrefs.checkFinalizes(context, votingAddress)) {
 
                 Log.i("HERE", "HELP ME")
                 val callData: ByteArray = identity.register(

@@ -1,6 +1,7 @@
 package org.freedomtool.feature.voting
 
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import org.freedomtool.R
 import org.freedomtool.base.view.BaseActivity
@@ -23,6 +24,14 @@ class ManifestSigning : BaseActivity() {
         binding.date.text = resolveDays(this, votingData.dueDate!!)
         binding.signedCount.text = getString(R.string._x_people_already_signed, votingData.votingCount.toString())
         initButtons()
+        isActive()
+    }
+
+    private fun isActive() {
+        if (!votingData.isActive) {
+            binding.signBtn.visibility = View.GONE
+            binding.linearLayoutCompat.visibility = View.INVISIBLE
+        }
     }
 
     private fun initButtons() {
@@ -33,13 +42,6 @@ class ManifestSigning : BaseActivity() {
                     finish()
                 }
                 binding.signBtn.id -> {
-
-//                    if(SecureSharedPrefs.getIsPassportScanned(this)) {
-//                        Navigator.from(this).openVoteProcessing(votingData)
-//                        finish()
-//                        return@setOnClickListener
-//                    }
-
                     Navigator.from(this).openVerificationPage(votingData)
                 }
             }

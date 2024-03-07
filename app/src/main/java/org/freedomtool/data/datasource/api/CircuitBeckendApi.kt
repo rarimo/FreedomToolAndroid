@@ -30,7 +30,8 @@ interface CircuitBackendApi {
     @POST
     fun fetchForProofPost(@Url url : String, @Body body : String, @HeaderMap headers: Map<String, String>): Single<ResponseBody>
 
-    @GET("https://issuer.polygon.robotornot.mainnet-beta.rarimo.com/v1/credentials/{Did}/urn:uuid:f2c8db83-7e1b-493d-a65e-9939d643e79d")
+
+    @GET("https://api.robotornot.mainnet-beta.rarimo.com/v1/{Did}/claims/claim_id/offer")
     fun claimOffer(@Path("Did") identityDid: String): Single<ClaimOfferResponse>
 
     @GET("https://rpc-api.node1.mainnet-beta.rarimo.com/rarimo/rarimo-core/identity/state/{issuerIdHex}")

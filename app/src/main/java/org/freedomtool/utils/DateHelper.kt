@@ -23,13 +23,7 @@ fun getDaysAndHoursBetween(endDate: Long): Pair<Int, Int> {
 fun isEnded(endDate: Long): Boolean {
     val (days, hours) = getDaysAndHoursBetween(endDate)
 
-
-    if (days < 0) return true
-
-    if (hours < 0) return true
-
-
-    return false
+    return days <= 0 && hours <= 0
 }
 
 fun resolveDays(context: Context, endDate: Long): String {

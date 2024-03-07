@@ -116,7 +116,7 @@ class VoteAdapter(
         }
 
         private fun onClickAllowed() {
-            if(SecureSharedPrefs.checkIsVoted(context, data.contractAddress!!)){
+            if (SecureSharedPrefs.checkIsVoted(context, data.contractAddress!!)) {
                 navigator.openSignedManifest(data)
                 return
             }

@@ -146,6 +146,7 @@ class GenerateVerifyableCredenial {
 
 
             SecureSharedPrefs.saveIssuerDid(context, response.data.attributes.issuer_did)
+            SecureSharedPrefs.saveClaimId(context, response.data.attributes.claim_id)
             val identityToSave = IdentityData(
                 identity.secretHex,
                 identity.secretKeyHex,
@@ -259,8 +260,10 @@ class GenerateVerifyableCredenial {
                     Thread.sleep(10 * 1000)
                 }
 
+                val claim_id = SecureSharedPrefs.geiClaimId(context)
+
                 val claimOfferResponse =
-                    apiProvider.circuitBackend.claimOffer(identity.did).blockingGet()
+                    apiProvider.circuitBackend.claimOffer(issuerDid, claim_id!!).blockingGet()
 
                 val rawClaimOfferResponse = gson.toJson(claimOfferResponse)
 

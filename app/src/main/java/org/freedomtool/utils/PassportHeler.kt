@@ -1,7 +1,5 @@
 package org.freedomtool.utils
 
-import java.math.BigInteger
-
 fun getIssuingAuthorityCode(issuingAuthority: String): String {
     return when (issuingAuthority) {
         "UKR" -> "4903594"

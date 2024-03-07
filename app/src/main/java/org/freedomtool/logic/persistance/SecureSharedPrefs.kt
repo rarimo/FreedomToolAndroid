@@ -25,7 +25,8 @@ object SecureSharedPrefs {
         "IDENTITY" to "IDENTITY",
         "SAVED_VOTING" to "SAVED_VOTING",
         "FINALIZATION_VOTE" to "FINALIZATION_VOTE",
-        "VC" to "VC"
+        "VC" to "VC",
+        "CLAIM_ID" to "CLAIM_ID"
     )
 
     private fun getSharedPreferences(context: Context): SharedPreferences {
@@ -222,6 +223,18 @@ object SecureSharedPrefs {
         val editor = sharedPreferences.edit()
         editor.putString(tags["VC"], rawData)
         editor.apply()
+    }
+
+    fun saveClaimId(context: Context, claimId: String) {
+        val sharedPreferences = getSharedPreferences(context)
+        val editor = sharedPreferences.edit()
+        editor.putString(tags["CLAIM_ID"], claimId)
+        editor.apply()
+    }
+
+    fun geiClaimId(context: Context): String? {
+        val sharedPreferences = getSharedPreferences(context)
+        return sharedPreferences.getString(tags["CLAIM_ID"], "")
     }
 
 

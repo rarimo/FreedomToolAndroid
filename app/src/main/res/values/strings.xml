@@ -92,9 +92,9 @@
     <string name="button_no">No</string>
     <string name="privacyPolicy">Privacy Policy</string>
     <string name="formation_of_the_ballot">Formation of the signature</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="vote_anonymization">Anonymization</string>
-    <string name="loading_text">Loading...</string>
+    <string name="loading_text">Loading…</string>
     <string name="sending_your_vote">Sending your vote</string>
     <string name="finalizing">Finalizing</string>
     <string name="processing_hint">Remember: Neither your identity can be traced nor your vote matched to it</string>
@@ -113,7 +113,13 @@
     <string name="name1">Sam Anderson</string>
     <string name="name2">Alexander Schmidt</string>
     <string name="name3">Olga Drake</string>
-    <string name="_x_people_already_signed">%1$s people already signed</string>
+    <plurals name="_x_people_already_signed">
+        <item quantity="one">%1$d person already signed</item>
+        <item quantity="two">%1$d people already signed</item>
+        <item quantity="few">%1$d people already signed</item>
+        <item quantity="many">%1$d people already signed</item>
+        <item quantity="other">%1$d people already signed</item>
+    </plurals>
     <string name="view_petition">View Petition</string>
     <string name="you_and_x_other_people_already_signed">You and %1$s other people already signed</string>
     <string name="you_already_registered">You\'ve already signed it</string>

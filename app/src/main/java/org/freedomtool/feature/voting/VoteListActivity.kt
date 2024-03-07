@@ -61,8 +61,10 @@ class VoteListActivity : BaseActivity() {
     override fun onResume() {
         if (!SecureSharedPrefs.getIsPassportScanned(this)) {
             binding.clearAllData.visibility = View.GONE
+            binding.separator.visibility = View.GONE
         }else {
             binding.clearAllData.visibility = View.VISIBLE
+            binding.separator.visibility = View.VISIBLE
         }
         super.onResume()
     }

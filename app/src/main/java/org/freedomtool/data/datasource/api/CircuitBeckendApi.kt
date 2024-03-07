@@ -9,7 +9,6 @@ import org.freedomtool.data.models.Payload
 import org.freedomtool.data.models.RegistrationData
 import org.freedomtool.data.models.SendCalldataRequest
 import org.freedomtool.data.models.StateInfoResponse
-import org.freedomtool.data.models.UserDid
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
@@ -26,20 +25,28 @@ interface CircuitBackendApi {
     fun gistData(@Query("user_did") user_did: String): Single<GistData>
 
     @GET
-    fun fetchForProofGet(@Url url : String,@HeaderMap headers: Map<String, String> ): Single<ResponseBody>
+    fun fetchForProofGet(
+        @Url url: String,
+        @HeaderMap headers: Map<String, String>
+    ): Single<ResponseBody>
+
     @POST
-    fun fetchForProofPost(@Url url : String, @Body body : String, @HeaderMap headers: Map<String, String>): Single<ResponseBody>
+    fun fetchForProofPost(
+        @Url url: String,
+        @Body body: String,
+        @HeaderMap headers: Map<String, String>
+    ): Single<ResponseBody>
 
 
-    @GET("https://api.robotornot.mainnet-beta.rarimo.com/v1/{Did}/claims/claim_id/offer")
-    fun claimOffer(@Path("Did") identityDid: String): Single<ClaimOfferResponse>
+    @GET("https://api.robotornot.mainnet-beta.rarimo.com/v1/{Did}/claims/{claim_id}/offer")
+    fun claimOffer(@Path("Did") identityDid: String, @Path("claim_id") claimId: String): Single<ClaimOfferResponse>
 
     @GET("https://rpc-api.node1.mainnet-beta.rarimo.com/rarimo/rarimo-core/identity/state/{issuerIdHex}")
-    fun getCoreStateHash(@Path("issuerIdHex") issuerIdHash : String ) : Single<StateInfoResponse>
+    fun getCoreStateHash(@Path("issuerIdHex") issuerIdHash: String): Single<StateInfoResponse>
 
     @POST("https://api.stage.freedomtool.org/integrations/proof-verification-relayer/v1/verify-proof")
-    fun sendRegistration(@Body body : SendCalldataRequest): Single<ResponseBody>
+    fun sendRegistration(@Body body: SendCalldataRequest): Single<ResponseBody>
 
     @GET
-    fun getRegistrationData(@Url url : String): Single<RegistrationData>
+    fun getRegistrationData(@Url url: String): Single<RegistrationData>
 }

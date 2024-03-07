@@ -96,9 +96,9 @@
     <string name="button_no">Нет</string>
     <string name="privacyPolicy">Политика Конфиденциальности</string>
     <string name="formation_of_the_ballot">Формирование подписи</string>
-    <string name="loading">Загрузка...</string>
+    <string name="loading">Загрузка…</string>
     <string name="vote_anonymization">Анонимизация</string>
-    <string name="loading_text">Загрузка...</string>
+    <string name="loading_text">Загрузка…</string>
     <string name="sending_your_vote">"Отправка вашего голоса"</string>
     <string name="finalizing">Завершение</string>
     <string name="processing_hint">Помните: Ваши данные хранятся только на этом устройстве. Данные никогда не раскрываются и не передаються третьим сторонам.</string>
@@ -116,7 +116,13 @@
     <string name="name1">Sam Anderson</string>
     <string name="name2">Alexander Schmidt</string>
     <string name="name3">Olga Drake</string>
-    <string name="_x_people_already_signed">%1$s человек уже подписало</string>
+    <plurals name="_x_people_already_signed">
+        <item quantity="one">%1$d человек уже подписал</item>
+        <item quantity="two">%1$d человека уже подписало</item>
+        <item quantity="few">%1$d человека уже подписало</item>
+        <item quantity="many">%1$d человек уже подписало</item>
+        <item quantity="other">%1$d человек уже подписало</item>
+    </plurals>
     <string name="view_petition">View Petition</string>
     <string name="you_and_x_other_people_already_signed">Вы и еще %1$s человек уже подписали</string>
     <string name="you_already_registered">Вы уже подписывали это</string>
@@ -124,5 +130,5 @@
     <string name="check_back_later">Зайдите позже</string>
     <string name="completed_vote">Завершено</string>
     <string name="heading">ЗАГОЛОВОК</string>
-    <string name="description">ОПИСАНИЕ</string>
+    <string name="description">ОПИСАНИЕ</string>ё
 </resources>

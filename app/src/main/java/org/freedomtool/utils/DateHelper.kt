@@ -50,7 +50,7 @@ fun calculateAge(birthdate: String): Int {
         val currentDate = Calendar.getInstance().time
 
         val calendarBirth = Calendar.getInstance()
-        calendarBirth.time = birthDate
+        calendarBirth.time = birthDate!!
 
         val calendarCurrent = Calendar.getInstance()
         calendarCurrent.time = currentDate

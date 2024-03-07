@@ -72,7 +72,6 @@ class VoteAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var data: VotingData
-        private var daysLeft: Int = 0
         private val context = binding.root.context
 
         init {

@@ -21,8 +21,8 @@ object VotingProvider {
 
             val web3j = apiProvider.web3
             val ecKeyPair = Keys.createEcKeyPair()
-            val contractAddress = "0xECB5371C727a664160c4F4360af77F0Fe4aeb7F9"
-            val proposalAddress = "0xf41ceE234219D6cc3d90A6996dC3276aD378cfCF"
+            val contractAddress = "0x1d84cFd4839fE92dAe8E1F8F777010c08a60013C"
+            val proposalAddress = "0xF5Ca28acbBC7DFFfFFf714e1F306A803037Bdad2"
             val credentials = Credentials.create(ecKeyPair)
             val gasProvider = DefaultGasProvider()
 
@@ -36,8 +36,8 @@ object VotingProvider {
             val numberOfVoting = contract.poolCountByProposer(proposalAddress).send()
             val resp = contract.listPoolsByProposer(
                 proposalAddress,
-                BigInteger.ZERO, //numberOfVoting.minus(BigInteger.ONE),
-                BigInteger.TEN
+                numberOfVoting.minus(BigInteger.ONE),
+                BigInteger.ONE
             ).send()
 
             val voteList = mutableListOf<VotingData>()
@@ -73,6 +73,7 @@ object VotingProvider {
 
                         val registrationData =
                             apiProvider.circuitBackend.getRegistrationData(url).blockingGet()
+
 
                         VotingData(
                             header = registrationData.name,
@@ -115,7 +116,7 @@ object VotingProvider {
 //                description = context.resources.getString(R.string.pool_1),
 //                dueDate = 1710453600L,
 //                isPassportRequired = true,
-//                requirements = RequirementsForVoting("UKR", 18),
+//                requirements = RequirementsForVoting("RUS", 21),
 //                options = listOf(
 //                    OptionsData(context.getString(R.string.name1), 0),
 //                    OptionsData(context.getString(R.string.name2), 1),

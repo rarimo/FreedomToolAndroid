@@ -7,7 +7,7 @@ import androidx.security.crypto.MasterKey
 
 
 object SecureSharedPrefs {
-    private const val PREFS_FILE_NAME = "irpgeojk;flp[oiogpj"
+    private const val PREFS_FILE_NAME = "irpgeojk;flp[oioguhohupj"
     private var sharedPref: SharedPreferences? = null
 
 

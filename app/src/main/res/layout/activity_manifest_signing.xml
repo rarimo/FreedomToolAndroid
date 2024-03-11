@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="ends in " />
+                tools:text="ends in " />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -82,22 +82,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/Theme.Voting.SecondaryText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="4dp"
-                    android:text="@string/heading" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/Theme.Voting.SecondaryText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{data.excerpt}"
-                    android:layout_marginBottom="16dp"
-                    tools:text="Amidst the scenic landscapes of Chile, an appalling scenario unfolds in Molina, where greyhounds are subjected to alleged racing and mistreatment, veiled under the guise of sport. Allegations pinpoint Mayor Priscilla Castillo, alongside council members Cristian Aguilera and Francisco Valdes, for inaugurating a greyhound racetrack, igniting widespread condemnation from animal rights organizations. This alleged act " />
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/Theme.Voting.SecondaryText"
@@ -109,10 +93,10 @@
                     android:text="@string/description" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/markdownText"
                     style="@style/Theme.Voting.SecondaryText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{data.description}"
                     tools:text="Amidst the scenic landscapes of Chile, an appalling scenario unfolds in Molina, where greyhounds are subjected to alleged racing and mistreatment, veiled under the guise of sport. Allegations pinpoint Mayor Priscilla Castillo, alongside council members Cristian Aguilera and Francisco Valdes, for inaugurating a greyhound racetrack, igniting widespread condemnation from animal rights organizations. This alleged act " />
 
 
@@ -134,6 +118,7 @@
             android:id="@+id/signed_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginBottom="16dp"
             tools:text="500 people already signed"
             app:layout_constraintBottom_toTopOf="@+id/sign_btn"
@@ -144,6 +129,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sign_btn"
             style="@style/Theme.Voting.Button"
+
             android:layout_width="0dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"

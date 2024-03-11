@@ -14,6 +14,32 @@ fun String.decodeHexString(): ByteArray {
         .toByteArray()
 }
 
+fun String.reversedInt(): String {
+    var result = ""
+    for (byte in this.toByteArray()) {
+        val bitsStr = byte.toString(2) // Convert byte to binary string
+        val bitsStrReversed = bitsStr.reversed().drop(1) // Reverse and remove leading "0"
+        result = bitsStrReversed + result
+    }
+    return (result.toInt(2)).toString() // Convert binary string to decimal and convert to string
+}
+fun String.reversedIntPreImage(): String {
+    val rawInt = this.toIntOrNull(10) ?: 0
+    var result = ""
+    for (byte in rawInt.toByteArr().dropLast(1)) {
+        val bitsStr = byte.toString(2)
+        val bitsStrReversed = bitsStr.reversed().drop(1)
+        result = bitsStrReversed + result
+    }
+    val intPreImageRepr = result.toIntOrNull(2) ?: 0
+    return intPreImageRepr.toByteArr().toString(Charsets.UTF_8) ?: ""
+}
+
+fun Byte.toString(radix: Int): String = Integer.toString(this.toInt(), radix)
+
+fun Int.toByteArr(): ByteArray = ByteArray(4) { (this shr (it * 8) and 0xFF).toByte() }
+
+
 fun String.toBitArray(): String {
     val stringBuilder = StringBuilder()
 

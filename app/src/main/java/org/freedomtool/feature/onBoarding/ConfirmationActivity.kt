@@ -7,9 +7,8 @@ import io.reactivex.rxkotlin.addTo
 import org.freedomtool.R
 import org.freedomtool.base.view.BaseActivity
 import org.freedomtool.databinding.ActivityConfirmingBinding
-import org.freedomtool.feature.onBoarding.logic.GenerateVerifyableCredenial
+import org.freedomtool.feature.onBoarding.logic.GenerateVerifiableCredential
 import org.freedomtool.logic.persistance.SecureSharedPrefs
-import org.freedomtool.utils.Navigator
 import org.freedomtool.utils.ObservableTransformers
 import org.freedomtool.utils.TimerManager
 import org.freedomtool.utils.nfc.model.EDocument
@@ -28,7 +27,7 @@ class ConfirmationActivity : BaseActivity() {
 
         eDocument = intent?.getParcelableExtra(E_DOCUMENT)!!
 
-        GenerateVerifyableCredenial().generateIdentity(this, this.apiProvider, eDocument)
+        GenerateVerifiableCredential().generateIdentity(this, this.apiProvider, eDocument)
             .compose(ObservableTransformers.defaultSchedulersSingle())
             .subscribe({
                 SecureSharedPrefs.saveIsPassportScanned(this)

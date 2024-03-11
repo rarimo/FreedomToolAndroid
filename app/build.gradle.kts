@@ -15,8 +15,8 @@ android {
         applicationId = "org.freedomtool"
         minSdk = 27
         targetSdk = 34
-        versionCode = 7
-        versionName = "1.1.1"
+        versionCode = 8
+        versionName = "1.1.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -82,6 +82,8 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 //0.7.40
+
+    implementation("io.noties.markwon:core:4.6.2")
 
     implementation("org.jmrtd:jmrtd:0.7.27")
     implementation("net.sf.scuba:scuba-sc-android:0.0.20")

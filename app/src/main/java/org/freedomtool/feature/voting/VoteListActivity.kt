@@ -49,20 +49,22 @@ class VoteListActivity : BaseActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = resources.getColor(R.color.primary_button_color)
 
-
-
         binding.recyclerViewVote.adapter = voteAdapter
         val manager = LinearLayoutManager(this)
         binding.recyclerViewVote.layoutManager = manager
 
         initButtons()
+
+        val vc = SecureSharedPrefs.getVC(this)
+
+        Log.e("VC", vc.toString())
     }
 
     override fun onResume() {
         if (!SecureSharedPrefs.getIsPassportScanned(this)) {
             binding.clearAllData.visibility = View.GONE
             binding.separator.visibility = View.GONE
-        }else {
+        } else {
             binding.clearAllData.visibility = View.VISIBLE
             binding.separator.visibility = View.VISIBLE
         }

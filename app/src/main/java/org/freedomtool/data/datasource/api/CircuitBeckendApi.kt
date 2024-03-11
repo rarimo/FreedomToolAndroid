@@ -18,10 +18,10 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface CircuitBackendApi {
-    @POST("https://api.stage.freedomtool.org/integrations/identity-provider-service/v1/create-identity")
+    @POST("https://kyc.freedomtool.org/integrations/identity-provider-service/v1/create-identity")
     fun createIdentity(@Body body: Payload): Single<ClaimId>
 
-    @GET("https://api.stage.freedomtool.org/integrations/identity-provider-service/v1/gist-data")
+    @GET("https://kyc.freedomtool.org/integrations/identity-provider-service/v1/gist-data")
     fun gistData(@Query("user_did") user_did: String): Single<GistData>
 
     @GET
@@ -38,13 +38,10 @@ interface CircuitBackendApi {
     ): Single<ResponseBody>
 
 
-    @GET("https://api.robotornot.mainnet-beta.rarimo.com/v1/{Did}/claims/{claim_id}/offer")
+    @GET("https://api.robotornot.rarimo.com/v1/{Did}/claims/{claim_id}/offer")
     fun claimOffer(@Path("Did") identityDid: String, @Path("claim_id") claimId: String): Single<ClaimOfferResponse>
 
-    @GET("https://rpc-api.node1.mainnet-beta.rarimo.com/rarimo/rarimo-core/identity/state/{issuerIdHex}")
-    fun getCoreStateHash(@Path("issuerIdHex") issuerIdHash: String): Single<StateInfoResponse>
-
-    @POST("https://api.stage.freedomtool.org/integrations/proof-verification-relayer/v1/verify-proof")
+    @POST("https://proofverification.freedomtool.org/integrations/proof-verification-relayer/v1/verify-proof")
     fun sendRegistration(@Body body: SendCalldataRequest): Single<ResponseBody>
 
     @GET

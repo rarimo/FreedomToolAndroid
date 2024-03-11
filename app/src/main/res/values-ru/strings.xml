@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Freedom Tool</string>
+    <string name="app_name">Vote 2024</string>
     <string name="secure_and_decentralized">Безопасно и децентрализовано</string>
     <string name="let_s_start">Начнем</string>
 
@@ -11,7 +11,7 @@
     <string name="slide_description_2">Когда вы сканируете свой паспорт, приложение обрабатывает данные непосредственно на вашем устройстве. Персональные данные не покидают ваш телефон, обеспечивая полную конфиденциальность.</string>
     <string name="slider_footer_2">Делаем вас неотслеживаемым</string>
     <string name="slider_header_4">Шаг 3</string>
-    <string name="slider_description_4">Ваш голос ананимно и безопасно сохраняется на блокчейне. Право голоса невозможно отследить и подделать, что обеспечивает полную конфиденциальность.</string>
+    <string name="slider_description_4">Ваш голос анонимно и безопасно сохраняется на блокчейне. Право голоса невозможно отследить и подделать, что обеспечивает полную конфиденциальность.</string>
     <string name="slide_footer_4">Чтобы ваш голос был услышан!</string>
     <string name="slider_header_3">Шаг 2</string>
     <string name="slider_description_3">Для участия в голосовании система генерирует специальный \'пропуск\', гарантируя полную конфиденциальность вашей личности и предотвращая множественное голосование.</string>
@@ -21,7 +21,7 @@
     <string name="title_activity_scan">ScanActivity</string>
     <!-- Строки, используемые для фрагментов для навигации -->
 
-    <string name="scan_your_passport">Отсканируйте ваш Документ\nили служебную карту</string>
+    <string name="scan_your_passport">Отсканируйте ваш документ\nили служебную карту</string>
     <string name="scan_passport_description">Данные хранятся только на устройстве</string>
     <string name="passport_camera_tip">Наведите камеру на ваш паспорт</string>
     <string name="nfc_scan_tip">Приложите обложку Документа к\nзадней части телефона</string>
@@ -35,8 +35,8 @@
     <string name="confirm">Подтвердить</string>
     <string name="polls">Опросы</string>
     <string name="please_wait">Пожалуйста, подождите…</string>
-    <string name="comfirm_proof_description">Создаем анонимизированного\nудостоверения личности</string>
-    <string name="generating_proof_tip"><b>Помните:</b> Ваши данные хранятся только на этом устройстве и никогда не раскрываются, и не передаются третьим лицам</string>
+    <string name="comfirm_proof_description">Создаем анонимизированное\nудостоверения личности</string>
+    <string name="generating_proof_tip"><b>Помните:</b> Ваши данные хранятся только на этом устройстве, никогда не раскрываются и не передаются третьим лицам</string>
     <string name="all_done">Все готово!</string>
     <string name="all_done_description">Вы будете перенаправлены\nчерез 5 секунд</string>
     <string name="active">Активные</string>

@@ -3,6 +3,7 @@ package org.freedomtool.feature.voting
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
+import io.noties.markwon.Markwon
 import org.freedomtool.R
 import org.freedomtool.base.view.BaseActivity
 import org.freedomtool.data.models.VotingData
@@ -25,6 +26,9 @@ class ManifestSigning : BaseActivity() {
             resources.getQuantityString(R.plurals._x_people_already_signed, votingData.votingCount.toInt(), votingData.votingCount.toInt())
         initButtons()
         isActive()
+
+        val markdown = Markwon.create(this)
+        markdown.setMarkdown(binding.markdownText, votingData.description)
     }
 
     private fun isActive() {

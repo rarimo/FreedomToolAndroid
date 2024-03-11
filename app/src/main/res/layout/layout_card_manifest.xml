@@ -18,6 +18,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -53,7 +54,7 @@
                     tools:text="@string/pool_1_header" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/materialTextView13"
+                    android:id="@+id/excertText"
                     style="@style/Theme.Voting.SecondaryText"
                     android:layout_width="0dp"
                     android:maxLines="3"
@@ -62,13 +63,13 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="24dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/materialTextView12"
-                    android:text="@{data.excerpt}"
                     tools:text="@string/pool_1" />
 
                 <View
-                    android:id="@+id/view2"
+                    android:id="@+id/separator"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_marginStart="16dp"
@@ -77,10 +78,10 @@
                     android:background="#F2F2F2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/materialTextView13" />
+                    app:layout_constraintTop_toBottomOf="@+id/excertText" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/appCompatImageView3"
+                    android:id="@+id/calendarImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -89,18 +90,18 @@
                     android:src="@drawable/ic_calendar"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view2" />
+                    app:layout_constraintTop_toBottomOf="@+id/separator" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/materialTextView15"
+                    android:id="@+id/timeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/appCompatImageView3"
-                    app:layout_constraintTop_toBottomOf="@+id/view2"
+                    app:layout_constraintStart_toEndOf="@+id/calendarImage"
+                    app:layout_constraintTop_toBottomOf="@+id/separator"
                     android:text="@{date}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

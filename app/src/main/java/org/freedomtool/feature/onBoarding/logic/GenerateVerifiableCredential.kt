@@ -27,6 +27,7 @@ import org.freedomtool.utils.ZKPTools
 import org.freedomtool.utils.ZKPUseCase
 import org.freedomtool.utils.addCharAtIndex
 import org.freedomtool.utils.decodeHexString
+import org.freedomtool.utils.getIssuingAuthorityCode
 import org.freedomtool.utils.nfc.SecurityUtil
 import org.freedomtool.utils.nfc.model.EDocument
 import org.freedomtool.utils.toBitArray
@@ -36,7 +37,7 @@ import org.web3j.tx.gas.DefaultGasProvider
 import java.time.LocalDate
 
 
-class GenerateVerifyableCredenial {
+class GenerateVerifiableCredential {
     @OptIn(ExperimentalStdlibApi::class)
     fun generateIdentity(
         context: Context,
@@ -284,15 +285,12 @@ class GenerateVerifyableCredenial {
 
                 Log.i("HERE", "HELP ME")
                 val callData: ByteArray = identity.register(
-                    "https://rpc-api.node1.mainnet-beta.rarimo.com",
+                    "https://rpc-api.mainnet.rarimo.com",
                     issuerDid,
                     votingAddress,
                     schemaJson,
-                    "4903594"//getIssuingAuthorityCode(issuerAuthority!!)
+                    getIssuingAuthorityCode(issuerAuthority!!)
                 )
-
-                Log.i("HERE", "HELP ME pls")
-
                 val calldataRequest =
                     SendCalldataRequest(SendCalldataRequestData("0x" + callData.toHexString()))
 
@@ -323,12 +321,11 @@ class GenerateVerifyableCredenial {
     ): Boolean {
         try {
             val res = identity.isFinalized(
-                "https://rpc-api.node1.mainnet-beta.rarimo.com",
+                "https://rpc-api.mainnet.rarimo.com",
                 issuerDid,
                 identityData.timeStamp.toLong(),
             )
-            Log.i("adawdawf", identityData.timeStamp)
-            Log.i("ISFINITE", res.toString())
+
             return res
         } catch (e: Exception) {
             throw e

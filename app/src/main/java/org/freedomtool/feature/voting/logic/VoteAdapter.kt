@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import io.noties.markwon.Markwon
 import org.freedomtool.data.models.VotingData
 import org.freedomtool.databinding.LayoutCardManifestBinding
 import org.freedomtool.databinding.LayoutCardVotingBinding
@@ -106,9 +107,6 @@ class VoteAdapter(
         private lateinit var data: VotingData
         private val context = binding.root.context
 
-        init {
-            binding.root.setOnClickListener(::onClick)
-        }
 
         private fun onClick(view: View) {
             clickHelper.canInvokeClick(::onClickAllowed)
@@ -125,8 +123,30 @@ class VoteAdapter(
         fun bind(voteData: VotingData) {
             data = voteData
             binding.data = voteData
+
+
+            if(data.excerpt.isNullOrEmpty()){
+                val markdown = Markwon.create(context)
+                markdown.setMarkdown(binding.excertText, data.description)
+            }else {
+                binding.excertText.text = data.excerpt
+            }
+
+            binding.cardView.setOnClickListener(::onClick)
+            binding.excertText.setOnClickListener(::onClick)
+
+            if(!data.isActive){
+                binding.separator.visibility = View.INVISIBLE
+                binding.calendarImage.visibility = View.INVISIBLE
+                binding.timeText.visibility = View.INVISIBLE
+                return
+            }
+
+
+
             val time = resolveDays(context, data.dueDate!!)
             binding.date = time
+
         }
     }
 

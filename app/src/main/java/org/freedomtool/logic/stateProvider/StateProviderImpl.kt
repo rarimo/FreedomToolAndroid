@@ -42,24 +42,27 @@ class StateProviderImpl(val context: Context, val apiProvider: ApiProvider) : St
 
         Log.i("Fetching", "url: $url\nmethod: $method\nbody: ${body?.decodeToString()}")
 
-        val headers: Map<String, String> = if (headerValue.isNullOrEmpty() || headerKey.isNullOrEmpty()) {
-            mapOf("foo" to "bar")
-        }else {
-            mapOf(headerKey to headerValue)
-        }
-
-            val response: ResponseBody = if (method!! == "POST") {
-                apiProvider.circuitBackend
-                    .fetchForProofPost(url!!, body!!.decodeToString(), headers).blockingGet()
-            } else if (method == "GET") {
-                apiProvider.circuitBackend
-                    .fetchForProofGet(url!!, headers).blockingGet()
+        val headers: Map<String, String> =
+            if (headerValue.isNullOrEmpty() || headerKey.isNullOrEmpty()) {
+                mapOf("foo" to "bar")
             } else {
-                throw IllegalStateException("No method for fetch")
+                mapOf(headerKey to headerValue)
             }
 
+        val response: ResponseBody = if (method!! == "POST") {
+            apiProvider.circuitBackend
+                .fetchForProofPost(url!!, body!!.decodeToString(), headers).blockingGet()
+        } else if (method == "GET") {
+            apiProvider.circuitBackend
+                .fetchForProofGet(url!!, headers).blockingGet()
+        } else {
+            throw IllegalStateException("No method for fetch")
+        }
 
-            return response.string().toByteArray().clone()
+        val resp = response.string()
+        Log.e("Fetching", resp)
+
+        return resp.toByteArray().clone()
 
     }
 

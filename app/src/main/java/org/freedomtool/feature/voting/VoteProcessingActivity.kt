@@ -12,7 +12,7 @@ import org.freedomtool.R
 import org.freedomtool.base.view.BaseActivity
 import org.freedomtool.data.models.VotingData
 import org.freedomtool.databinding.ActivityVoteProcessingBinding
-import org.freedomtool.feature.onBoarding.logic.GenerateVerifyableCredenial
+import org.freedomtool.feature.onBoarding.logic.GenerateVerifiableCredential
 import org.freedomtool.logic.persistance.SecureSharedPrefs
 import org.freedomtool.utils.Navigator
 import org.freedomtool.utils.ObservableTransformers
@@ -38,7 +38,7 @@ class VoteProcessingActivity : BaseActivity() {
 
     private fun changeStatusView() {
 
-        GenerateVerifyableCredenial().register(this, apiProvider, votingData.contractAddress!!)
+        GenerateVerifiableCredential().register(this, apiProvider, votingData.contractAddress!!)
             .compose(ObservableTransformers.defaultSchedulers())
             .subscribe({
                 updateLoading(statusList[it])

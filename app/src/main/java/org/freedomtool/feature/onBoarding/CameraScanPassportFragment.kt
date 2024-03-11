@@ -83,7 +83,7 @@ class CameraScanPassportFragment : BaseFragment(), ResultListener {
         clickHelper.setOnClickListener {
             when(it.id){
                 binding.privacyText.id -> {
-                    Navigator.from(this).openBrowser("https://freedomtool.org/privacy-policy.html")
+                    Navigator.from(this).openBrowser("https://russia2024.net/privacy-policy.html")
                 }
             }
         }

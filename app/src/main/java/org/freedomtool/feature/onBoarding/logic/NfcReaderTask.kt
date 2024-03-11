@@ -19,23 +19,14 @@ import org.freedomtool.utils.nfc.model.Image
 import org.freedomtool.utils.nfc.model.PersonDetails
 import org.jmrtd.BACKeySpec
 import org.jmrtd.PassportService
-import org.jmrtd.Util
 import org.jmrtd.lds.CardSecurityFile
-import org.jmrtd.lds.ChipAuthenticationInfo
-import org.jmrtd.lds.ChipAuthenticationPublicKeyInfo
 import org.jmrtd.lds.PACEInfo
 import org.jmrtd.lds.SODFile
-import org.jmrtd.lds.icao.DG14File
-import org.jmrtd.lds.icao.DG15File
 import org.jmrtd.lds.icao.DG1File
 import org.jmrtd.lds.icao.DG2File
-import org.jmrtd.lds.icao.DG5File
-import org.jmrtd.lds.icao.DG7File
 import org.jmrtd.lds.iso19794.FaceImageInfo
-import org.jmrtd.protocol.EACCAResult
 import java.io.InputStream
 import java.security.MessageDigest
-import java.security.SecureRandom
 import java.security.Security
 import java.util.Arrays
 
@@ -114,8 +105,6 @@ class NfcReaderTask(
             }
 
             var hashesMatched = true
-            var activeAuth = true
-            var chipAuth = true
             publishProgress("Reading sod file")
             val sodIn1 = service.getInputStream(PassportService.EF_SOD)
 
@@ -135,7 +124,7 @@ class NfcReaderTask(
                 Log.d("", "Data group: $key hash value: ${StringUtil.byteArrayToHex(value)}")
             }
 
-            var digestAlgorithm = sodFile.digestAlgorithm
+            val digestAlgorithm = sodFile.digestAlgorithm
             Log.d(
                 "",
                 "Digest Algorithm: $digestAlgorithm"
@@ -178,8 +167,6 @@ class NfcReaderTask(
             personDetails.serialNumber = mrzInfo.documentNumber;
             personDetails.nationality = mrzInfo.nationality;
             personDetails.issuerAuthority = mrzInfo.issuingState;
-
-            //TODO: don't save this
 
             eDocument.dg1 = encodedDg1File
 
@@ -238,208 +225,11 @@ class NfcReaderTask(
                 personDetails.faceImage = image.bitmapImage
                 personDetails.faceImageBase64 = image.base64Image
             }
-            publishProgress("Reading Portrait Picture")
 
-            // -- Portrait Picture -- //
-            try {
-                val dg5In = service.getInputStream(PassportService.EF_DG5)
-                val dg5File = DG5File(dg5In)
-
-                val dg5StoredHash = sodFile.dataGroupHashes[5]
-                val dg5ComputedHash = digest.digest(dg5File.encoded)
-                Log.d(
-                    "",
-                    "DG5 Stored Hash: " + StringUtil.byteArrayToHex(dg5StoredHash!!)
-                )
-                Log.d(
-                    "",
-                    "DG5 Computed Hash: " + StringUtil.byteArrayToHex(dg5ComputedHash)
-                )
-                if (Arrays.equals(dg5StoredHash, dg5ComputedHash)) {
-                    Log.d(
-                        "",
-                        "DG5 Hashes are matched"
-                    )
-                } else {
-                    hashesMatched = false
-                }
-                val displayedImageInfos = dg5File.images
-                if (!displayedImageInfos.isEmpty()) {
-                    val displayedImageInfo = displayedImageInfos.iterator().next()
-                    val image: Image = ImageUtil.getImage(context, displayedImageInfo)
-                    personDetails.portraitImage = image.bitmapImage
-                    personDetails.portraitImageBase64 = image.base64Image
-                }
-            } catch (e: Exception) {
-                Log.w("", e)
-            }
-            publishProgress("Reading Signature")
-
-            // -- Signature (if exist) -- //
-            try {
-                val dg7In = service.getInputStream(PassportService.EF_DG7)
-                val dg7File = DG7File(dg7In)
-                val dg7StoredHash = sodFile.dataGroupHashes[7]
-                val dg7ComputedHash = digest.digest(dg7File.encoded)
-                Log.d(
-                    "",
-                    "DG7 Stored Hash: " + StringUtil.byteArrayToHex(dg7StoredHash!!)
-                )
-                Log.d(
-                    "",
-                    "DG7 Computed Hash: " + StringUtil.byteArrayToHex(dg7ComputedHash)
-                )
-                if (Arrays.equals(dg7StoredHash, dg7ComputedHash)) {
-                    Log.d(
-                        "",
-                        "DG7 Hashes are matched"
-                    )
-                } else {
-                    hashesMatched = false
-                }
-                val signatureImageInfos = dg7File.images
-                if (!signatureImageInfos.isEmpty()) {
-                    val displayedImageInfo = signatureImageInfos.iterator().next()
-                    val image: Image = ImageUtil.getImage(context, displayedImageInfo)
-                    personDetails.portraitImage = image.bitmapImage
-                    personDetails.portraitImageBase64 = image.base64Image
-                }
-            } catch (e: Exception) {
-                Log.w("", e)
-            }
-            publishProgress("Reading Security Options")
-
-            // -- Security Options (if exist) -- //
-            try {
-                val dg14In = service.getInputStream(PassportService.EF_DG14)
-                val dg14File = DG14File(dg14In)
-                val dg14StoredHash = sodFile.dataGroupHashes[14]
-                val dg14ComputedHash = digest.digest(dg14File.encoded)
-                Log.d(
-                    "",
-                    "DG14 Stored Hash: " + StringUtil.byteArrayToHex(dg14StoredHash!!)
-                )
-                Log.d(
-                    "",
-                    "DG14 Computed Hash: " + StringUtil.byteArrayToHex(dg14ComputedHash)
-                )
-                if (Arrays.equals(dg14StoredHash, dg14ComputedHash)) {
-                    Log.d(
-                        "",
-                        "DG14 Hashes are matched"
-                    )
-                } else {
-                    hashesMatched = false
-                }
-
-                // Chip Authentication
-                val eaccaResults: MutableList<EACCAResult> = ArrayList()
-                val chipAuthenticationPublicKeyInfos: MutableList<ChipAuthenticationPublicKeyInfo> =
-                    ArrayList()
-                var chipAuthenticationInfo: ChipAuthenticationInfo? = null
-                if (!dg14File.securityInfos.isEmpty()) {
-                    for (securityInfo in dg14File.securityInfos) {
-                        Log.d(
-                            "",
-                            "DG14 Security Info Identifier: " + securityInfo.objectIdentifier
-                        )
-                        if (securityInfo is ChipAuthenticationInfo) {
-                            chipAuthenticationInfo = securityInfo
-                        } else if (securityInfo is ChipAuthenticationPublicKeyInfo) {
-                            chipAuthenticationPublicKeyInfos.add(securityInfo)
-                        }
-                    }
-                    for (chipAuthenticationPublicKeyInfo in chipAuthenticationPublicKeyInfos) {
-                        if (chipAuthenticationInfo != null) {
-                            val eaccaResult = service.doEACCA(
-                                chipAuthenticationInfo.keyId,
-                                chipAuthenticationInfo.objectIdentifier,
-                                chipAuthenticationInfo.protocolOIDString,
-                                chipAuthenticationPublicKeyInfo.subjectPublicKey
-                            )
-                            eaccaResults.add(eaccaResult)
-                        } else {
-                            Log.d(
-                                "",
-                                "Chip Authentication failed for key: $chipAuthenticationPublicKeyInfo"
-                            )
-                        }
-                    }
-                    if (eaccaResults.size == 0) chipAuth = false
-                }
-
-                /*
-                    if (paceSucceeded) {
-                        service.doEACTA(caReference, terminalCerts, privateKey, null, eaccaResults.get(0), mrzInfo.getDocumentNumber())
-                    } else {
-                        service.doEACTA(caReference, terminalCerts, privateKey, null, eaccaResults.get(0), paceSucceeded)
-                    }
-                */
-            } catch (e: Exception) {
-                Log.w("", e)
-            }
-            publishProgress("Reading Document (Active Authentication) Public Key")
-
-            // -- Document (Active Authentication) Public Key -- //
-            try {
-                val dg15In = service.getInputStream(PassportService.EF_DG15)
-                val dg15File = DG15File(dg15In)
-                val dg15StoredHash = sodFile.dataGroupHashes[15]
-                val dg15ComputedHash = digest.digest(dg15File.encoded)
-                Log.d(
-                    "",
-                    "DG15 Stored Hash: " + StringUtil.byteArrayToHex(dg15StoredHash!!)
-                )
-                Log.d(
-                    "",
-                    "DG15 Computed Hash: " + StringUtil.byteArrayToHex(dg15ComputedHash)
-                )
-                if (Arrays.equals(dg15StoredHash, dg15ComputedHash)) {
-                    Log.d(
-                        "",
-                        "DG15 Hashes are matched"
-                    )
-                } else {
-                    hashesMatched = false
-                }
-                val publicKey = dg15File.publicKey
-                val publicKeyAlgorithm = publicKey.algorithm
-
-                // Active Authentication
-                if ("EC" == publicKeyAlgorithm || "ECDSA" == publicKeyAlgorithm) {
-                    digestAlgorithm =
-                        Util.inferDigestAlgorithmFromSignatureAlgorithm("SHA1WithRSA/ISO9796-2")
-                }
-                val sr = SecureRandom()
-                val challenge = ByteArray(8)
-                sr.nextBytes(challenge)
-                val result = service.doAA(
-                    dg15File.publicKey,
-                    sodFile.digestAlgorithm,
-                    sodFile.signerInfoDigestAlgorithm,
-                    challenge
-                )
-
-                activeAuth = SecurityUtil.verifyAA(
-                    dg15File.publicKey,
-                    digestAlgorithm,
-                    digestEncryptionAlgorithm,
-                    challenge,
-                    result.response
-                )
-                Log.d(
-                    "",
-                    StringUtil.byteArrayToHex(result.response)
-                )
-            } catch (e: Exception) {
-                Log.w("", e)
-            }
             eDocument.docType = docType;
             eDocument.personDetails = personDetails;
             eDocument.additionalPersonDetails = additionalPersonDetails;
             eDocument.isPassiveAuth = hashesMatched;
-            eDocument.isActiveAuth = activeAuth;
-            eDocument.isChipAuth = chipAuth;
 
 
         } catch (e: Exception) {

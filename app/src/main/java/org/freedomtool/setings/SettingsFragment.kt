@@ -92,7 +92,6 @@ class SettingsFragment : BaseBottomSheetDialog() {
             }
 
             requireActivity().recreate()
-            dismiss()
         }
     }
 

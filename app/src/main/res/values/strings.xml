@@ -142,5 +142,6 @@
     <string name="logout">Logout</string>
     <string name="biometric_prompt_title">Scan your fingerprint</string>
     <string name="biometric_prompt_description">Please place your finger on the fingerprint scanner to authenticate\n</string>
+    <string name="repeat_passcode">Repeat Passcode</string>
 
 </resources>

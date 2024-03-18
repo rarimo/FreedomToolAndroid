@@ -66,6 +66,7 @@ class CreateCredentialActivity : BaseActivity() {
                         instanceOfBiometricPrompt().authenticate(BiometricHelper().getPromptInfo(this))
                     }
                     if (state == State.PIN_CODE) {
+                        finish()
                         Navigator.from(this).openCreatePinCode()
                     }
 

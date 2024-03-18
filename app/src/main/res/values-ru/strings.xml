@@ -132,7 +132,7 @@
     <string name="heading">ЗАГОЛОВОК</string>
     <string name="description">ОПИСАНИЕ</string>
     <string name="enter_passcode">Введите пин код</string>
-    <string name="passcode_description">Не забудьте код, иначе\nвыне сможете его восстановить.</string>
+    <string name="passcode_description">Не забудьте код, иначе\nвы не сможете его восстановить.</string>
     <string name="too_many_attempts">Слишком много попыток. Повторите позже</string>
     <string name="enter">Ввести</string>
     <string name="maybe_later">Позже</string>
@@ -145,4 +145,5 @@
     <string name="logout">Выйти</string>
     <string name="biometric_prompt_title">Просканируйте ваш отпечаток</string>
     <string name="biometric_prompt_description">Пожалуйста, приложите палец к сканеру отпечатков пальцев для аутентификации</string>
+    <string name="repeat_passcode">Повторите Пинкод</string>
 </resources>

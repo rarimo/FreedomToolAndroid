@@ -135,7 +135,7 @@ class CreatePinCodeActivity : BaseActivity() {
             if (pinCode.length >= dotArray.size) {
                 isChecking = true
                 cleanDots()
-                binding.header.text = "Repeat Passcode"
+                binding.header.text = getString(R.string.repeat_passcode)
             }
         if (isChecking) {
             if (checkPinCode.length >= dotArray.size) {
@@ -155,13 +155,13 @@ class CreatePinCodeActivity : BaseActivity() {
         MaterialAlertDialogBuilder(this).setTitle("PassCode don't match")
             .setMessage("Please try again").setPositiveButton("") { _, _ ->
                 isChecking = false
-                binding.header.text = "Enter Passcode"
+                binding.header.text = getString(R.string.enter_passcode)
                 pinCode = ""
                 checkPinCode = ""
                 cleanDots()
             }.setOnDismissListener {
                 isChecking = false
-                binding.header.text = "Enter Passcode"
+                binding.header.text = getString(R.string.enter_passcode)
                 pinCode = ""
                 checkPinCode = ""
                 cleanDots()

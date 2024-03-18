@@ -38,7 +38,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView11"
+            android:id="@+id/title"
             style="@style/Theme.Voting.PrimaryText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,32 +49,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/changeLanguage"
-            style="@style/Theme.Voting.TextButton.ChangeLanguage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:text="@string/localization_name"
-            app:layout_constraintBottom_toBottomOf="@+id/materialTextView11"
-            app:layout_constraintEnd_toStartOf="@+id/clear_all_data"
-            app:layout_constraintTop_toTopOf="@+id/materialTextView11"
-             />
-
-        <View
-            android:id="@+id/separator"
-            android:layout_width="1dp"
-            android:layout_height="20dp"
-            android:visibility="gone"
-            android:background="#7AE191"
-            app:layout_constraintBottom_toBottomOf="@+id/changeLanguage"
-            app:layout_constraintEnd_toStartOf="@+id/clear_all_data"
-            app:layout_constraintStart_toEndOf="@+id/changeLanguage"
-            app:layout_constraintTop_toTopOf="@+id/changeLanguage" />
-
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/clear_all_data"
+            android:id="@+id/settings"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginEnd="24dp"
@@ -83,11 +59,10 @@
             android:scaleType="fitCenter"
             android:scaleX="2"
             android:scaleY="2"
-            android:src="@drawable/ic_exit"
-            app:layout_constraintBottom_toBottomOf="@+id/changeLanguage"
+            android:src="@drawable/ic_settings"
+            app:layout_constraintBottom_toBottomOf="@+id/title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/changeLanguage"
-            app:layout_constraintVertical_bias="0.38" />
+            app:layout_constraintTop_toTopOf="@+id/title" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -98,7 +73,7 @@
             android:layout_marginEnd="26dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView11">
+            app:layout_constraintTop_toBottomOf="@+id/title">
 
             <com.addisonelliott.segmentedbutton.SegmentedButtonGroup
                 android:id="@+id/buttonGroup_roundSelectedButton"

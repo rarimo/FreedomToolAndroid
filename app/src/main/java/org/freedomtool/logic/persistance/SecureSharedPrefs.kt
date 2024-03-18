@@ -15,18 +15,17 @@ object SecureSharedPrefs {
         "accessToken" to "access_token",
         "DATE_OF_BIRTH" to "DATE_OF_BIRTH",
         "ISSUE_AUTHORITY" to "ISSUE_AUTHORITY",
-        "CERTIFICATE_PEM" to "CERTIFICATE_PEM",
         "FIRST_LAUNCHED" to "FIRST_LAUNCHED",
-        "PASSPORT_VERIFICATION_PROOF" to "PASSPORT_VERIFICATION_PROOF",
         "VOTE_RESULT" to "VOTE_RESULT",
         "LOCALE" to "LOCALE",
-        "PRIVATE_KEY" to "PRIVATE_KEY",
         "ISSUER_DID" to "ISSUER_DID",
         "IDENTITY" to "IDENTITY",
         "SAVED_VOTING" to "SAVED_VOTING",
         "FINALIZATION_VOTE" to "FINALIZATION_VOTE",
         "VC" to "VC",
-        "CLAIM_ID" to "CLAIM_ID"
+        "CLAIM_ID" to "CLAIM_ID",
+        "PIN_CODE" to "PIN_CODE",
+        "IS_BIOMETRIC_ENABLED" to "IS_BIOMETRIC_ENABLED"
     )
 
     private fun getSharedPreferences(context: Context): SharedPreferences {
@@ -59,9 +58,10 @@ object SecureSharedPrefs {
         editor.apply()
     }
 
-    private fun getFinalizationVote(context: Context) : Set<String> {
+    private fun getFinalizationVote(context: Context): Set<String> {
         val sharedPreferences = getSharedPreferences(context)
-        return sharedPreferences.getStringSet(tags["FINALIZATION_VOTE"], HashSet<String>()).orEmpty()
+        return sharedPreferences.getStringSet(tags["FINALIZATION_VOTE"], HashSet<String>())
+            .orEmpty()
     }
 
     fun addFinalizationVote(context: Context, address: String) {
@@ -81,7 +81,7 @@ object SecureSharedPrefs {
         return set.contains(address)
     }
 
-    private fun getVoted(context: Context) : Set<String> {
+    private fun getVoted(context: Context): Set<String> {
         val sharedPreferences = getSharedPreferences(context)
         return sharedPreferences.getStringSet(tags["SAVED_VOTING"], HashSet<String>()).orEmpty()
     }
@@ -111,9 +111,44 @@ object SecureSharedPrefs {
                 continue
             if (entry.value == tags["LOCALE"])
                 continue
+            if(entry.value == tags["PIN_CODE"])
+                continue
             editor.remove(entry.value)
         }
         editor.apply()
+    }
+
+    fun savePinCode(context: Context, pinCode: String) {
+        val sharedPreferences = getSharedPreferences(context)
+        val editor = sharedPreferences.edit()
+        editor.putString(tags["PIN_CODE"], pinCode)
+        editor.apply()
+    }
+
+    fun isPinCodeExist(context: Context): Boolean {
+        val sharedPreferences = getSharedPreferences(context)
+        val savedPinCode = sharedPreferences.getString(tags["PIN_CODE"], null)
+
+        return savedPinCode != null
+    }
+
+    fun checkPinCode(context: Context, pinCode: String): Boolean {
+        val sharedPreferences = getSharedPreferences(context)
+        val savedPinCode = sharedPreferences.getString(tags["PIN_CODE"], "")
+
+        return savedPinCode == pinCode
+    }
+
+    fun saveIsBiometricSaved(context: Context, isBiometricEnabled: Boolean) {
+        val sharedPreferences = getSharedPreferences(context)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(tags["IS_BIOMETRIC_ENABLED"], isBiometricEnabled)
+        editor.apply()
+    }
+
+    fun getIsBiometricEnabled(context: Context): Boolean {
+        val sharedPreferences = getSharedPreferences(context)
+        return sharedPreferences.getBoolean(tags["IS_BIOMETRIC_ENABLED"], false)
     }
 
     fun saveLocale(context: Context, language: String) {
@@ -143,13 +178,6 @@ object SecureSharedPrefs {
         editor.apply()
     }
 
-    fun savePassportVerificationProof(context: Context, proof: String) {
-        val sharedPreferences = getSharedPreferences(context)
-        val editor = sharedPreferences.edit()
-        editor.putString(tags["PASSPORT_VERIFICATION_PROOF"], proof)
-        editor.apply()
-    }
-
     fun saveIdentityData(context: Context, json: String) {
         val sharedPreferences = getSharedPreferences(context)
         val editor = sharedPreferences.edit()
@@ -160,11 +188,6 @@ object SecureSharedPrefs {
     fun getIdentityData(context: Context): String? {
         val sharedPreferences = getSharedPreferences(context)
         return sharedPreferences.getString(tags["IDENTITY"], "")
-    }
-
-    fun getPassportVerificationProof(context: Context): String? {
-        val sharedPreferences = getSharedPreferences(context)
-        return sharedPreferences.getString(tags["PASSPORT_VERIFICATION_PROOF"], "")
     }
 
     fun isFirstLaunch(context: Context): Boolean {

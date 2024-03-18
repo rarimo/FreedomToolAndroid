@@ -11,6 +11,7 @@ import org.freedomtool.R
 import org.freedomtool.base.view.BaseActivity
 import org.freedomtool.databinding.ActivityIntroBinding
 import org.freedomtool.feature.intro.logic.ViewPagerAdapter
+import org.freedomtool.logic.persistance.SecureSharedPrefs
 import org.freedomtool.utils.Navigator
 import pt.tornelas.segmentedprogressbar.SegmentedProgressBarListener
 
@@ -88,7 +89,8 @@ class IntroActivity : BaseActivity() {
     }
 
     private fun navigateToNext() {
-        Navigator.from(this).openInfo()
+        Navigator.from(this).openCreateCredential()
+        finish()
     }
 
 

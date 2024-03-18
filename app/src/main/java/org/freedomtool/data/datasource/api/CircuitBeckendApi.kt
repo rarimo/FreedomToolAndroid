@@ -2,13 +2,13 @@ package org.freedomtool.data.datasource.api
 
 import io.reactivex.Single
 import okhttp3.ResponseBody
+import org.freedomtool.base.BaseConfig
 import org.freedomtool.data.models.ClaimId
 import org.freedomtool.data.models.ClaimOfferResponse
 import org.freedomtool.data.models.GistData
 import org.freedomtool.data.models.Payload
 import org.freedomtool.data.models.RegistrationData
 import org.freedomtool.data.models.SendCalldataRequest
-import org.freedomtool.data.models.StateInfoResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
@@ -18,10 +18,10 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface CircuitBackendApi {
-    @POST("https://kyc.freedomtool.org/integrations/identity-provider-service/v1/create-identity")
+    @POST(BaseConfig.CREATE_IDENTITY_LINK)
     fun createIdentity(@Body body: Payload): Single<ClaimId>
 
-    @GET("https://kyc.freedomtool.org/integrations/identity-provider-service/v1/gist-data")
+    @GET(BaseConfig.GIST_DATA_LINK)
     fun gistData(@Query("user_did") user_did: String): Single<GistData>
 
     @GET
@@ -38,10 +38,13 @@ interface CircuitBackendApi {
     ): Single<ResponseBody>
 
 
-    @GET("https://api.robotornot.rarimo.com/v1/{Did}/claims/{claim_id}/offer")
-    fun claimOffer(@Path("Did") identityDid: String, @Path("claim_id") claimId: String): Single<ClaimOfferResponse>
+    @GET(BaseConfig.CLAIM_OFFER_LINK)
+    fun claimOffer(
+        @Path("Did") identityDid: String,
+        @Path("claim_id") claimId: String
+    ): Single<ClaimOfferResponse>
 
-    @POST("https://proofverification.freedomtool.org/integrations/proof-verification-relayer/v1/verify-proof")
+    @POST(BaseConfig.SEND_REGISTRATION_LINK)
     fun sendRegistration(@Body body: SendCalldataRequest): Single<ResponseBody>
 
     @GET

@@ -3,6 +3,7 @@ package org.freedomtool.data.datasource.api
 import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.Single
+import org.freedomtool.base.BaseConfig
 import org.freedomtool.contracts.RegistrationVerifier
 import org.freedomtool.contracts.SRegistration
 import org.freedomtool.data.models.RequirementsForVoting
@@ -21,21 +22,20 @@ object VotingProvider {
 
             val web3j = apiProvider.web3
             val ecKeyPair = Keys.createEcKeyPair()
-            val contractAddress = "0x1d84cFd4839fE92dAe8E1F8F777010c08a60013C"
-            val proposalAddress = "0xF5Ca28acbBC7DFFfFFf714e1F306A803037Bdad2"
+
             val credentials = Credentials.create(ecKeyPair)
             val gasProvider = DefaultGasProvider()
 
             val contract = org.freedomtool.contracts.RegistrationVoting.load(
-                contractAddress,
+                BaseConfig.REGISTRATION_ADDRESS,
                 web3j,
                 credentials,
                 gasProvider
             )
 
-            val numberOfVoting = contract.poolCountByProposer(proposalAddress).send()
+            val numberOfVoting = contract.poolCountByProposer(BaseConfig.PROPOSAL_ADDRESS).send()
             val resp = contract.listPoolsByProposer(
-                proposalAddress,
+                BaseConfig.PROPOSAL_ADDRESS,
                 numberOfVoting.minus(BigInteger.ONE),
                 BigInteger.ONE
             ).send()

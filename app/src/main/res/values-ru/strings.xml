@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Vote 2024</string>
+    <string name="app_name">Freedom tool</string>
     <string name="secure_and_decentralized">Безопасно и децентрализовано</string>
     <string name="let_s_start">Начнем</string>
 
@@ -130,5 +130,19 @@
     <string name="check_back_later">Зайдите позже</string>
     <string name="completed_vote">Завершено</string>
     <string name="heading">ЗАГОЛОВОК</string>
-    <string name="description">ОПИСАНИЕ</string>ё
+    <string name="description">ОПИСАНИЕ</string>
+    <string name="enter_passcode">Введите пин код</string>
+    <string name="passcode_description">Не забудьте код, иначе\nвыне сможете его восстановить.</string>
+    <string name="too_many_attempts">Слишком много попыток. Повторите позже</string>
+    <string name="enter">Ввести</string>
+    <string name="maybe_later">Позже</string>
+    <string name="enable">Включить</string>
+    <string name="enable_nfingerprint">Включить\nБиометрию</string>
+    <string name="set_up_a_passcode">Установите\nпароль</string>
+    <string name="settings">Настройки</string>
+    <string name="language">Язык</string>
+    <string name="fingerprint">Отпечаток</string>
+    <string name="logout">Выйти</string>
+    <string name="biometric_prompt_title">Просканируйте ваш отпечаток</string>
+    <string name="biometric_prompt_description">Пожалуйста, приложите палец к сканеру отпечатков пальцев для аутентификации</string>
 </resources>

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        style="@style/Widget.Material3.BottomSheet"
+        android:elevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <FrameLayout
+            android:id="@+id/standardBottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_anchor="@+id/standardBottomSheet"
+                app:layout_anchorGravity="center"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/materialTextView22"
+                        style="@style/Theme.Voting.PrimaryText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/settings"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/close_btn"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_close"
+                        app:layout_constraintBottom_toBottomOf="@+id/materialTextView22"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/materialTextView22" />
+
+                    <View
+                        android:id="@+id/view7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:background="#F2F2F2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/materialTextView22" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/appCompatImageView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:src="@drawable/ic_language"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/materialTextView23"
+                        style="@style/Theme.Voting.PrimaryText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/language"
+                        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView14"
+                        app:layout_constraintStart_toEndOf="@+id/appCompatImageView14"
+                        app:layout_constraintTop_toTopOf="@+id/appCompatImageView14" />
+
+
+                    <com.addisonelliott.segmentedbutton.SegmentedButtonGroup
+                        android:id="@+id/buttonGroup_roundSelectedButton"
+                        android:layout_width="122dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="#dbd9d9"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:position="0"
+                        app:radius="30dp"
+                        app:ripple="false"
+                        app:selectedBackground="@color/white"
+                        app:selectedBorderColor="#dbd9d9"
+                        app:selectedBorderWidth="3dp"
+                        app:selectedButtonRadius="30dp"
+                        app:selectionAnimationInterpolator="none">
+
+                        <com.addisonelliott.segmentedbutton.SegmentedButton
+                            style="@style/Theme.Voting.PrimaryText"
+                            android:layout_width="0dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="5dp"
+                            app:text="RUS"
+                            app:textColor="@color/black"
+                            app:textSize="12sp" />
+
+
+                        <com.addisonelliott.segmentedbutton.SegmentedButton
+                            style="@style/Theme.Voting.PrimaryText"
+                            android:layout_width="0dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="5dp"
+                            app:text="ENG"
+                            app:textColor="@color/black"
+                            app:textSize="12sp" />
+
+                    </com.addisonelliott.segmentedbutton.SegmentedButtonGroup>
+
+
+                    <View
+                        android:id="@+id/view8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:background="#F2F2F2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fingerprint_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/appCompatImageView15"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:src="@drawable/ic_fingerprint"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/materialTextView24"
+                        style="@style/Theme.Voting.PrimaryText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/fingerprint"
+                        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView15"
+                        app:layout_constraintStart_toEndOf="@+id/appCompatImageView15"
+                        app:layout_constraintTop_toTopOf="@+id/appCompatImageView15" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchFingerprint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:background="#F2F2F2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/appCompatImageView16"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:src="@drawable/ic_exit"
+                        android:tint="#DD1414"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/materialTextView25"
+                        style="@style/Theme.Voting.PrimaryText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/logout"
+                        android:textColor="#DD1414"
+                        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView16"
+                        app:layout_constraintStart_toEndOf="@+id/appCompatImageView16"
+                        app:layout_constraintTop_toTopOf="@+id/appCompatImageView16" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </FrameLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -48,7 +48,7 @@ class NfcReaderTask(
         return resultSubject
     }
 
-    fun cropByteArray(inputByteArray: ByteArray, endNumber: Int): ByteArray {
+    private fun cropByteArray(inputByteArray: ByteArray, endNumber: Int): ByteArray {
         // Make sure endNumber is within bounds
         val endIndex = if (endNumber > inputByteArray.size) inputByteArray.size else endNumber
 

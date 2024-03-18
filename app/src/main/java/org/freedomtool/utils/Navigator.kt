@@ -3,7 +3,6 @@ package org.freedomtool.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -17,6 +16,9 @@ import org.freedomtool.feature.intro.StartActivity
 import org.freedomtool.feature.onBoarding.ConfirmationActivity
 import org.freedomtool.feature.onBoarding.InfoActivity
 import org.freedomtool.feature.onBoarding.ScanActivity
+import org.freedomtool.feature.security.CheckPinCodeActivity
+import org.freedomtool.feature.security.CreateCredentialActivity
+import org.freedomtool.feature.security.CreatePinCodeActivity
 import org.freedomtool.feature.voting.ManifestSigning
 import org.freedomtool.feature.voting.MustVerifyActivity
 import org.freedomtool.feature.voting.SignedManifest
@@ -93,6 +95,16 @@ class Navigator private constructor() {
     fun openVotePage(votingData: VotingData) {
         val intent = Intent(context, VotePageActivity::class.java)
         intent.putExtra(VotePageActivity.VOTING_DATA, votingData)
+        performIntent(intent)
+    }
+
+    fun openCreateCredential() {
+        val intent = Intent(context, CreateCredentialActivity::class.java)
+        performIntent(intent)
+    }
+
+    fun openCreatePinCode() {
+        val intent = Intent(context, CreatePinCodeActivity::class.java)
         performIntent(intent)
     }
 
@@ -200,6 +212,11 @@ class Navigator private constructor() {
     fun openVerificationPage(data: VotingData) {
         val intent = Intent(context, MustVerifyActivity::class.java)
         intent.putExtra(MustVerifyActivity.VOTING_DATA, data)
+        performIntent(intent)
+    }
+
+    fun openCheckPinCode() {
+        val intent = Intent(context, CheckPinCodeActivity::class.java)
         performIntent(intent)
     }
 

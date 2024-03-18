@@ -72,6 +72,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
     implementation(files("libs/Identity.aar"))
+    implementation("androidx.preference:preference:1.2.0")
     testImplementation("junit:junit:4.13.2")
     implementation("io.reactivex.rxjava2:rxjava:2.2.9")
     implementation("io.reactivex.rxjava2:rxkotlin:2.0.0")
@@ -84,6 +85,13 @@ dependencies {
 //0.7.40
 
     implementation("io.noties.markwon:core:4.6.2")
+
+    implementation("io.noties.markwon:ext-strikethrough:4.6.2")
+    implementation("io.noties.markwon:ext-tables:4.6.2")
+    implementation("io.noties.markwon:ext-tasklist:4.6.2")
+    implementation("io.noties.markwon:image:4.6.2")
+    implementation("io.noties.markwon:inline-parser:4.6.2")
+    implementation("io.noties.markwon:linkify:4.6.2")
 
     implementation("org.jmrtd:jmrtd:0.7.27")
     implementation("net.sf.scuba:scuba-sc-android:0.0.20")
@@ -107,5 +115,6 @@ dependencies {
     kapt("com.google.dagger:dagger-android-processor:2.11")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("androidx.biometric:biometric:1.1.0")
 
 }

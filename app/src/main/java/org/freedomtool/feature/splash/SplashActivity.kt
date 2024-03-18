@@ -11,7 +11,7 @@ class SplashActivity : BaseActivity() {
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
 
         if (!SecureSharedPrefs.isFirstLaunch(this)) {
-            Navigator.from(this).openVote()
+            Navigator.from(this).openCheckPinCode()
             finish()
             return
         }

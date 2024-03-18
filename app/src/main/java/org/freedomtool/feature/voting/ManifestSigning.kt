@@ -4,6 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import io.noties.markwon.Markwon
+import io.noties.markwon.ext.tables.TablePlugin
+import io.noties.markwon.ext.tasklist.TaskListPlugin
+import io.noties.markwon.image.ImagesPlugin
+import io.noties.markwon.inlineparser.MarkwonInlineParserPlugin
 import org.freedomtool.R
 import org.freedomtool.base.view.BaseActivity
 import org.freedomtool.data.models.VotingData
@@ -23,11 +27,21 @@ class ManifestSigning : BaseActivity() {
         binding.data = votingData
         binding.date.text = resolveDays(this, votingData.dueDate!!)
         binding.signedCount.text =
-            resources.getQuantityString(R.plurals._x_people_already_signed, votingData.votingCount.toInt(), votingData.votingCount.toInt())
+            resources.getQuantityString(
+                R.plurals._x_people_already_signed,
+                votingData.votingCount.toInt(),
+                votingData.votingCount.toInt()
+            )
         initButtons()
         isActive()
 
-        val markdown = Markwon.create(this)
+        val markdown = Markwon.builder(this)
+            .usePlugin(TaskListPlugin.create(this))
+            .usePlugin(ImagesPlugin.create())
+            .usePlugin(MarkwonInlineParserPlugin.create())
+            .usePlugin(ImagesPlugin.create())
+            .usePlugin(TablePlugin.create(this))
+            .build()
         markdown.setMarkdown(binding.markdownText, votingData.description)
     }
 

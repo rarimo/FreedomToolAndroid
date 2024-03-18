@@ -18,7 +18,7 @@ import org.freedomtool.data.models.VotingData
 import org.freedomtool.databinding.ActivityVoteListBinding
 import org.freedomtool.feature.voting.logic.VoteAdapter
 import org.freedomtool.logic.persistance.SecureSharedPrefs
-import org.freedomtool.utils.LocalizationManager
+import org.freedomtool.setings.SettingsFragment
 import org.freedomtool.utils.Navigator
 import org.freedomtool.utils.ObservableTransformers
 import org.freedomtool.utils.unSafeLazy
@@ -31,15 +31,15 @@ class VoteListActivity : BaseActivity() {
     private var voteList: List<VotingData> = listOf()
     private var voteListEnded: List<VotingData> = listOf()
 
+
     private val voteAdapter by unSafeLazy {
         VoteAdapter(clickHelper, Navigator.from(this), SecureSharedPrefs)
     }
-
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_vote_list)
         binding.lifecycleOwner = this
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null && !voteAdapter.hasData) {
             restoreFromMemory(savedInstanceState)
         } else {
             subscribeToVotes()
@@ -55,20 +55,7 @@ class VoteListActivity : BaseActivity() {
 
         initButtons()
 
-        val vc = SecureSharedPrefs.getVC(this)
 
-        Log.e("VC", vc.toString())
-    }
-
-    override fun onResume() {
-        if (!SecureSharedPrefs.getIsPassportScanned(this)) {
-            binding.clearAllData.visibility = View.GONE
-            binding.separator.visibility = View.GONE
-        } else {
-            binding.clearAllData.visibility = View.VISIBLE
-            binding.separator.visibility = View.VISIBLE
-        }
-        super.onResume()
     }
 
     private fun subscribeToVotes() {
@@ -88,7 +75,6 @@ class VoteListActivity : BaseActivity() {
             }, {
                 subscribeToVotes()
             }).addTo(compositeDisposable)
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -98,7 +84,6 @@ class VoteListActivity : BaseActivity() {
         val json_ended = gson.toJson(voteListEnded)
         outState.putString(SAVED_VOTES_LIST, json)
         outState.putString(SAVED_VOTES_LIST_ENDED, json_ended)
-        Log.i("Save state", "HERE")
     }
 
     private fun restoreFromMemory(savedInstanceState: Bundle) {
@@ -107,7 +92,6 @@ class VoteListActivity : BaseActivity() {
         val jsonEnded = savedInstanceState.getString(SAVED_VOTES_LIST_ENDED)
         val type = object : TypeToken<List<VotingData>>() {}.type
         if (json!!.isNotEmpty()) {
-            Log.i("Restore state", "HERE")
             val gson = Gson()
             voteList = gson.fromJson(json, type)
             voteListEnded = gson.fromJson(jsonEnded, type)
@@ -115,25 +99,20 @@ class VoteListActivity : BaseActivity() {
             voteAdapter.addAll(voteList)
             return
         }
-        Log.i("Unluck", "Unluck")
         subscribeToVotes()
     }
 
     private fun initButtons() {
         clickHelper.addViews(
-            binding.changeLanguage,
-            binding.clearAllData,
+            binding.settings
         )
         clickHelper.setOnClickListener {
             when (it.id) {
+                binding.settings.id -> {
 
-                binding.clearAllData.id -> {
-                    clearAllData()
-                }
-
-                binding.changeLanguage.id -> {
-                    LocalizationManager.switchLocale(this)
-                    recreate()
+                    val modalBottomSheet = SettingsFragment()
+                    modalBottomSheet.logoutCallback = ::clearAllData
+                    modalBottomSheet.show(supportFragmentManager, SettingsFragment.TAG)
                 }
             }
         }
@@ -142,10 +121,8 @@ class VoteListActivity : BaseActivity() {
             if (it == 0) {
                 voteAdapter.clear()
                 voteAdapter.addAll(voteList)
-                //binding.noPollsText.visibility = View.GONE
                 return@setOnPositionChangedListener
             }
-            //binding.noPollsText.visibility = View.VISIBLE
             voteAdapter.clear()
             voteAdapter.addAll(voteListEnded)
         }

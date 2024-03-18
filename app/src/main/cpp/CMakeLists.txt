@@ -31,4 +31,4 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
         android
-        log fq fr gmp passport-verification-1 rapidsnark authv2 rapidsnark-fr-fq credAtomicQuery passport-verification-256 voteSMT)
+        log passport-verification-1 rapidsnark authv2 credAtomicQuery passport-verification-256 voteSMT)

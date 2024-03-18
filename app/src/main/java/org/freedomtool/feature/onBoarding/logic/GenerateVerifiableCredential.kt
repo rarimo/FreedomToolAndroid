@@ -10,8 +10,10 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import org.freedomtool.R
+import org.freedomtool.base.BaseConfig
 import org.freedomtool.contracts.SRegistration
 import org.freedomtool.data.models.Data
+import org.freedomtool.data.models.GistData
 import org.freedomtool.data.models.IdCardSod
 import org.freedomtool.data.models.IdentityData
 import org.freedomtool.data.models.InputsPassport
@@ -156,11 +158,6 @@ class GenerateVerifiableCredential {
             )
 
 
-            SecureSharedPrefs.savePassportVerificationProof(
-                context,
-                passportVerificationProof.toByteArray().toHexString()
-            )
-
             SecureSharedPrefs.saveIdentityData(context, identityToSave.toJson())
 
             it.onSuccess(payload)
@@ -185,16 +182,17 @@ class GenerateVerifiableCredential {
 
             Log.i("commitmentIndex", commitmentIndex.toHexString())
 
-            val siblings = mutableListOf<String>()
+            val gistProof = apiProvider.circuitBackend.gistData(identity.did).blockingGet()
+
 
 
             val votingInputs = VotingInputs(
-                root = "0x" + "",
+                root = gistProof.data.attributes.gist_proof.root,
                 vote = vote,
                 votingAddress = contractAddress,
                 secret = identity.secretIntStr,
                 nullifier = identity.nullifierIntStr,
-                siblings = siblings
+                siblings = gistProof.data.attributes.gist_proof.siblings
             )
 
             val gson = GsonBuilder().setPrettyPrinting().create()
@@ -209,7 +207,15 @@ class GenerateVerifiableCredential {
                 zkpTools::voteSMT
             )
 
-            Log.i("ZKP", gson.toJson(zkp))
+            val root = gistProof.data.attributes.gist_proof.root
+            val nullifierHash_ = identity.nullifierHex
+            val candidate = "2"
+
+            Log.i("root_", root)
+            Log.i("nullifierHash_", nullifierHash_)
+            Log.i("candidate_", candidate)
+            Log.i("proof_", gson.toJson(zkp))
+
         }
     }
 
@@ -279,13 +285,14 @@ class GenerateVerifiableCredential {
 
             it.onNext(1)
 
+
             val issuerAuthority = SecureSharedPrefs.getIssuerAuthority(context)
 
             if (!SecureSharedPrefs.checkFinalizes(context, votingAddress)) {
 
                 Log.i("HERE", "HELP ME")
                 val callData: ByteArray = identity.register(
-                    "https://rpc-api.mainnet.rarimo.com",
+                    BaseConfig.CORE_LINK,
                     issuerDid,
                     votingAddress,
                     schemaJson,
@@ -321,7 +328,7 @@ class GenerateVerifiableCredential {
     ): Boolean {
         try {
             val res = identity.isFinalized(
-                "https://rpc-api.mainnet.rarimo.com",
+                BaseConfig.CORE_LINK,
                 issuerDid,
                 identityData.timeStamp.toLong(),
             )

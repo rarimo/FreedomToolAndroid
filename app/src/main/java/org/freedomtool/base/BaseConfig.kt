@@ -1,6 +1,8 @@
 package org.freedomtool.base
 
-object BaseConfig {
+
+//Main
+object kk {
     const val CREATE_IDENTITY_LINK =
         "https://kyc.freedomtool.org/integrations/identity-provider-service/v1/create-identity"
 
@@ -17,4 +19,25 @@ object BaseConfig {
 
 //    const val REGISTRATION_ADDRESS = "0xECB5371C727a664160c4F4360af77F0Fe4aeb7F9"
 //    const val PROPOSAL_ADDRESS = "0xf41ceE234219D6cc3d90A6996dC3276aD378cfCF"
+}
+
+
+//TestNet
+object BaseConfig {
+
+    const val CREATE_IDENTITY_LINK ="https://api.stage.freedomtool.org/integrations/identity-provider-service/v1/create-identity"
+    const val GIST_DATA_LINK = "https://api.stage.freedomtool.org/integrations/identity-provider-service/v1/gist-data"
+    const val SEND_REGISTRATION_LINK = "https://api.stage.freedomtool.org/integrations/proof-verification-relayer/v1/register"
+    const val CLAIM_OFFER_LINK = "https://api.robotornot.mainnet-beta.rarimo.com/v1/{Did}/claims/{claim_id}/offer"
+
+    const val CORE_LINK = "https://rpc-api.node1.mainnet-beta.rarimo.com"
+    const val REGISTRATION_ADDRESS = "0xECB5371C727a664160c4F4360af77F0Fe4aeb7F9"
+    const val PROPOSAL_ADDRESS = "0xf41ceE234219D6cc3d90A6996dC3276aD378cfCF"
+
+    const val BLOCK_CHAIN_RPC_LINK = "https://rpc.qtestnet.org"
+
+
+    const val REGISTRATION_TYPE = "Simple Registration"
+
+
 }

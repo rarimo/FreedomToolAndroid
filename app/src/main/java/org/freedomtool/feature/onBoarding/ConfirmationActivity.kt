@@ -19,7 +19,6 @@ class ConfirmationActivity : BaseActivity() {
 
     lateinit var binding: ActivityConfirmingBinding
     private lateinit var eDocument: EDocument
-
     private lateinit var nextTimer: TimerManager
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_confirming)
@@ -37,9 +36,7 @@ class ConfirmationActivity : BaseActivity() {
                 finish()
             })
             .addTo(compositeDisposable)
-
     }
-
 
     private fun errorHandler(throwable: Throwable) {
         Log.i("ERROR", throwable.toString())

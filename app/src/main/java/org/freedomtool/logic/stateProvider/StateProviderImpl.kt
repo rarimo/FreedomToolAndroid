@@ -17,20 +17,7 @@ import java.math.BigInteger
 
 
 class StateProviderImpl(val context: Context, val apiProvider: ApiProvider) : StateProvider {
-//    override fun fetch(url: String?, method: String?, body: String?): ByteArray {
-//
-//        val response: ResponseBody = if (method!!.toLowerCase(Locale.getDefault()) == "post") {
-//            apiProvider.circuitBackend
-//                .fetchForProofPost(url!!, body!!).blockingGet()
-//        } else if (method.toLowerCase(Locale.getDefault()) == "get") {
-//            apiProvider.circuitBackend
-//                .fetchForProofGet(url!!).blockingGet()
-//        } else {
-//            throw IllegalStateException("No method for fetch")
-//        }
-//
-//        return response.string().toByteArray().clone()
-//    }
+
 
     override fun fetch(
         url: String?,
@@ -125,7 +112,7 @@ class StateProviderImpl(val context: Context, val apiProvider: ApiProvider) : St
         val zkpTools = ZKPTools(context)
         val proof = ZKPUseCase(context)
             .generateZKP(
-                R.raw.new_zkkey,
+                R.raw.new_zkey,
                 R.raw.new_dat,
                 inputs!!,
                 zkpTools::credentialAtomicQueryMTPV2OnChainVoting

@@ -14,6 +14,7 @@ set_target_properties(rapidsnark PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR
 add_library(passport-verification-256 SHARED IMPORTED)
 set_target_properties(passport-verification-256 PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/lib/libwitnesscalc_passportVerificationSHA256.so)
 
+
 add_library(authv2 SHARED IMPORTED)
 set_target_properties(authv2 PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/lib/libwitnesscalc_authV2.so)
 
@@ -31,4 +32,4 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
         android
-        log passport-verification-1 rapidsnark authv2 credAtomicQuery passport-verification-256 voteSMT)
+        log passport-verification-1 credAtomicQuery rapidsnark authv2 passport-verification-256 voteSMT)

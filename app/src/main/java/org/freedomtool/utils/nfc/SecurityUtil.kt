@@ -7,10 +7,12 @@ import org.jmrtd.Util
 import org.bouncycastle.asn1.ASN1Encodable
 import org.bouncycastle.asn1.ASN1Integer
 import org.bouncycastle.asn1.DERSequence
+import org.freedomtool.App
 import java.io.IOException
 import java.security.MessageDigest
 import java.security.Provider
 import java.security.PublicKey
+import java.security.Security
 import java.security.Signature
 import java.security.cert.Certificate
 import java.security.cert.CertificateEncodingException
@@ -28,7 +30,7 @@ import javax.crypto.Cipher
  */
 object SecurityUtil {
     private val TAG = SecurityUtil::class.java.simpleName
-    private val BC_PROVIDER: Provider = BouncyCastleProvider()
+    private val BC_PROVIDER: Provider = Security.getProvider(BouncyCastleProvider.PROVIDER_NAME)
     fun verifyAA(
         publicKey: PublicKey,
         digestAlgorithm: String?,

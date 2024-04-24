@@ -1,5 +1,6 @@
 package org.freedomtool.feature.voting
 
+import android.app.ActivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.reactivex.Completable
 import io.reactivex.rxkotlin.addTo
 import org.freedomtool.R
 import org.freedomtool.base.view.BaseActivity
@@ -21,6 +23,8 @@ import org.freedomtool.logic.persistance.SecureSharedPrefs
 import org.freedomtool.setings.SettingsFragment
 import org.freedomtool.utils.Navigator
 import org.freedomtool.utils.ObservableTransformers
+import org.freedomtool.utils.ZKPTools
+import org.freedomtool.utils.ZKPUseCase
 import org.freedomtool.utils.unSafeLazy
 
 
@@ -35,6 +39,7 @@ class VoteListActivity : BaseActivity() {
     private val voteAdapter by unSafeLazy {
         VoteAdapter(clickHelper, Navigator.from(this), SecureSharedPrefs)
     }
+
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_vote_list)
         binding.lifecycleOwner = this
@@ -61,11 +66,9 @@ class VoteListActivity : BaseActivity() {
     private fun subscribeToVotes() {
 
         VotingProvider.getVotes(apiProvider)
-            .compose(ObservableTransformers.defaultSchedulersSingle())
-            .doOnSuccess {
+            .compose(ObservableTransformers.defaultSchedulersSingle()).doOnSuccess {
                 binding.loader.visibility = View.GONE
-            }
-            .doOnSubscribe {
+            }.doOnSubscribe {
                 binding.loader.visibility = View.VISIBLE
             }.subscribe({
                 voteList = it.first
@@ -73,6 +76,7 @@ class VoteListActivity : BaseActivity() {
                 voteAdapter.addAll(voteList)
 
             }, {
+                Log.e("VotingProvider", it.message, it)
                 subscribeToVotes()
             }).addTo(compositeDisposable)
     }
@@ -104,12 +108,11 @@ class VoteListActivity : BaseActivity() {
 
     private fun initButtons() {
         clickHelper.addViews(
-            binding.settings
+            binding.settings, binding.title
         )
         clickHelper.setOnClickListener {
             when (it.id) {
                 binding.settings.id -> {
-
                     val modalBottomSheet = SettingsFragment()
                     modalBottomSheet.logoutCallback = ::clearAllData
                     modalBottomSheet.show(supportFragmentManager, SettingsFragment.TAG)
@@ -129,20 +132,16 @@ class VoteListActivity : BaseActivity() {
 
     }
 
-
     private fun clearAllData() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(getString(R.string.delete_all_data_header))
+        MaterialAlertDialogBuilder(this).setTitle(getString(R.string.delete_all_data_header))
             .setMessage(resources.getString(R.string.delete_all_data_message))
             .setPositiveButton(resources.getString(R.string.button_ok)) { _, _ ->
                 compositeDisposable.clear()
                 SecureSharedPrefs.clearAllData(this)
                 recreate()
-            }
-            .setNegativeButton(resources.getString(R.string.decline)) { dialog, _ ->
+            }.setNegativeButton(resources.getString(R.string.decline)) { dialog, _ ->
                 dialog.dismiss()
-            }
-            .show()
+            }.show()
     }
 
     private companion object {

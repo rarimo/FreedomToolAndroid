@@ -42,7 +42,6 @@ class App : Application() {
         if (provider::class.java.equals(BouncyCastleProvider::class.java)) {
             // BC with same package name, shouldn't happen in real life.
             throw IllegalStateException("BC with same package name")
-
         }
         // Android registers its own BC provider. As it might be outdated and might not include
         // all needed ciphers, we substitute it with a known BC bundled in the app.

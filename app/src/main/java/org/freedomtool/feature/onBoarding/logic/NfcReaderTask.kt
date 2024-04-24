@@ -32,11 +32,8 @@ import java.util.Arrays
 
 @OptIn(ExperimentalStdlibApi::class)
 class NfcReaderTask(
-    private val isoDep: IsoDep,
-    private val bacKey: BACKeySpec,
-    val context: Context
-) :
-    AsyncTask<Void?, String?, Exception?>() {
+    private val isoDep: IsoDep, private val bacKey: BACKeySpec, val context: Context
+) : AsyncTask<Void?, String?, Exception?>() {
     private var eDocument: EDocument = EDocument()
     private var docType: DocType = DocType.OTHER
     private var personDetails: PersonDetails = PersonDetails()
@@ -59,7 +56,6 @@ class NfcReaderTask(
 
     override fun onProgressUpdate(vararg values: String?) {
         super.onProgressUpdate(*values)
-        //loadingInfo.setText(values[0])
     }
 
     override fun doInBackground(vararg params: Void?): Exception? {
@@ -103,7 +99,6 @@ class NfcReaderTask(
                     service.doBAC(bacKey)
                 }
             }
-
             var hashesMatched = true
             publishProgress("Reading sod file")
             val sodIn1 = service.getInputStream(PassportService.EF_SOD)
@@ -115,7 +110,6 @@ class NfcReaderTask(
 
             val sod = cropByteArray(byteArray, byteLen).toHexString()
             eDocument.sod = sod
-
             val sodIn = service.getInputStream(PassportService.EF_SOD)
 
             val sodFile = SODFile(sodIn)
@@ -124,21 +118,18 @@ class NfcReaderTask(
                 Log.d("", "Data group: $key hash value: ${StringUtil.byteArrayToHex(value)}")
             }
 
-            val digestAlgorithm = sodFile.digestAlgorithm
+            var digestAlgorithm = sodFile.digestAlgorithm
             Log.d(
-                "",
-                "Digest Algorithm: $digestAlgorithm"
+                "", "Digest Algorithm: $digestAlgorithm"
             )
             val docSigningCert = sodFile.docSigningCertificate
             val docSigningCerts = sodFile.docSigningCertificates
             val pemFile: String = SecurityUtil.convertToPem(docSigningCert)
             Log.d(
-                "",
-                "Document Signer Certificate: $docSigningCert"
+                "", "Document Signer Certificate: $docSigningCert"
             )
             Log.d(
-                "",
-                "Document Signer Certificate Pem : $pemFile"
+                "", "Document Signer Certificate Pem : $pemFile"
             )
             val digestEncryptionAlgorithm = sodFile.digestEncryptionAlgorithm
             val digest: MessageDigest
@@ -150,16 +141,13 @@ class NfcReaderTask(
             }
             publishProgress("Reading Personal Details")
 
-
             // -- Personal Details -- //
             val dg1In = service.getInputStream(PassportService.EF_DG1)
             val dg1File = DG1File(dg1In)
             var encodedDg1File = String(dg1File.encoded)
             val mrzInfo = dg1File.mrzInfo
-            personDetails.name =
-                mrzInfo.secondaryIdentifier.replace("<", " ").trim { it <= ' ' }
-            personDetails.surname =
-                mrzInfo.primaryIdentifier.replace("<", " ").trim { it <= ' ' }
+            personDetails.name = mrzInfo.secondaryIdentifier.replace("<", " ").trim { it <= ' ' }
+            personDetails.surname = mrzInfo.primaryIdentifier.replace("<", " ").trim { it <= ' ' }
             personDetails.personalNumber = mrzInfo.personalNumber;
             personDetails.gender = mrzInfo.gender.toString();
             personDetails.birthDate = DateUtil.convertFromMrzDate(mrzInfo.dateOfBirth);
@@ -180,12 +168,10 @@ class NfcReaderTask(
             val dg1StoredHash = sodFile.dataGroupHashes[1]
             val dg1ComputedHash = digest.digest(encodedDg1File.toByteArray())
             Log.d(
-                "",
-                "DG1 Stored Hash: " + StringUtil.byteArrayToHex(dg1StoredHash!!)
+                "", "DG1 Stored Hash: " + StringUtil.byteArrayToHex(dg1StoredHash!!)
             )
             Log.d(
-                "",
-                "DG1 Computed Hash: " + StringUtil.byteArrayToHex(dg1ComputedHash)
+                "", "DG1 Computed Hash: " + StringUtil.byteArrayToHex(dg1ComputedHash)
             )
             if (Arrays.equals(dg1StoredHash, dg1ComputedHash)) {
                 Log.d("", "DG1 Hashes are matched")
@@ -201,12 +187,10 @@ class NfcReaderTask(
             val dg2StoredHash = sodFile.dataGroupHashes[2]
             val dg2ComputedHash = digest.digest(dg2File.encoded)
             Log.d(
-                "",
-                "DG2 Stored Hash: " + StringUtil.byteArrayToHex(dg2StoredHash!!)
+                "", "DG2 Stored Hash: " + StringUtil.byteArrayToHex(dg2StoredHash!!)
             )
             Log.d(
-                "",
-                "DG2 Computed Hash: " + StringUtil.byteArrayToHex(dg2ComputedHash)
+                "", "DG2 Computed Hash: " + StringUtil.byteArrayToHex(dg2ComputedHash)
             )
             if (Arrays.equals(dg2StoredHash, dg2ComputedHash)) {
                 eDocument.dg2Hash = dg2ComputedHash.toHexString()

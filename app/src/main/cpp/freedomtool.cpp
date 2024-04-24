@@ -2,11 +2,13 @@
 #include "include/witnesscalc_passportVerificationSHA1.h"
 #include "include/witnesscalc_passportVerificationSHA256.h"
 #include "include/witnesscalc_authV2.h"
-#include "include/witnesscalc_credentialAtomicQueryMTPV2OnChainVoting.h"
 #include "include/witnesscalc_voteSMT.h"
-
+#include "include/witnesscalc_registerIdentity.h"
+#include "witnesscalc_credentialAtomicQueryMTPV2OnChainVoting.h"
 #include <jni.h>
-#include <iostream>
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
+#include <vector>
 
 using namespace std;
 
@@ -60,15 +62,18 @@ Java_org_freedomtool_utils_ZKPTools_groth16_1prover(JNIEnv *env, jobject thiz,
     env->ReleaseByteArrayElements(error_msg, reinterpret_cast<jbyte *>(errorMsg), 0);
 
     return result;
+
 }
 extern "C"
 JNIEXPORT jint JNICALL
 Java_org_freedomtool_utils_ZKPTools_passportVerification256(JNIEnv *env, jobject thiz,
-                                                         jbyteArray circuit_buffer,
-                                                         jlong circuit_size, jbyteArray json_buffer,
-                                                         jlong json_size, jbyteArray wtns_buffer,
-                                                         jlongArray wtns_size, jbyteArray error_msg,
-                                                         jlong error_msg_max_size) {
+                                                            jbyteArray circuit_buffer,
+                                                            jlong circuit_size,
+                                                            jbyteArray json_buffer,
+                                                            jlong json_size, jbyteArray wtns_buffer,
+                                                            jlongArray wtns_size,
+                                                            jbyteArray error_msg,
+                                                            jlong error_msg_max_size) {
     const char *circuitBuffer = reinterpret_cast<const char *>(env->GetByteArrayElements(
             circuit_buffer, nullptr));
     const char *jsonBuffer = reinterpret_cast<const char *>(env->GetByteArrayElements(json_buffer,
@@ -102,11 +107,13 @@ Java_org_freedomtool_utils_ZKPTools_passportVerification256(JNIEnv *env, jobject
 extern "C"
 JNIEXPORT jint JNICALL
 Java_org_freedomtool_utils_ZKPTools_passportVerification1(JNIEnv *env, jobject thiz,
-                                                            jbyteArray circuit_buffer,
-                                                            jlong circuit_size, jbyteArray json_buffer,
-                                                            jlong json_size, jbyteArray wtns_buffer,
-                                                            jlongArray wtns_size, jbyteArray error_msg,
-                                                            jlong error_msg_max_size) {
+                                                          jbyteArray circuit_buffer,
+                                                          jlong circuit_size,
+                                                          jbyteArray json_buffer,
+                                                          jlong json_size, jbyteArray wtns_buffer,
+                                                          jlongArray wtns_size,
+                                                          jbyteArray error_msg,
+                                                          jlong error_msg_max_size) {
     const char *circuitBuffer = reinterpret_cast<const char *>(env->GetByteArrayElements(
             circuit_buffer, nullptr));
     const char *jsonBuffer = reinterpret_cast<const char *>(env->GetByteArrayElements(json_buffer,
@@ -141,11 +148,11 @@ Java_org_freedomtool_utils_ZKPTools_passportVerification1(JNIEnv *env, jobject t
 extern "C"
 JNIEXPORT jint JNICALL
 Java_org_freedomtool_utils_ZKPTools_witnesscalcAuthV2(JNIEnv *env, jobject thiz,
-                                                       jbyteArray circuit_buffer,
-                                                       jlong circuit_size, jbyteArray json_buffer,
-                                                       jlong json_size, jbyteArray wtns_buffer,
-                                                       jlongArray wtns_size, jbyteArray error_msg,
-                                                       jlong error_msg_max_size) {
+                                                      jbyteArray circuit_buffer,
+                                                      jlong circuit_size, jbyteArray json_buffer,
+                                                      jlong json_size, jbyteArray wtns_buffer,
+                                                      jlongArray wtns_size, jbyteArray error_msg,
+                                                      jlong error_msg_max_size) {
     const char *circuitBuffer = reinterpret_cast<const char *>(env->GetByteArrayElements(
             circuit_buffer, nullptr));
     const char *jsonBuffer = reinterpret_cast<const char *>(env->GetByteArrayElements(json_buffer,
@@ -190,6 +197,7 @@ Java_org_freedomtool_utils_ZKPTools_credentialAtomicQueryMTPV2OnChainVoting(JNIE
                                                                             jlongArray wtns_size,
                                                                             jbyteArray error_msg,
                                                                             jlong error_msg_max_size) {
+
     const char *circuitBuffer = reinterpret_cast<const char *>(env->GetByteArrayElements(
             circuit_buffer, nullptr));
     const char *jsonBuffer = reinterpret_cast<const char *>(env->GetByteArrayElements(json_buffer,

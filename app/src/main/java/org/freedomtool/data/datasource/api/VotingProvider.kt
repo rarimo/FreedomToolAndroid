@@ -33,11 +33,12 @@ object VotingProvider {
                 gasProvider
             )
 
-            val numberOfVoting = contract.poolCountByProposer(BaseConfig.PROPOSAL_ADDRESS).send()
-            val resp = contract.listPoolsByProposer(
+            val numberOfVoting = contract.poolCountByProposerAndType(BaseConfig.PROPOSAL_ADDRESS, BaseConfig.REGISTRATION_TYPE).send()
+            val resp = contract.listPoolsByProposerAndType(
                 BaseConfig.PROPOSAL_ADDRESS,
-                numberOfVoting.minus(BigInteger.ONE),
-                BigInteger.ONE
+                BaseConfig.REGISTRATION_TYPE,
+                numberOfVoting.minus(BigInteger.valueOf(1L)),
+                BigInteger.valueOf(1L)
             ).send()
 
             val voteList = mutableListOf<VotingData>()

@@ -1,63 +1,94 @@
 package org.freedomtool.utils
 
 import android.content.Context
+import android.content.res.AssetManager
+import android.util.Log
 import com.google.gson.Gson
 import org.freedomtool.data.models.Proof
 import org.freedomtool.data.models.ZkProof
-import java.io.ByteArrayOutputStream
 
 
 class ZKPTools(val context: Context) {
 
-    external fun voteSMT(circuitBuffer: ByteArray,
-                         circuitSize: Long,
-                         jsonBuffer: ByteArray,
-                         jsonSize: Long,
-                         wtnsBuffer: ByteArray,
-                         wtnsSize: LongArray,
-                         errorMsg: ByteArray,
-                         errorMsgMaxSize: Long): Int
-    external fun credentialAtomicQueryMTPV2OnChainVoting(circuitBuffer: ByteArray,
-                                                       circuitSize: Long,
-                                                       jsonBuffer: ByteArray,
-                                                       jsonSize: Long,
-                                                       wtnsBuffer: ByteArray,
-                                                       wtnsSize: LongArray,
-                                                       errorMsg: ByteArray,
-                                                       errorMsgMaxSize: Long): Int
+    external fun checkSize(a: AssetManager): Int
+    external fun voteSMT(
+        circuitBuffer: ByteArray,
+        circuitSize: Long,
+        jsonBuffer: ByteArray,
+        jsonSize: Long,
+        wtnsBuffer: ByteArray,
+        wtnsSize: LongArray,
+        errorMsg: ByteArray,
+        errorMsgMaxSize: Long
+    ): Int
 
-    external fun witnesscalcAuthV2(circuitBuffer: ByteArray,
-                               circuitSize: Long,
-                               jsonBuffer: ByteArray,
-                               jsonSize: Long,
-                               wtnsBuffer: ByteArray,
-                               wtnsSize: LongArray,
-                               errorMsg: ByteArray,
-                               errorMsgMaxSize: Long): Int
-    external fun passportVerification1(circuitBuffer: ByteArray,
-                                         circuitSize: Long,
-                                         jsonBuffer: ByteArray,
-                                         jsonSize: Long,
-                                         wtnsBuffer: ByteArray,
-                                         wtnsSize: LongArray,
-                                         errorMsg: ByteArray,
-                                         errorMsgMaxSize: Long) : Int
-    external fun passportVerification256(circuitBuffer: ByteArray,
-                                      circuitSize: Long,
-                                      jsonBuffer: ByteArray,
-                                      jsonSize: Long,
-                                      wtnsBuffer: ByteArray,
-                                      wtnsSize: LongArray,
-                                      errorMsg: ByteArray,
-                                      errorMsgMaxSize: Long) : Int
+    external fun credentialAtomicQueryMTPV2OnChainVoting(
+        circuitBuffer: ByteArray,
+        circuitSize: Long,
+        jsonBuffer: ByteArray,
+        jsonSize: Long,
+        wtnsBuffer: ByteArray,
+        wtnsSize: LongArray,
+        errorMsg: ByteArray,
+        errorMsgMaxSize: Long
+    ): Int
+
+    external fun witnesscalcAuthV2(
+        circuitBuffer: ByteArray,
+        circuitSize: Long,
+        jsonBuffer: ByteArray,
+        jsonSize: Long,
+        wtnsBuffer: ByteArray,
+        wtnsSize: LongArray,
+        errorMsg: ByteArray,
+        errorMsgMaxSize: Long
+    ): Int
+
+    external fun passportVerification1(
+        circuitBuffer: ByteArray,
+        circuitSize: Long,
+        jsonBuffer: ByteArray,
+        jsonSize: Long,
+        wtnsBuffer: ByteArray,
+        wtnsSize: LongArray,
+        errorMsg: ByteArray,
+        errorMsgMaxSize: Long
+    ): Int
+
+    external fun passportVerification256(
+        circuitBuffer: ByteArray,
+        circuitSize: Long,
+        jsonBuffer: ByteArray,
+        jsonSize: Long,
+        wtnsBuffer: ByteArray,
+        wtnsSize: LongArray,
+        errorMsg: ByteArray,
+        errorMsgMaxSize: Long
+    ): Int
+
+    external fun registerIdentity(
+        circuitBuffer: ByteArray,
+        circuitSize: Long,
+        jsonBuffer: ByteArray,
+        jsonSize: Long,
+        wtnsBuffer: ByteArray,
+        wtnsSize: LongArray,
+        errorMsg: ByteArray,
+        errorMsgMaxSize: Long
+    ): Int
 
     external fun CalcPublicBufferSize(zkeyBuffer: ByteArray, zkeySize: Long): Long
     external fun groth16_prover(
-        zkeyBuffer: ByteArray, zkeySize: Long,
-        wtnsBuffer: ByteArray, wtnsSize: Long,
-        proofBuffer: ByteArray, proofSize: LongArray,
-        publicBuffer: ByteArray, publicSize: LongArray,
-        errorMsg: ByteArray, errorMsgMaxSize: Long
+        zkeyBuffer: ByteArray,
+        zkeySize: Long,
+        wtnsBuffer: ByteArray,
+        wtnsSize: Long,
+        proofBuffer: ByteArray,
+        proofSize: LongArray,
+        publicBuffer: ByteArray,
+        publicSize: LongArray,
+        errorMsg: ByteArray,
+        errorMsgMaxSize: Long
     ): Int
 
     init {
@@ -67,45 +98,26 @@ class ZKPTools(val context: Context) {
 
     fun openRawResourceAsByteArray(resourceName: Int): ByteArray {
         val inputStream = context.resources.openRawResource(resourceName)
-        val byteArrayOutputStream = ByteArrayOutputStream()
-
-        try {
-            val buffer = ByteArray(1024)
-            var length: Int
-
-            while (inputStream.read(buffer).also { length = it } != -1) {
-                byteArrayOutputStream.write(buffer, 0, length)
-            }
-
-            // Process the content as needed
-
-            return byteArrayOutputStream.toByteArray()
-        } finally {
-            // Close the streams in a finally block to ensure they are closed even if an exception occurs
-            byteArrayOutputStream.close()
-            inputStream.close()
-        }
+        return inputStream.readBytes()
     }
 }
 
 class ZKPUseCase(val context: Context) {
 
-
     fun generateZKP(
         zkpId: Int, datFile: Int, inputs: ByteArray, proofFunction: (
-            circuitBuffer: ByteArray,
-            circuitSize: Long,
-            jsonBuffer: ByteArray,
-            jsonSize: Long,
-            wtnsBuffer: ByteArray,
-            wtnsSize: LongArray,
-            errorMsg: ByteArray,
-            errorMsgMaxSize: Long
+            circuitBuffer: ByteArray, circuitSize: Long, jsonBuffer: ByteArray, jsonSize: Long, wtnsBuffer: ByteArray, wtnsSize: LongArray, errorMsg: ByteArray, errorMsgMaxSize: Long
         ) -> Int
     ): ZkProof {
         val zkpTool = ZKPTools(context)
-        val zkp = zkpTool.openRawResourceAsByteArray(zkpId)
+
+
+        val cTimeDAT = System.currentTimeMillis() / 1000
         val datFile = zkpTool.openRawResourceAsByteArray(datFile)
+
+        val fTimeDate = System.currentTimeMillis() / 1000
+
+        Log.e("ZKP READ Time", (fTimeDate - cTimeDAT).toString())
 
         val msg = ByteArray(256)
 
@@ -113,6 +125,9 @@ class ZKPUseCase(val context: Context) {
         witnessLen[0] = 100 * 1024 * 1024
 
         val byteArr = ByteArray(100 * 1024 * 1024)
+
+
+        val cTimeZKP = System.currentTimeMillis() / 1000
 
         val res = proofFunction(
             datFile,
@@ -126,24 +141,36 @@ class ZKPUseCase(val context: Context) {
         )
 
         if (res == 2) {
-            throw Exception("Not enough memory for zkp")
+            throw Exception("Not enough memory for zkpgg")
         }
 
         if (res == 1) {
             throw Exception("Error during zkp ${msg.decodeToString()}")
         }
 
-        val pubData = ByteArray(4 *1024 *1024)
+        val fTimeZKP = System.currentTimeMillis() / 1000
+
+
+        Log.e("ZKP creation Time", (fTimeZKP - cTimeZKP).toString())
+
+        val pubData = ByteArray(4 * 1024 * 1024)
 
 
         val pubLen = LongArray(1)
         pubLen[0] = pubData.size.toLong()
 
-        val proofData = ByteArray(4*1024*1024)
+        val proofData = ByteArray(4 * 1024 * 1024)
         val proofLen = LongArray(1)
         proofLen[0] = proofData.size.toLong()
 
         val witnessData = byteArr.copyOfRange(0, witnessLen[0].toInt())
+
+
+        val sVerif = System.currentTimeMillis() / 1000
+
+
+        val zkp = zkpTool.openRawResourceAsByteArray(zkpId)
+
 
         val verification = zkpTool.groth16_prover(
             zkp,
@@ -166,15 +193,17 @@ class ZKPUseCase(val context: Context) {
             throw Exception("Error during verification ${msg.decodeToString()}")
         }
 
+        val eVerif = System.currentTimeMillis() / 1000
+
+        Log.e("Ver Time", (eVerif - sVerif).toString())
+
         val proofDataZip = proofData.copyOfRange(0, proofLen[0].toInt())
 
         val index = findLastIndexOfSubstring(
-            proofDataZip.toString(Charsets.UTF_8),
-            "\"protocol\":\"groth16\"}"
+            proofDataZip.toString(Charsets.UTF_8), "\"protocol\":\"groth16\"}"
         )
         val indexPubData = findLastIndexOfSubstring(
-            pubData.decodeToString(),
-            "]"
+            pubData.decodeToString(), "]"
         )
 
         val formatedPubData = pubData.decodeToString().slice(0..indexPubData)
@@ -183,8 +212,7 @@ class ZKPUseCase(val context: Context) {
         val proof = Proof.fromJson(foramtedProof)
 
         return ZkProof(
-            proof = proof,
-            pub_signals = getPubSignals(formatedPubData).toList()
+            proof = proof, pub_signals = getPubSignals(formatedPubData).toList()
         )
     }
 

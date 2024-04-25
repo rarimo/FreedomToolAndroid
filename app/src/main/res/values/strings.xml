@@ -143,5 +143,9 @@
     <string name="biometric_prompt_title">Scan your fingerprint</string>
     <string name="biometric_prompt_description">Please place your finger on the fingerprint scanner to authenticate\n</string>
     <string name="repeat_passcode">Repeat Passcode</string>
+    <string name="next_voter">Next voter</string>
+    <string name="next_voter_title">You can use this device to\nenable others to vote</string>
+    <string name="next_voter_description">This device automatically deletes previous voter data\nand scans new passports for voting</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

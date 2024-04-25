@@ -4,6 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import org.freedomtool.data.models.IdentityData
+import org.freedomtool.data.models.IdentityDataStored
 
 
 object SecureSharedPrefs {
@@ -25,17 +30,18 @@ object SecureSharedPrefs {
         "VC" to "VC",
         "CLAIM_ID" to "CLAIM_ID",
         "PIN_CODE" to "PIN_CODE",
-        "IS_BIOMETRIC_ENABLED" to "IS_BIOMETRIC_ENABLED"
+        "IS_BIOMETRIC_ENABLED" to "IS_BIOMETRIC_ENABLED",
+        "CACHED_KEYS" to "CACHED_KEYS",
     )
 
     private fun getSharedPreferences(context: Context): SharedPreferences {
         if (sharedPref == null) {
-            val masterKey = MasterKey.Builder(context)
-                .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                .build()
+            val masterKey =
+                MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
             sharedPref = EncryptedSharedPreferences.create(
                 context,
-                PREFS_FILE_NAME, masterKey,
+                PREFS_FILE_NAME,
+                masterKey,
                 EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             )
@@ -44,6 +50,34 @@ object SecureSharedPrefs {
 
         return sharedPref!!
 
+    }
+
+
+    fun getCachedIdentity(context: Context, hash: String): IdentityDataStored? {
+        val map: Map<String, IdentityDataStored> = loadCachedIdentity(context)
+        return map.getOrDefault(key = hash, defaultValue = null)
+    }
+
+    private fun loadCachedIdentity(context: Context): Map<String, IdentityDataStored> {
+        val json: String =
+            getSharedPreferences(context).getString(tags["CACHED_KEYS"], null) ?: return emptyMap()
+
+        return Gson().fromJson(json, object : TypeToken<Map<String?, IdentityDataStored?>?>() {}.type)
+    }
+
+    private fun saveCachedIdentity(context: Context, map: Map<String, IdentityDataStored>?) {
+        val json: String = Gson().toJson(map)
+        val editor: SharedPreferences.Editor = getSharedPreferences(context).edit()
+        editor.putString(tags["CACHED_KEYS"], json)
+        editor.apply()
+    }
+
+    // Method to add a key-value pair to the map
+    fun addCachedIdentity(context: Context, key: String, value: IdentityDataStored) {
+        val map: MutableMap<String, IdentityDataStored> =
+            loadCachedIdentity(context) as MutableMap<String, IdentityDataStored> // Load the current map
+        map[key] = value // Add new key-value pair
+        saveCachedIdentity(context, map) // Save the updated map
     }
 
     fun addVoted(context: Context, address: String) {
@@ -107,12 +141,10 @@ object SecureSharedPrefs {
         val sharedPreferences = getSharedPreferences(context)
         val editor = sharedPreferences.edit()
         for (entry in tags.entries.iterator()) {
-            if (entry.value == tags["FIRST_LAUNCHED"])
-                continue
-            if (entry.value == tags["LOCALE"])
-                continue
-            if(entry.value == tags["PIN_CODE"])
-                continue
+            if (entry.value == tags["FIRST_LAUNCHED"]) continue
+            if (entry.value == tags["LOCALE"]) continue
+            if (entry.value == tags["PIN_CODE"]) continue
+            if (entry.value == tags["CACHED_KEYS"]) continue
             editor.remove(entry.value)
         }
         editor.apply()

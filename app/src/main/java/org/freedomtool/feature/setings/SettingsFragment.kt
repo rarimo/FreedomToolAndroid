@@ -1,4 +1,4 @@
-package org.freedomtool.setings
+package org.freedomtool.feature.setings
 
 import android.content.res.ColorStateList
 import android.os.Bundle

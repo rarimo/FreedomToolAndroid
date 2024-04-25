@@ -13,9 +13,9 @@ import org.freedomtool.R
 import org.freedomtool.base.BaseConfig
 import org.freedomtool.contracts.SRegistration
 import org.freedomtool.data.models.Data
-import org.freedomtool.data.models.GistData
 import org.freedomtool.data.models.IdCardSod
 import org.freedomtool.data.models.IdentityData
+import org.freedomtool.data.models.IdentityDataStored
 import org.freedomtool.data.models.InputsPassport
 import org.freedomtool.data.models.Payload
 import org.freedomtool.data.models.SendCalldataRequest
@@ -42,18 +42,14 @@ import java.time.LocalDate
 class GenerateVerifiableCredential {
     @OptIn(ExperimentalStdlibApi::class)
     fun generateIdentity(
-        context: Context,
-        apiProvider: ApiProvider,
-        eDocument: EDocument
-    ): Single<Payload> {
+        context: Context, apiProvider: ApiProvider, eDocument: EDocument
+    ): Single<Boolean> {
 
         return Single.create { it ->
             val hexString = eDocument.sod
-            if (hexString.isNullOrEmpty())
-                throw IllegalStateException("No Sod File found")
+            if (hexString.isNullOrEmpty()) throw IllegalStateException("No Sod File found")
 
-            val byteArray = hexString.decodeHexString()
-                .inputStream()
+            val byteArray = hexString.decodeHexString().inputStream()
 
             val zkpTools = ZKPTools(context)
 
@@ -61,8 +57,24 @@ class GenerateVerifiableCredential {
 
             val dg1 = eDocument.dg1
 
-            val current = LocalDate.now()
+            val storedPassportsKeys =
+                eDocument.dg2Hash?.let { it1 -> SecureSharedPrefs.getCachedIdentity(context, it1) }
 
+            if (storedPassportsKeys != null) {
+                val identity = IdentityData(
+                    storedPassportsKeys.secretHex,
+                    storedPassportsKeys.secretKeyHex,
+                    storedPassportsKeys.nullifierHex,
+                    storedPassportsKeys.timeStamp,
+                )
+                SecureSharedPrefs.saveIdentityData(context, identity.toJson())
+                SecureSharedPrefs.saveIssuerDid(context, storedPassportsKeys.issuer_did)
+                SecureSharedPrefs.saveClaimId(context, storedPassportsKeys.claim_id)
+                Log.i("StoredPassports", "RESTORED FROM SecureSharedPrefs")
+                it.onSuccess(true)
+            }
+
+            val current = LocalDate.now()
 
             val nextDate = current.plusYears(1)
             val inputs = InputsPassport(
@@ -120,9 +132,7 @@ class GenerateVerifiableCredential {
 
             val payload = Payload(
                 Data(
-                    id = identity.did,
-                    zkproof = zkp,
-                    document_sod = IdCardSod(
+                    id = identity.did, zkproof = zkp, document_sod = IdCardSod(
                         signed_attributes = signedAttributes.toHexString(),
                         algorithm = algorithm,
                         signature = sodFile.encryptedDigest.toHexString(),
@@ -137,16 +147,11 @@ class GenerateVerifiableCredential {
 
             Log.i("Payload", passportVerificationProof)
 
-            val response = apiProvider
-                .circuitBackend
-                .createIdentity(payload)
-                .blockingGet()
+            val response = apiProvider.circuitBackend.createIdentity(payload).blockingGet()
 
             val timestamp = System.currentTimeMillis() / 1000
 
             Log.i("Payload", gson.toJson(response))
-
-
 
             SecureSharedPrefs.saveIssuerDid(context, response.data.attributes.issuer_did)
             SecureSharedPrefs.saveClaimId(context, response.data.attributes.claim_id)
@@ -157,10 +162,22 @@ class GenerateVerifiableCredential {
                 (timestamp).toString()
             )
 
-
             SecureSharedPrefs.saveIdentityData(context, identityToSave.toJson())
 
-            it.onSuccess(payload)
+            //save to Cache
+            val storedIdentityData = IdentityDataStored(
+                identity.secretHex,
+                identity.secretKeyHex,
+                identity.nullifierHex,
+                response.data.attributes.issuer_did,
+                response.data.attributes.claim_id,
+                (timestamp).toString()
+            )
+            SecureSharedPrefs.addCachedIdentity(context, eDocument.dg2Hash!!, storedIdentityData)
+
+
+            Log.i("StoredPassports", "RESTORED FROM RAW DATA")
+            it.onSuccess(true)
         }
     }
 
@@ -185,7 +202,6 @@ class GenerateVerifiableCredential {
             val gistProof = apiProvider.circuitBackend.gistData(identity.did).blockingGet()
 
 
-
             val votingInputs = VotingInputs(
                 root = gistProof.data.attributes.gist_proof.root,
                 vote = vote,
@@ -201,10 +217,7 @@ class GenerateVerifiableCredential {
             Log.i("INPUTS VOTE", inputs)
 
             val zkp = ZKPUseCase(context).generateZKP(
-                R.raw.vote_smt_zkey,
-                R.raw.vote_smt,
-                inputs.toByteArray(),
-                zkpTools::voteSMT
+                R.raw.vote_smt_zkey, R.raw.vote_smt, inputs.toByteArray(), zkpTools::voteSMT
             )
 
             val root = gistProof.data.attributes.gist_proof.root
@@ -233,9 +246,7 @@ class GenerateVerifiableCredential {
 
     @OptIn(ExperimentalStdlibApi::class)
     fun register(
-        context: Context,
-        apiProvider: ApiProvider,
-        votingAddress: String
+        context: Context, apiProvider: ApiProvider, votingAddress: String
     ): Observable<Int> {
 
         val identity = createIdentity(context, apiProvider)
@@ -248,10 +259,7 @@ class GenerateVerifiableCredential {
             val gasProvider = DefaultGasProvider()
 
             val contract = SRegistration.load(
-                votingAddress,
-                apiProvider.web3,
-                credentials,
-                gasProvider
+                votingAddress, apiProvider.web3, credentials, gasProvider
             )
 
             val zkpTools = ZKPTools(context)
@@ -322,9 +330,7 @@ class GenerateVerifiableCredential {
     }
 
     private fun isFinalized(
-        identity: Identity_,
-        identityData: IdentityData,
-        issuerDid: String
+        identity: Identity_, identityData: IdentityData, issuerDid: String
     ): Boolean {
         try {
             val res = identity.isFinalized(

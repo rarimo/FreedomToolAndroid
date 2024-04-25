@@ -61,7 +61,7 @@
             android:id="@+id/materialCardView"
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="364dp"
-            android:layout_height="110dp"
+            android:layout_height="176dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="24dp"
@@ -102,9 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="16dp"
                     android:text="@string/you_and_x_other_people_already_signed"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/appCompatImageView11"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/name">
@@ -115,7 +113,7 @@
                     android:id="@+id/appCompatImageView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-15dp"
+                    android:layout_marginTop="-14dp"
                     android:layout_marginEnd="-6dp"
                     android:alpha="0.2"
                     android:src="@drawable/ic_person"
@@ -200,6 +198,22 @@
                     android:src="@drawable/ic_person"
                     app:layout_constraintEnd_toStartOf="@+id/appCompatImageView12"
                     app:layout_constraintTop_toBottomOf="@+id/appCompatImageView7" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/next_voter_button"
+                    style="@style/Theme.Voting.ButtonSecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/next_voter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/signed_count" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

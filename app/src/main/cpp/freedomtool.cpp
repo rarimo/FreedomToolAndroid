@@ -3,7 +3,6 @@
 #include "include/witnesscalc_passportVerificationSHA256.h"
 #include "include/witnesscalc_authV2.h"
 #include "include/witnesscalc_voteSMT.h"
-#include "include/witnesscalc_registerIdentity.h"
 #include "witnesscalc_credentialAtomicQueryMTPV2OnChainVoting.h"
 #include <jni.h>
 #include <android/asset_manager.h>

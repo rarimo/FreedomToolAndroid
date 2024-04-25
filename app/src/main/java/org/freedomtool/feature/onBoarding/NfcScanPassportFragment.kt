@@ -27,7 +27,6 @@ class NfcScanPassportFragment : BaseFragment() {
         binding.imagePreview.visibility = View.INVISIBLE
         binding.loader.visibility = View.VISIBLE
         binding.nfcTipScanning.text = getString(R.string.please_wait)
-
     }
     fun setScanMe() {
         binding.imagePreview.visibility = View.VISIBLE

@@ -20,7 +20,7 @@ import org.freedomtool.data.models.VotingData
 import org.freedomtool.databinding.ActivityVoteListBinding
 import org.freedomtool.feature.voting.logic.VoteAdapter
 import org.freedomtool.logic.persistance.SecureSharedPrefs
-import org.freedomtool.setings.SettingsFragment
+import org.freedomtool.feature.setings.SettingsFragment
 import org.freedomtool.utils.Navigator
 import org.freedomtool.utils.ObservableTransformers
 import org.freedomtool.utils.ZKPTools
@@ -49,6 +49,12 @@ class VoteListActivity : BaseActivity() {
         } else {
             subscribeToVotes()
         }
+
+        val date = SecureSharedPrefs.getDateOfBirth(this)!!
+        val issuerAuythority = SecureSharedPrefs.getIssuerAuthority(this)!!
+
+        Log.i("age", issuerAuythority)
+        Log.i("date", date)
 
         val window: Window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)

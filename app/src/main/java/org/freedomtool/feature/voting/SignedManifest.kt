@@ -29,9 +29,14 @@ class SignedManifest : BaseActivity() {
     }
 
     private fun initButtons() {
-        clickHelper.addViews(binding.closeBtn)
+        clickHelper.addViews(binding.closeBtn, binding.nextVoterButton)
         clickHelper.setOnClickListener {
             when (it.id) {
+
+                binding.nextVoterButton.id -> {
+                    OtherVoterFragment().show(supportFragmentManager, "")
+                }
+
                 binding.closeBtn.id -> {
                     finish()
                     Navigator.from(this).openVote()

@@ -72,12 +72,12 @@ object SecureSharedPrefs {
         editor.apply()
     }
 
-    // Method to add a key-value pair to the map
+
     fun addCachedIdentity(context: Context, key: String, value: IdentityDataStored) {
-        val map: MutableMap<String, IdentityDataStored> =
-            loadCachedIdentity(context) as MutableMap<String, IdentityDataStored> // Load the current map
-        map[key] = value // Add new key-value pair
-        saveCachedIdentity(context, map) // Save the updated map
+        val map =
+            loadCachedIdentity(context).toMutableMap()
+        map[key] = value
+        saveCachedIdentity(context, map)
     }
 
     fun addVoted(context: Context, address: String) {

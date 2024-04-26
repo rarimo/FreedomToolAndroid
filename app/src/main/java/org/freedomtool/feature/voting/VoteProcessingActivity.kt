@@ -24,6 +24,7 @@ class VoteProcessingActivity : BaseActivity() {
 
     private lateinit var votingData: VotingData
     private lateinit var statusList: List<MaterialTextView>
+    private var isSigned = false
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_vote_processing)
         binding.lifecycleOwner = this
@@ -128,6 +129,16 @@ class VoteProcessingActivity : BaseActivity() {
         binding.separator.visibility = View.GONE
         binding.hint.visibility = View.GONE
         binding.viewPetition.visibility = View.VISIBLE
+        isSigned = true
+    }
+
+    override fun onBackPressed() {
+        if(isSigned){
+            finish()
+            Navigator.from(this).openSignedManifest(votingData)
+        }else {
+            finish()
+        }
     }
 
 
@@ -137,7 +148,12 @@ class VoteProcessingActivity : BaseActivity() {
         clickHelper.setOnClickListener {
             when (it.id) {
                 binding.backButton.id -> {
-                    finish()
+                    if(isSigned){
+                        finish()
+                        Navigator.from(this).openSignedManifest(votingData)
+                    }else {
+                        finish()
+                    }
                 }
 
                 binding.viewPetition.id -> {

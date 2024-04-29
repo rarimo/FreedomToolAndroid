@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -59,20 +58,14 @@ class VotePageActivity : BaseActivity() {
 
     private fun addPassedReq(text: String) {
         val binding: LayoutRequirementOkItemBinding = DataBindingUtil.inflate(
-            layoutInflater,
-            R.layout.layout_requirement_ok_item,
-            binding.reqContainer,
-            true
+            layoutInflater, R.layout.layout_requirement_ok_item, binding.reqContainer, true
         )
         binding.textContent = text
     }
 
     private fun addDeclineReq(text: String) {
         val binding: LayoutRequirementDeclineItemBinding = DataBindingUtil.inflate(
-            layoutInflater,
-            R.layout.layout_requirement_decline_item,
-            binding.reqContainer,
-            true
+            layoutInflater, R.layout.layout_requirement_decline_item, binding.reqContainer, true
         )
         binding.textContent = text
     }
@@ -86,8 +79,7 @@ class VotePageActivity : BaseActivity() {
         votingData.requirements?.let { requirements ->
             requirements.age?.let { requiredAge ->
                 val ageMessage = getString(
-                    R.string.are_x_years_old_on_or_before_election_day,
-                    requiredAge.toString()
+                    R.string.are_x_years_old_on_or_before_election_day, requiredAge.toString()
                 )
                 if (age < requiredAge) {
                     addDeclineReq(ageMessage)
@@ -168,9 +160,7 @@ class VotePageActivity : BaseActivity() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String?>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<String?>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PermissionUtil.REQUEST_CODE_MULTIPLE_PERMISSIONS) {
@@ -181,8 +171,7 @@ class VotePageActivity : BaseActivity() {
                     val uri = Uri.fromParts("package", packageName, null)
                     intent.setData(uri)
                     startActivityForResult(
-                        intent,
-                        APP_SETTINGS_ACTIVITY_REQUEST_CODE
+                        intent, APP_SETTINGS_ACTIVITY_REQUEST_CODE
                     )
                 } else {
                     requestPermissionForCamera()
@@ -198,17 +187,13 @@ class VotePageActivity : BaseActivity() {
         val isPermissionGranted = PermissionUtil.hasPermissions(this, *permissions)
         if (!isPermissionGranted) {
 
-            MaterialAlertDialogBuilder(this)
-                .setTitle(getString(R.string.permission_title))
+            MaterialAlertDialogBuilder(this).setTitle(getString(R.string.permission_title))
                 .setMessage(resources.getString(R.string.permission_description))
                 .setPositiveButton(resources.getString(R.string.button_ok)) { dialog, which ->
                     ActivityCompat.requestPermissions(
-                        this,
-                        permissions,
-                        PermissionUtil.REQUEST_CODE_MULTIPLE_PERMISSIONS
+                        this, permissions, PermissionUtil.REQUEST_CODE_MULTIPLE_PERMISSIONS
                     )
-                }
-                .show()
+                }.show()
 
 
         } else {

@@ -30,14 +30,15 @@ fun resolveDays(context: Context, endDate: Long): String {
     val (days, hours) = getDaysAndHoursBetween(endDate)
 
     return when {
-        days > 0 && hours > 0 -> context.getString(
-            R.string.ends_in_x_days_y_hours,
+        days > 0 && hours > 0 -> context.resources.getQuantityString(
+            R.plurals.ends_in_x_days_y_hours,
+            days,
             days.toString(),
-            hours.toString()
+            hours.toString(),
         )
 
-        days > 0 -> context.getString(R.string.ends_in_x_days, days.toString())
-        hours > 0 -> context.getString(R.string.starts_in_x_hours, hours.toString())
+        days > 0 -> context.resources.getQuantityString(R.plurals.ends_in_x_days, days, days.toString())
+        hours > 0 -> context.resources.getQuantityString(R.plurals.starts_in_x_hours, hours, hours.toString())
         else -> context.getString(R.string.completed_vote)
     }
 }

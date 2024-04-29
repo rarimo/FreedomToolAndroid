@@ -71,6 +71,7 @@ class CheckPinCodeActivity : BaseActivity() {
             override fun onAuthenticationSucceeded(
                 result: BiometricPrompt.AuthenticationResult
             ) {
+                finish()
                 Navigator.from(this@CheckPinCodeActivity).openVote()
             }
 
@@ -183,6 +184,7 @@ class CheckPinCodeActivity : BaseActivity() {
     private fun checkState() {
         if (dotArray.size == pinCode.length) {
             if (SecureSharedPrefs.checkPinCode(this, pinCode)) {
+                finish()
                 Navigator.from(this).openVote()
             } else {
                 cleanDots()

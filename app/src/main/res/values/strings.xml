@@ -21,7 +21,7 @@
     <string name="scan_your_passport">Scan your Document or\nemployee card</string>
     <string name="scan_passport_description">Data is stored only on a device</string>
     <string name="passport_camera_tip">Move your PASSPORT card inside\nthe border</string>
-    <string name="nfc_scan_tip">Move your ID card inside the border</string>
+    <string name="nfc_scan_tip">Move your passport inside the border</string>
     <string name="permission_title">Permission Required</string>
     <string name="permission_description">We need your permission to access camera in order to scan Passport.</string>
     <string name="button_ok">OK</string>
@@ -33,18 +33,46 @@
     <string name="polls">Polls</string>
     <string name="please_wait">Please wait…</string>
     <string name="comfirm_proof_description">Creating anonymized\nidentity proof</string>
-    <string name="generating_proof_tip">"<b>"Remember:"</b>" Your data is only stored on this device and is\nnever reviled or shared with any third party</string>
+    <string name="generating_proof_tip">"<b>"Remember:"</b>" Your data is only stored on this device and \nnever reviled or shared with any third party</string>
     <string name="all_done">All Done!</string>
     <string name="all_done_description">You will be redirected\nin 5 sec</string>
     <string name="active">Active</string>
     <string name="completed">Completed</string>
     <string name="pool_1">The election of a new CEO to the company begins</string>
-    <string name="endx_in_x_hours">Ends in %1$s hours</string>
-    <string name="starts_in_x_hours">Starts in %1$s hours</string>
-    <string name="ends_in_x_days">Ends in %1$s days</string>
-    <string name="begins_in_x_days">Starts in %1$s days</string>
-    <string name="ends_in_x_days_y_hours">Ends in %1$s days %2$s hours</string>
-    <string name="begins_in_x_days_y_hours">Starts in %1$s days %2$s hours</string>
+    <plurals name="endx_in_x_hours">
+        <item quantity="one">Ends in %1$s hour</item>
+        <item quantity="other">Ends in %1$s hours</item>
+    </plurals>
+
+    <!-- Plural for "starts in X hours" -->
+    <plurals name="starts_in_x_hours">
+        <item quantity="one">Starts in %1$s hour</item>
+        <item quantity="other">Starts in %1$s hours</item>
+    </plurals>
+
+    <!-- Plural for "ends in X days" -->
+    <plurals name="ends_in_x_days">
+        <item quantity="one">Ends in %1$s day</item>
+        <item quantity="other">Ends in %1$s days</item>
+    </plurals>
+
+    <!-- Plural for "begins in X days" -->
+    <plurals name="begins_in_x_days">
+        <item quantity="one">Begins in %1$s day</item>
+        <item quantity="other">Begins in %1$s days</item>
+    </plurals>
+
+    <!-- Plural for "ends in X days Y hours" -->
+    <plurals name="ends_in_x_days_y_hours">
+        <item quantity="one">Ends in %1$s day and %2$s hour</item>
+        <item quantity="other">Ends in %1$s days and %2$s hours</item>
+    </plurals>
+
+    <!-- Plural for "begins in X days Y hours" -->
+    <plurals name="begins_in_x_days_y_hours">
+        <item quantity="one">Begins in %1$s day and %2$s hour</item>
+        <item quantity="other">Begins in %1$s days and %2$s hours</item>
+    </plurals>
     <string name="pool_1_header">Сhoosing a new CEO</string>
     <string name="non_traceable_identity">Secure identification</string>
     <string name="anonymized_voting">Anonymized choice</string>

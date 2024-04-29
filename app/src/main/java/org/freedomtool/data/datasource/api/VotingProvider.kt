@@ -27,13 +27,12 @@ object VotingProvider {
             val gasProvider = DefaultGasProvider()
 
             val contract = org.freedomtool.contracts.RegistrationVoting.load(
-                BaseConfig.REGISTRATION_ADDRESS,
-                web3j,
-                credentials,
-                gasProvider
+                BaseConfig.REGISTRATION_ADDRESS, web3j, credentials, gasProvider
             )
 
-            val numberOfVoting = contract.poolCountByProposerAndType(BaseConfig.PROPOSAL_ADDRESS, BaseConfig.REGISTRATION_TYPE).send()
+            val numberOfVoting = contract.poolCountByProposerAndType(
+                BaseConfig.PROPOSAL_ADDRESS, BaseConfig.REGISTRATION_TYPE
+            ).send()
             val resp = contract.listPoolsByProposerAndType(
                 BaseConfig.PROPOSAL_ADDRESS,
                 BaseConfig.REGISTRATION_TYPE,
@@ -44,56 +43,46 @@ object VotingProvider {
             val voteList = mutableListOf<VotingData>()
             val voteListEnded = mutableListOf<VotingData>()
 
-            val registrationDataListSingle = Observable.fromIterable(resp)
-                .flatMapSingle { registrationAddress ->
-                    Single.fromCallable {
-                        val registration = SRegistration.load(
-                            registrationAddress as String,
-                            web3j,
-                            credentials,
-                            gasProvider
-                        )
-
-                        val addressVerifier = registration.registerVerifier().send()
-                        Log.i("Registration", addressVerifier)
-                        val registrationVerifier =
-                            RegistrationVerifier.load(
-                                addressVerifier,
-                                web3j,
-                                credentials,
-                                gasProvider
+            val registrationDataListSingle =
+                Observable.fromIterable(resp).flatMapSingle { registrationAddress ->
+                        Single.fromCallable {
+                            val registration = SRegistration.load(
+                                registrationAddress as String, web3j, credentials, gasProvider
                             )
 
-                        val arrayOfCountries = registrationVerifier.listIssuingAuthorityWhitelist(
-                            BigInteger.ZERO,
-                            BigInteger.valueOf(100L)
-                        ).send()
+                            val addressVerifier = registration.registerVerifier().send()
+                            Log.i("Registration", addressVerifier)
+                            val registrationVerifier = RegistrationVerifier.load(
+                                addressVerifier, web3j, credentials, gasProvider
+                            )
 
-                        val data = registration.registrationInfo().send()
-                        val (url, time, registeredCount) = data
+                            val arrayOfCountries =
+                                registrationVerifier.listIssuingAuthorityWhitelist(
+                                    BigInteger.ZERO, BigInteger.valueOf(100L)
+                                ).send()
 
-                        val registrationData =
-                            apiProvider.circuitBackend.getRegistrationData(url).blockingGet()
+                            val data = registration.registrationInfo().send()
+                            val (url, time, registeredCount) = data
 
+                            val registrationData =
+                                apiProvider.circuitBackend.getRegistrationData(url).blockingGet()
 
-                        VotingData(
-                            header = registrationData.name,
-                            excerpt = registrationData.excerpt,
-                            description = registrationData.description,
-                            contractAddress = registrationAddress,
-                            dueDate = time.commitmentEndTime.toLong(),
-                            isPassportRequired = true,
-                            requirements = RequirementsForVoting(
-                                arrayOfCountries as List<BigInteger>,
-                                18
-                            ),
-                            isManifest = true,
-                            isActive = registrationData.isActive == true && !isEnded(time.commitmentEndTime.toLong()),
-                            votingCount = registeredCount.totalRegistrations.toLong()
-                        )
-                    }.compose(ObservableTransformers.defaultSchedulersSingle())
-                }
-                .toList()
+                            VotingData(
+                                header = registrationData.name,
+                                excerpt = registrationData.excerpt,
+                                description = registrationData.description,
+                                contractAddress = registrationAddress,
+                                dueDate = time.commitmentEndTime.toLong(),
+                                isPassportRequired = true,
+                                requirements = RequirementsForVoting(
+                                    arrayOfCountries as List<BigInteger>, 18
+                                ),
+                                isManifest = true,
+                                isActive = registrationData.isActive == true && !isEnded(time.commitmentEndTime.toLong()),
+                                votingCount = registeredCount.totalRegistrations.toLong()
+                            )
+                        }.compose(ObservableTransformers.defaultSchedulersSingle())
+                    }.toList()
 
             val registrationDataList = registrationDataListSingle.blockingGet()
 
@@ -104,6 +93,9 @@ object VotingProvider {
                     voteList.add(votingData)
                 }
             }
+
+            voteList.sortBy { it.dueDate }
+            voteListEnded.sortBy { it.dueDate }
 
             Pair(voteList, voteListEnded)
         }

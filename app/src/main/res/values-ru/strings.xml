@@ -9,17 +9,16 @@
 
     <string name="slide_header_2">Шаг 1</string>
     <string name="slide_description_2">Когда вы сканируете свой паспорт, приложение обрабатывает данные непосредственно на вашем устройстве. Персональные данные не покидают ваш телефон, обеспечивая полную конфиденциальность.</string>
-    <string name="slider_footer_2">Делаем вас неотслеживаемым</string>
+    <string name="slider_footer_2">Делаем вас неотслеживаемым !</string>
     <string name="slider_header_4">Шаг 3</string>
     <string name="slider_description_4">Ваш голос анонимно и безопасно сохраняется на блокчейне. Право голоса невозможно отследить и подделать, что обеспечивает полную конфиденциальность.</string>
-    <string name="slide_footer_4">Чтобы ваш голос был услышан!</string>
+    <string name="slide_footer_4">Чтобы ваш голос был услышан !</string>
     <string name="slider_header_3">Шаг 2</string>
     <string name="slider_description_3">Для участия в голосовании система генерирует специальный \'пропуск\', гарантируя полную конфиденциальность вашей личности и предотвращая множественное голосование.</string>
-    <string name="slider_footer_3">Делаем вас уникальным и анонимным!</string>
+    <string name="slider_footer_3">Делаем вас уникальным и анонимным !</string>
     <string name="participate">Участвовать</string>
     <string name="participate_description">Полностью защищенная конфиденциальная\nдецентрализованная система голосования</string>
     <string name="title_activity_scan">ScanActivity</string>
-    <!-- Строки, используемые для фрагментов для навигации -->
 
     <string name="scan_your_passport">Отсканируйте ваш документ\nили служебную карту</string>
     <string name="scan_passport_description">Данные хранятся только на устройстве</string>
@@ -37,18 +36,58 @@
     <string name="please_wait">Пожалуйста, подождите…</string>
     <string name="comfirm_proof_description">Создаем анонимизированное\nудостоверения личности</string>
     <string name="generating_proof_tip"><b>Помните:</b> Ваши данные хранятся только на этом устройстве, никогда не раскрываются и не передаются третьим лицам</string>
-    <string name="all_done">Все готово!</string>
+    <string name="all_done">Все готово !</string>
     <string name="all_done_description">Вы будете перенаправлены\nчерез 5 секунд</string>
     <string name="active">Активные</string>
     <string name="completed">Завершенные</string>
 
     <string name="pool_1">Начинаются выборы нового генерального директора компании</string>
-    <string name="endx_in_x_hours">Заканчивается через %1$s часов</string>
-    <string name="starts_in_x_hours">Начинается через %1$s часов</string>
-    <string name="ends_in_x_days">Заканчивается через %1$s дней</string>
-    <string name="begins_in_x_days">Начинается через %1$s дней</string>
-    <string name="ends_in_x_days_y_hours">Заканчивается через %1$s дней %2$s часов</string>
-    <string name="begins_in_x_days_y_hours">Начинается через %1$s дней %2$s часов</string>
+    <plurals name="endx_in_x_hours">
+        <item quantity="one">Заканчивается через %1$s час</item>
+        <item quantity="few">Заканчивается через %1$s часа</item>
+        <item quantity="many">Заканчивается через %1$s часов</item>
+        <item quantity="other">Заканчивается через %1$s часов</item>
+    </plurals>
+
+    <!-- Plural for "starts in X hours" -->
+    <plurals name="starts_in_x_hours">
+        <item quantity="one">Начинается через %1$s час</item>
+        <item quantity="few">Начинается через %1$s часа</item>
+        <item quantity="many">Начинается через %1$s часов</item>
+        <item quantity="other">Начинается через %1$s часов</item>
+    </plurals>
+
+    <!-- Plural for "ends in X days" -->
+    <plurals name="ends_in_x_days">
+        <item quantity="one">Заканчивается через %1$s день</item>
+        <item quantity="few">Заканчивается через %1$s дня</item>
+        <item quantity="many">Заканчивается через %1$s дней</item>
+        <item quantity="other">Заканчивается через %1$s дней</item>
+    </plurals>
+
+    <!-- Plural for "begins in X days" -->
+    <plurals name="begins_in_x_days">
+        <item quantity="one">Начинается через %1$s день</item>
+        <item quantity="few">Начинается через %1$s дня</item>
+        <item quantity="many">Начинается через %1$s дней</item>
+        <item quantity="other">Начинается через %1$s дней</item>
+    </plurals>
+
+    <!-- Plural for "ends in X days Y hours" -->
+    <plurals name="ends_in_x_days_y_hours">
+        <item quantity="one">Заканчивается через %1$s день %2$s час</item>
+        <item quantity="few">Заканчивается через %1$s дня %2$s часа</item>
+        <item quantity="many">Заканчивается через %1$s дней %2$s часов</item>
+        <item quantity="other">Заканчивается через %1$s дней %2$s часов</item>
+    </plurals>
+
+    <!-- Plural for "begins in X days Y hours" -->
+    <plurals name="begins_in_x_days_y_hours">
+        <item quantity="one">Начинается через %1$s день %2$s час</item>
+        <item quantity="few">Начинается через %1$s дня %2$s часа</item>
+        <item quantity="many">Начинается через %1$s дней %2$s часов</item>
+        <item quantity="other">Начинается через %1$s дней %2$s часов</item>
+    </plurals>
     <string name="pool_1_header">Выборы нового генерального директора компании</string>
     <string name="non_traceable_identity">Безопасная идентификация</string>
     <string name="anonymized_voting">Анонимизированный выбор</string>
@@ -118,12 +157,11 @@
     <string name="name3">Olga Drake</string>
     <plurals name="_x_people_already_signed">
         <item quantity="one">%1$d человек уже подписал</item>
-        <item quantity="two">%1$d человека уже подписало</item>
-        <item quantity="few">%1$d человека уже подписало</item>
+        <item quantity="few">%1$d человек уже подписало</item>
         <item quantity="many">%1$d человек уже подписало</item>
         <item quantity="other">%1$d человек уже подписало</item>
     </plurals>
-    <string name="view_petition">View Petition</string>
+    <string name="view_petition">Посмотреть петицию</string>
     <string name="you_and_x_other_people_already_signed">Вы и еще %1$s человек уже подписали</string>
     <string name="you_already_registered">Вы уже подписывали это</string>
     <string name="cant_verify_multiple_device">Вы не можете пройти верификацию на нескольких устройствах</string>
@@ -146,8 +184,8 @@
     <string name="biometric_prompt_title">Просканируйте ваш отпечаток</string>
     <string name="biometric_prompt_description">Пожалуйста, приложите палец к сканеру отпечатков пальцев для аутентификации</string>
     <string name="repeat_passcode">Повторите Пинкод</string>
-    <string name="next_voter">Next voter</string>
-    <string name="next_voter_title">You can use this device to\nenable others to vote</string>
-    <string name="next_voter_description">This device automatically deletes previous voter data and scans new passports for voting</string>
-    <string name="cancel">Cancel</string>
+    <string name="next_voter">Следующий голосующий</string>
+    <string name="next_voter_title">Вы можете использовать это устройство, чтобы\nдать возможность другим голосовать.</string>
+    <string name="next_voter_description">Устройство автоматически удалит предыдущие данные голосующего и сосканирует новый паспорт для голосования.</string>
+    <string name="cancel">Отменить</string>
 </resources>

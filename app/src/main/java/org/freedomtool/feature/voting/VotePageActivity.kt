@@ -42,6 +42,8 @@ class VotePageActivity : BaseActivity() {
         initButtons()
         initAddData()
 
+        binding.dataOfVoting.text = resolveDays(this, votingData.dueDate!!)
+
         val time = resolveDays(this, votingData.dueDate!!)
         binding.dataOfVoting.text = time
 

@@ -21,6 +21,7 @@ import org.freedomtool.databinding.LayoutRequirementOkItemBinding
 import org.freedomtool.logic.persistance.SecureSharedPrefs
 import org.freedomtool.utils.Navigator
 import org.freedomtool.utils.calculateAge
+import org.freedomtool.utils.nfc.DateUtil
 import org.freedomtool.utils.nfc.PermissionUtil
 import org.freedomtool.utils.resolveDays
 
@@ -36,6 +37,7 @@ class MustVerifyActivity : BaseActivity() {
 
         voteData = intent?.getParcelableExtra(VOTING_DATA)!!
 
+        binding.dataOfVoting.text = resolveDays(this, voteData.dueDate!!)
         //initViews()
         //isAllowedToSign()
     }

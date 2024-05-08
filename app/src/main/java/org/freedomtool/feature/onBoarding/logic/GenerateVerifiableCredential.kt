@@ -277,8 +277,9 @@ class GenerateVerifiableCredential {
 
                 val claim_id = SecureSharedPrefs.geiClaimId(context)
 
+                Log.i("IDENTITY DID", identity.did)
                 val claimOfferResponse =
-                    apiProvider.circuitBackend.claimOffer(issuerDid, claim_id!!).blockingGet()
+                    apiProvider.circuitBackend.claimOffer(identity.did).blockingGet()
 
                 val rawClaimOfferResponse = gson.toJson(claimOfferResponse)
 
@@ -298,7 +299,6 @@ class GenerateVerifiableCredential {
 
             if (!SecureSharedPrefs.checkFinalizes(context, votingAddress)) {
 
-                Log.i("HERE", "HELP ME")
                 val callData: ByteArray = identity.register(
                     BaseConfig.CORE_LINK,
                     issuerDid,
@@ -310,6 +310,7 @@ class GenerateVerifiableCredential {
                     SendCalldataRequest(SendCalldataRequestData("0x" + callData.toHexString()))
 
 
+
                 val resp =
                     apiProvider.circuitBackend.sendRegistration(calldataRequest).blockingGet()
 
@@ -318,7 +319,8 @@ class GenerateVerifiableCredential {
             }
             it.onNext(2)
 
-            while (contract.commitments(identity.commitment).send()) {
+            while (!contract.commitments(identity.commitment).send()) {
+                Log.i("Commitment", identity.commitment.toHexString())
                 Thread.sleep(10 * 1000)
             }
 

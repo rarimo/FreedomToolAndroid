@@ -36,7 +36,7 @@ object VotingProvider {
             val resp = contract.listPoolsByProposerAndType(
                 BaseConfig.PROPOSAL_ADDRESS,
                 BaseConfig.REGISTRATION_TYPE,
-                numberOfVoting.minus(BigInteger.valueOf(4L)),
+                numberOfVoting.minus(BigInteger.ONE),
                 BigInteger.valueOf(4L)
             ).send()
 
@@ -55,6 +55,9 @@ object VotingProvider {
                             val registrationVerifier = RegistrationVerifier.load(
                                 addressVerifier, web3j, credentials, gasProvider
                             )
+
+                            Log.i("RegistrationVerifier", addressVerifier)
+                            Log.i("SRegistration", registrationAddress as String)
 
                             val arrayOfCountries =
                                 registrationVerifier.listIssuingAuthorityWhitelist(
@@ -116,4 +119,3 @@ object VotingProvider {
 //                    OptionsData(context.getString(R.string.name3), 2)
 //                )
 //            )
-

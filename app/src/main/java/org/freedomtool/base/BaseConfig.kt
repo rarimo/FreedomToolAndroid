@@ -2,14 +2,16 @@ package org.freedomtool.base
 
 
 //Main
-object MainConfig {
+object BaseConfig {
     const val CREATE_IDENTITY_LINK =
         "https://kyc.freedomtool.org/integrations/identity-provider-service/v1/create-identity"
 
     const val GIST_DATA_LINK = "https://kyc.freedomtool.org/integrations/identity-provider-service/v1/gist-data"
+
+    const val CLAIM_OFFER_LINK_V2 = "https://issuerapi.freedomtool.org/v1/credentials/{Did}/urn:uuid:f2c8db83-7e1b-493d-a65e-9939d643e79d"
     const val CLAIM_OFFER_LINK = "https://api.robotornot.rarimo.com/v1/{Did}/claims/{claim_id}/offer"
 
-    const val SEND_REGISTRATION_LINK = "https://proofverification.freedomtool.org/integrations/proof-verification-relayer/v1/verify-proof"
+    const val SEND_REGISTRATION_LINK = "https://proofverification.freedomtool.org/integrations/proof-verification-relayer/v1/register"
 
     const val REGISTRATION_ADDRESS = "0x1d84cFd4839fE92dAe8E1F8F777010c08a60013C"
     const val PROPOSAL_ADDRESS = "0x281Ba9DbE471fFf0124368753960f3bdc93f9474"
@@ -23,7 +25,7 @@ object MainConfig {
 //    const val PROPOSAL_ADDRESS = "0xf41ceE234219D6cc3d90A6996dC3276aD378cfCF"
 }
 //TestNet
-object BaseConfig {
+object TestNet {
 
     const val CREATE_IDENTITY_LINK ="https://api.stage.freedomtool.org/integrations/identity-provider-service/v1/create-identity"
     const val GIST_DATA_LINK = "https://api.stage.freedomtool.org/integrations/identity-provider-service/v1/gist-data"

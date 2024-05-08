@@ -38,11 +38,16 @@ interface CircuitBackendApi {
     ): Single<ResponseBody>
 
 
-    @GET(BaseConfig.CLAIM_OFFER_LINK)
+    @GET(BaseConfig.CLAIM_OFFER_LINK_V2)
     fun claimOffer(
-        @Path("Did") identityDid: String,
-        @Path("claim_id") claimId: String
+        @Path("Did") issuerDid: String
     ): Single<ClaimOfferResponse>
+
+//    @GET(BaseConfig.CLAIM_OFFER_LINK)
+//    fun claimOffer(
+//        @Path("Did") issuerDid: String,
+//        @Path("claim_id") claimId: String
+//    ): Single<ClaimOfferResponse>
 
     @POST(BaseConfig.SEND_REGISTRATION_LINK)
     fun sendRegistration(@Body body: SendCalldataRequest): Single<ResponseBody>

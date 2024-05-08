@@ -36,7 +36,7 @@ object VotingProvider {
             val resp = contract.listPoolsByProposerAndType(
                 BaseConfig.PROPOSAL_ADDRESS,
                 BaseConfig.REGISTRATION_TYPE,
-                numberOfVoting.minus(BigInteger.ONE),
+                numberOfVoting.minus(BigInteger.valueOf(1L)),
                 BigInteger.valueOf(4L)
             ).send()
 
@@ -67,6 +67,7 @@ object VotingProvider {
                             val data = registration.registrationInfo().send()
                             val (url, time, registeredCount) = data
 
+                            Log.i("URL", url)
                             val registrationData =
                                 apiProvider.circuitBackend.getRegistrationData(url).blockingGet()
 

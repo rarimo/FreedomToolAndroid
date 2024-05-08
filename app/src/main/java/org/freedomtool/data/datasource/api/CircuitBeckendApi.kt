@@ -40,7 +40,7 @@ interface CircuitBackendApi {
 
     @GET(BaseConfig.CLAIM_OFFER_LINK_V2)
     fun claimOffer(
-        @Path("Did") issuerDid: String
+        @Path("claim_id") claimId: String
     ): Single<ClaimOfferResponse>
 
 //    @GET(BaseConfig.CLAIM_OFFER_LINK)

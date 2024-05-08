@@ -275,11 +275,13 @@ class GenerateVerifiableCredential {
                     Thread.sleep(10 * 1000)
                 }
 
-                val claim_id = SecureSharedPrefs.geiClaimId(context)
+                val claim_id = SecureSharedPrefs.geiClaimId(context)!!
+
+                Log.i("Claim id", claim_id)
 
                 Log.i("IDENTITY DID", identity.did)
                 val claimOfferResponse =
-                    apiProvider.circuitBackend.claimOffer(identity.did).blockingGet()
+                    apiProvider.circuitBackend.claimOffer(claim_id).blockingGet()
 
                 val rawClaimOfferResponse = gson.toJson(claimOfferResponse)
 

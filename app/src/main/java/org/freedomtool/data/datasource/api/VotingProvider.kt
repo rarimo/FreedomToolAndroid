@@ -37,7 +37,7 @@ object VotingProvider {
                 BaseConfig.PROPOSAL_ADDRESS,
                 BaseConfig.REGISTRATION_TYPE,
                 numberOfVoting.minus(BigInteger.valueOf(1L)),
-                BigInteger.valueOf(4L)
+                BigInteger.valueOf(1L)
             ).send()
 
             val voteList = mutableListOf<VotingData>()

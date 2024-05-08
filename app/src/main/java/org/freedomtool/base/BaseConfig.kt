@@ -13,7 +13,7 @@ object BaseConfig {
     const val SEND_REGISTRATION_LINK = "https://proofverification.freedomtool.org/integrations/proof-verification-relayer/v1/register"
 
     const val REGISTRATION_ADDRESS = "0x1d84cFd4839fE92dAe8E1F8F777010c08a60013C"
-    const val PROPOSAL_ADDRESS = "0x281Ba9DbE471fFf0124368753960f3bdc93f9474"
+    const val PROPOSAL_ADDRESS = "0xF5Ca28acbBC7DFFfFFf714e1F306A803037Bdad2"
     const val CORE_LINK = "https://rpc-api.mainnet.rarimo.com"
 
     const val BLOCK_CHAIN_RPC_LINK = "https://arbitrum.freedomtool.org"

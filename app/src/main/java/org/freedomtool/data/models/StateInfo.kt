@@ -11,3 +11,9 @@ data class StateInfo(
 data class StateInfoResponse(
     val state: StateInfo
 )
+
+
+data class FinalizedResponse(
+    val isFinalized: Boolean,
+    val stateInfo: StateInfo
+)

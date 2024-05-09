@@ -19,9 +19,6 @@ object BaseConfig {
     const val BLOCK_CHAIN_RPC_LINK = "https://arbitrum.freedomtool.org"
 
     const val REGISTRATION_TYPE = "Simple Registration"
-
-//    const val REGISTRATION_ADDRESS = "0xECB5371C727a664160c4F4360af77F0Fe4aeb7F9"
-//    const val PROPOSAL_ADDRESS = "0xf41ceE234219D6cc3d90A6996dC3276aD378cfCF"
 }
 //TestNet
 object TestNet {
@@ -40,6 +37,4 @@ object TestNet {
 
 
     const val REGISTRATION_TYPE = "Simple Registration"
-
-
 }

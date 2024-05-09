@@ -20,6 +20,7 @@ import org.freedomtool.data.models.InputsPassport
 import org.freedomtool.data.models.Payload
 import org.freedomtool.data.models.SendCalldataRequest
 import org.freedomtool.data.models.SendCalldataRequestData
+import org.freedomtool.data.models.StateInfo
 import org.freedomtool.data.models.VotingInputs
 import org.freedomtool.data.models.ZkProof
 import org.freedomtool.di.providers.ApiProvider
@@ -270,8 +271,19 @@ class GenerateVerifiableCredential {
             val identityData = IdentityData.fromJson(identityRaw)
 
             it.onNext(0)
+            var stateInfo: StateInfo? = null
             if (SecureSharedPrefs.getVC(context) == null) {
-                while (!isFinalized(identity, identityData, issuerDid)) {
+                while (true) {
+                    val finalizedResponse =
+                        isFinalized(identity, identityData, issuerDid, stateInfo)
+
+                    if (finalizedResponse!!.stateInfo.hash.isNotEmpty()) {
+                        stateInfo = finalizedResponse.stateInfo
+                    }
+
+                    if (finalizedResponse.isFinalized) {
+                        break
+                    }
                     Thread.sleep(10 * 1000)
                 }
 
@@ -306,11 +318,11 @@ class GenerateVerifiableCredential {
                     issuerDid,
                     votingAddress,
                     schemaJson,
-                    getIssuingAuthorityCode(issuerAuthority!!)
+                    getIssuingAuthorityCode(issuerAuthority!!),
+                    Gson().toJson(stateInfo).toByteArray()
                 )
                 val calldataRequest =
                     SendCalldataRequest(SendCalldataRequestData("0x" + callData.toHexString()))
-
 
 
                 val resp =
@@ -334,16 +346,28 @@ class GenerateVerifiableCredential {
     }
 
     private fun isFinalized(
-        identity: Identity_, identityData: IdentityData, issuerDid: String
-    ): Boolean {
+        identity: Identity_, identityData: IdentityData, issuerDid: String, stateInfo: StateInfo?
+    ): org.freedomtool.data.models.FinalizedResponse? {
         try {
-            val res = identity.isFinalized(
-                BaseConfig.CORE_LINK,
-                issuerDid,
-                identityData.timeStamp.toLong(),
+
+            var stateData: ByteArray = "".toByteArray()
+            if (stateInfo != null) {
+                stateData = Gson().toJson(stateInfo).toByteArray()
+            }
+
+            val byteArrayResponse = identity.isFinalized(
+                BaseConfig.CORE_LINK, issuerDid, identityData.timeStamp.toLong(), stateData
             )
 
-            return res
+
+            val response = Gson().fromJson(
+                byteArrayResponse.decodeToString(),
+                org.freedomtool.data.models.FinalizedResponse::class.java
+            )
+
+
+
+            return response
         } catch (e: Exception) {
             throw e
         }

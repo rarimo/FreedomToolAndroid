@@ -20,7 +20,12 @@ data class VotingData(
     val options: List<OptionsData>? = null,
     val votingCount: Long = 0,
     val isActive: Boolean = true,
-) : Parcelable
+    val isReferendum: Boolean = false,
+    val contractYes : String?,
+    val contractNo : String?
+) : Parcelable {
+
+}
 
 @Parcelize
 @Serializable

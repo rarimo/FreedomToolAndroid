@@ -1,4 +1,4 @@
-package org.freedomtool.feature.voting
+package org.freedomtool.feature.voting.referendum
 
 import android.Manifest
 import android.content.Intent
@@ -14,7 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.freedomtool.R
 import org.freedomtool.base.view.BaseActivity
 import org.freedomtool.data.models.VotingData
-import org.freedomtool.databinding.ActivityMustVerifyBinding
+import org.freedomtool.databinding.ActivityReferendumCheckReqBinding
 import org.freedomtool.databinding.LayoutRequirementDeclineItemBinding
 import org.freedomtool.databinding.LayoutRequirementItemBinding
 import org.freedomtool.databinding.LayoutRequirementOkItemBinding
@@ -24,21 +24,20 @@ import org.freedomtool.utils.calculateAge
 import org.freedomtool.utils.nfc.PermissionUtil
 import org.freedomtool.utils.resolveDays
 
-class MustVerifyActivity : BaseActivity() {
+class ReferendumCheckReqActivity : BaseActivity() {
+
 
     private lateinit var voteData: VotingData
 
-    private lateinit var binding: ActivityMustVerifyBinding
+    private lateinit var binding: ActivityReferendumCheckReqBinding
     private var isAllowedToSign = true
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_must_verify)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_referendum_check_req)
         binding.lifecycleOwner = this
 
         voteData = intent?.getParcelableExtra(VOTING_DATA)!!
 
         binding.dataOfVoting.text = resolveDays(this, voteData.dueDate!!)
-        //initViews()
-        //isAllowedToSign()
     }
 
     override fun onResume() {
@@ -92,16 +91,14 @@ class MustVerifyActivity : BaseActivity() {
         if (voteData.requirements?.getNationality() != null) {
             addRequirements(
                 resources.getString(
-                    R.string.is_citizen,
-                    voteData.requirements!!.getNationality()
+                    R.string.is_citizen, voteData.requirements!!.getNationality()
                 )
             )
         }
     }
 
     private fun handleIsPassportScanned() {
-        if (!SecureSharedPrefs.getIsPassportScanned(this))
-            return
+        if (!SecureSharedPrefs.getIsPassportScanned(this)) return
 
         if (voteData.requirements?.age != null) {
 
@@ -133,16 +130,14 @@ class MustVerifyActivity : BaseActivity() {
             if (voteData.requirements!!.isInList(issuer)) {
                 addAccept(
                     resources.getString(
-                        R.string.is_citizen,
-                        voteData.requirements!!.getNationality()
+                        R.string.is_citizen, voteData.requirements!!.getNationality()
                     )
                 )
             } else {
                 isAllowedToSign = false
                 addDecline(
                     resources.getString(
-                        R.string.is_citizen,
-                        voteData.requirements!!.getNationality()
+                        R.string.is_citizen, voteData.requirements!!.getNationality()
                     )
                 )
             }
@@ -157,7 +152,7 @@ class MustVerifyActivity : BaseActivity() {
             clickHelper.setOnClickListener {
                 when (it.id) {
                     binding.mainButton.id -> {
-                        Navigator.from(this).openVoteProcessing(voteData)
+                        Navigator.from(this).openReferendumPage(voteData)
                         finish()
                     }
 
@@ -187,17 +182,13 @@ class MustVerifyActivity : BaseActivity() {
         val isPermissionGranted = PermissionUtil.hasPermissions(this, *permissions)
         if (!isPermissionGranted) {
 
-            MaterialAlertDialogBuilder(this)
-                .setTitle(getString(R.string.permission_title))
+            MaterialAlertDialogBuilder(this).setTitle(getString(R.string.permission_title))
                 .setMessage(resources.getString(R.string.permission_description))
                 .setPositiveButton(resources.getString(R.string.button_ok)) { dialog, which ->
                     ActivityCompat.requestPermissions(
-                        this,
-                        permissions,
-                        PermissionUtil.REQUEST_CODE_MULTIPLE_PERMISSIONS
+                        this, permissions, PermissionUtil.REQUEST_CODE_MULTIPLE_PERMISSIONS
                     )
-                }
-                .show()
+                }.show()
 
 
         } else {
@@ -207,10 +198,7 @@ class MustVerifyActivity : BaseActivity() {
 
     private fun addRequirements(text: String) {
         val binding: LayoutRequirementItemBinding = DataBindingUtil.inflate(
-            layoutInflater,
-            R.layout.layout_requirement_item,
-            binding.reqContainer,
-            true
+            layoutInflater, R.layout.layout_requirement_item, binding.reqContainer, true
         )
         binding.textContent = text
     }
@@ -221,10 +209,7 @@ class MustVerifyActivity : BaseActivity() {
 
     private fun addAccept(text: String) {
         val binding: LayoutRequirementOkItemBinding = DataBindingUtil.inflate(
-            layoutInflater,
-            R.layout.layout_requirement_ok_item,
-            binding.reqContainer,
-            true
+            layoutInflater, R.layout.layout_requirement_ok_item, binding.reqContainer, true
         )
 
         binding.textContent = text
@@ -255,18 +240,13 @@ class MustVerifyActivity : BaseActivity() {
 
     private fun addDecline(text: String) {
         val binding: LayoutRequirementDeclineItemBinding = DataBindingUtil.inflate(
-            layoutInflater,
-            R.layout.layout_requirement_decline_item,
-            binding.reqContainer,
-            true
+            layoutInflater, R.layout.layout_requirement_decline_item, binding.reqContainer, true
         )
         binding.textContent = text
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String?>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<String?>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PermissionUtil.REQUEST_CODE_MULTIPLE_PERMISSIONS) {
@@ -277,8 +257,7 @@ class MustVerifyActivity : BaseActivity() {
                     val uri = Uri.fromParts("package", packageName, null)
                     intent.setData(uri)
                     startActivityForResult(
-                        intent,
-                        APP_SETTINGS_ACTIVITY_REQUEST_CODE
+                        intent, APP_SETTINGS_ACTIVITY_REQUEST_CODE
                     )
                 } else {
                     requestPermissionForCamera()
@@ -290,7 +269,7 @@ class MustVerifyActivity : BaseActivity() {
     }
 
     companion object {
-        const val APP_SETTINGS_ACTIVITY_REQUEST_CODE = 523
+        const val APP_SETTINGS_ACTIVITY_REQUEST_CODE = 527
         const val VOTING_DATA = "VOTING_DATA"
     }
 }

@@ -22,10 +22,16 @@ class VoteAdapter(
 
     private val manifestType = 1
     private val voteType = 2
+    private val referendum = 3
     override fun getItemViewType(position: Int): Int {
+        if (getItems()[position].isReferendum) {
+            return referendum
+        }
+
         if (getItems()[position].isManifest) {
             return manifestType
         }
+
         return voteType
     }
 
@@ -41,6 +47,11 @@ class VoteAdapter(
             voteType -> {
                 val binding = LayoutCardVotingBinding.inflate(inflater, parent, false)
                 VoteViewHolder(binding)
+            }
+
+            referendum -> {
+                val binding = LayoutCardManifestBinding.inflate(inflater, parent, false)
+                ReferendumViewHolder(binding)
             }
 
             else -> {
@@ -65,6 +76,11 @@ class VoteAdapter(
             voteType -> {
                 val voteHolder = holder as VoteViewHolder
                 voteHolder.bind(getItem(position))
+            }
+
+            referendum -> {
+                val referendumViewHolder = holder as ReferendumViewHolder
+                referendumViewHolder.bind(getItem(position))
             }
         }
     }
@@ -125,23 +141,22 @@ class VoteAdapter(
             binding.data = voteData
 
 
-            if(data.excerpt.isNullOrEmpty()){
+            if (data.excerpt.isNullOrEmpty()) {
                 val markdown = Markwon.create(context)
                 markdown.setMarkdown(binding.excertText, data.description)
-            }else {
+            } else {
                 binding.excertText.text = data.excerpt
             }
 
             binding.cardView.setOnClickListener(::onClick)
             binding.excertText.setOnClickListener(::onClick)
 
-            if(!data.isActive){
+            if (!data.isActive) {
                 binding.separator.visibility = View.INVISIBLE
                 binding.calendarImage.visibility = View.INVISIBLE
                 binding.timeText.visibility = View.INVISIBLE
                 return
             }
-
 
 
             val time = resolveDays(context, data.dueDate!!)
@@ -150,5 +165,52 @@ class VoteAdapter(
         }
     }
 
+
+    inner class ReferendumViewHolder(val binding: LayoutCardManifestBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        private lateinit var data: VotingData
+        private val context = binding.root.context
+
+
+        private fun onClick(view: View) {
+            clickHelper.canInvokeClick(::onClickAllowed)
+        }
+
+        private fun onClickAllowed() {
+            if (SecureSharedPrefs.checkIsVoted(context, data.contractAddress!!)) {
+                navigator.openSignedManifest(data)
+                return
+            }
+            navigator.openReferendumCheckReq(data)
+        }
+
+        fun bind(voteData: VotingData) {
+            data = voteData
+            binding.data = voteData
+
+
+            if (data.excerpt.isNullOrEmpty()) {
+                val markdown = Markwon.create(context)
+                markdown.setMarkdown(binding.excertText, data.description)
+            } else {
+                binding.excertText.text = data.excerpt
+            }
+
+            binding.cardView.setOnClickListener(::onClick)
+            binding.excertText.setOnClickListener(::onClick)
+
+            if (!data.isActive) {
+                binding.separator.visibility = View.INVISIBLE
+                binding.calendarImage.visibility = View.INVISIBLE
+                binding.timeText.visibility = View.INVISIBLE
+                return
+            }
+
+
+            val time = resolveDays(context, data.dueDate!!)
+            binding.date = time
+
+        }
+    }
 
 }

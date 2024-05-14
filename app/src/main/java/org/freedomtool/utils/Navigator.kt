@@ -9,8 +9,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import org.freedomtool.R
-import org.freedomtool.feature.browser.BrowserActivity
 import org.freedomtool.data.models.VotingData
+import org.freedomtool.feature.browser.BrowserActivity
 import org.freedomtool.feature.intro.IntroActivity
 import org.freedomtool.feature.intro.StartActivity
 import org.freedomtool.feature.onBoarding.ConfirmationActivity
@@ -27,6 +27,8 @@ import org.freedomtool.feature.voting.VoteOptionsActivity
 import org.freedomtool.feature.voting.VotePageActivity
 import org.freedomtool.feature.voting.VotePassportlessActivity
 import org.freedomtool.feature.voting.VoteProcessingActivity
+import org.freedomtool.feature.voting.referendum.ReferendumCheckReqActivity
+import org.freedomtool.feature.voting.referendum.ReferendumPageActivity
 import org.freedomtool.utils.nfc.model.EDocument
 
 
@@ -148,9 +150,11 @@ class Navigator private constructor() {
         performIntent(intent)
     }
 
-    fun openVoteProcessing(voteData: VotingData) {
+    fun openVoteProcessing(voteData: VotingData, selectedContract: String? = null) {
         val intent = Intent(context, VoteProcessingActivity::class.java)
         intent.putExtra(VoteProcessingActivity.VOTE_DATA, voteData)
+        if (selectedContract != null)
+            intent.putExtra(VoteProcessingActivity.VOTE_REFERENDUM_CONTRACT, selectedContract)
         performIntent(intent)
     }
 
@@ -220,5 +224,17 @@ class Navigator private constructor() {
         performIntent(intent)
     }
 
+    fun openReferendumCheckReq(data: VotingData) {
+        val intent = Intent(context, ReferendumCheckReqActivity::class.java)
+        intent.putExtra(ReferendumCheckReqActivity.VOTING_DATA, data)
+        performIntent(intent)
+    }
+
+
+    fun openReferendumPage(data: VotingData) {
+        val intent = Intent(context, ReferendumPageActivity::class.java)
+        intent.putExtra(ReferendumPageActivity.VOTING_DATA, data)
+        performIntent(intent)
+    }
 
 }

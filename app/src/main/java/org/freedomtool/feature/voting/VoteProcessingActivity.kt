@@ -24,12 +24,22 @@ class VoteProcessingActivity : BaseActivity() {
 
     private lateinit var votingData: VotingData
     private lateinit var statusList: List<MaterialTextView>
+
+    private lateinit var selectedContract: String
     private var isSigned = false
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_vote_processing)
         binding.lifecycleOwner = this
 
         votingData = intent?.getParcelableExtra(VOTE_DATA)!!
+
+        val referendumContract = intent?.getStringExtra(VOTE_REFERENDUM_CONTRACT)
+
+        if (referendumContract != null) {
+            selectedContract = referendumContract
+        } else {
+            selectedContract = votingData.contractAddress!!
+        }
 
 
         statusList = listOf(binding.option1, binding.option2, binding.option3, binding.option4)
@@ -39,7 +49,7 @@ class VoteProcessingActivity : BaseActivity() {
 
     private fun changeStatusView() {
 
-        GenerateVerifiableCredential().register(this, apiProvider, votingData.contractAddress!!)
+        GenerateVerifiableCredential().register(this, apiProvider, selectedContract)
             .compose(ObservableTransformers.defaultSchedulers())
             .subscribe({
                 updateLoading(statusList[it])
@@ -59,7 +69,7 @@ class VoteProcessingActivity : BaseActivity() {
                 }
 
                 if ((it.message as String).contains("user already registered")) {
-                    SecureSharedPrefs.addVoted(this, votingData.contractAddress!!)
+                    SecureSharedPrefs.addVoted(this, selectedContract)
                     handleAlreadyRegisteredError()
                     return@subscribe
                 }
@@ -133,10 +143,10 @@ class VoteProcessingActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if(isSigned){
+        if (isSigned) {
             finish()
             Navigator.from(this).openSignedManifest(votingData)
-        }else {
+        } else {
             finish()
         }
     }
@@ -148,10 +158,10 @@ class VoteProcessingActivity : BaseActivity() {
         clickHelper.setOnClickListener {
             when (it.id) {
                 binding.backButton.id -> {
-                    if(isSigned){
+                    if (isSigned) {
                         finish()
                         Navigator.from(this).openSignedManifest(votingData)
-                    }else {
+                    } else {
                         finish()
                     }
                 }
@@ -166,6 +176,7 @@ class VoteProcessingActivity : BaseActivity() {
 
     companion object {
         const val VOTE_DATA = "VOTE_DATA"
+        const val VOTE_REFERENDUM_CONTRACT = "VOTE_REFERENDUM_CONTRACT"
     }
 
 }

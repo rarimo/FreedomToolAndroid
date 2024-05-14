@@ -73,6 +73,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
     implementation(files("libs/Identity.aar"))
     implementation("androidx.preference:preference:1.2.0")
+    implementation("androidx.activity:activity:1.8.0")
     testImplementation("junit:junit:4.13.2")
     implementation("io.reactivex.rxjava2:rxjava:2.2.9")
     implementation("io.reactivex.rxjava2:rxkotlin:2.0.0")

@@ -49,9 +49,8 @@ class VoteProcessingActivity : BaseActivity() {
 
     private fun changeStatusView() {
 
-        GenerateVerifiableCredential().register(this, apiProvider, selectedContract)
-            .compose(ObservableTransformers.defaultSchedulers())
-            .subscribe({
+        GenerateVerifiableCredential().register(this, apiProvider, selectedContract, votingData.contractAddress)
+            .compose(ObservableTransformers.defaultSchedulers()).subscribe({
                 updateLoading(statusList[it])
             }, {
 
@@ -69,7 +68,10 @@ class VoteProcessingActivity : BaseActivity() {
                 }
 
                 if ((it.message as String).contains("user already registered")) {
-                    SecureSharedPrefs.addVoted(this, selectedContract)
+                    val identity = GenerateVerifiableCredential().createIdentity(
+                        this, apiProvider = apiProvider
+                    )!!
+                    SecureSharedPrefs.saveVotedAddress(this, identity.nullifierHex, selectedContract)
                     handleAlreadyRegisteredError()
                     return@subscribe
                 }
@@ -92,8 +94,7 @@ class VoteProcessingActivity : BaseActivity() {
     }
 
     private fun handleAlreadyRegisteredError() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(getString(R.string.you_already_registered))
+        MaterialAlertDialogBuilder(this).setTitle(getString(R.string.you_already_registered))
             .setPositiveButton(resources.getString(R.string.button_ok)) { dialog, which ->
 
                 Navigator.from(this).openSignedManifest(votingData)
@@ -102,31 +103,26 @@ class VoteProcessingActivity : BaseActivity() {
 
                 Navigator.from(this).openSignedManifest(votingData)
                 finish()
-            }
-            .show()
+            }.show()
     }
 
     private fun handleNoneReworkedCredError() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(getString(R.string.cant_verify_multiple_device))
+        MaterialAlertDialogBuilder(this).setTitle(getString(R.string.cant_verify_multiple_device))
             .setPositiveButton(resources.getString(R.string.button_ok)) { dialog, which ->
                 this.finish()
             }.setOnDismissListener {
                 this.finish()
-            }
-            .show()
+            }.show()
     }
 
 
     private fun handleUnknownError() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(getString(R.string.check_back_later))
+        MaterialAlertDialogBuilder(this).setTitle(getString(R.string.check_back_later))
             .setPositiveButton(resources.getString(R.string.button_ok)) { dialog, which ->
                 this.finish()
             }.setOnDismissListener {
                 this.finish()
-            }
-            .show()
+            }.show()
     }
 
     private fun handleEndOfHandler() {

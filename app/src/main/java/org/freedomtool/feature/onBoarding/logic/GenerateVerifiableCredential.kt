@@ -172,7 +172,7 @@ class GenerateVerifiableCredential {
                 identity.nullifierHex,
                 response.data.attributes.issuer_did,
                 response.data.attributes.claim_id,
-                (timestamp).toString()
+                (timestamp).toString(),
             )
             SecureSharedPrefs.addCachedIdentity(context, eDocument.dg2Hash!!, storedIdentityData)
 
@@ -185,7 +185,7 @@ class GenerateVerifiableCredential {
     //TODO implement this method
     @OptIn(ExperimentalStdlibApi::class)
     fun vote(context: Context, apiProvider: ApiProvider, vote: String): Completable {
-        val identity = createIdentity(context, apiProvider)
+        val identity = createIdentity(context, apiProvider)!!
         val contractAddress = "0xFc86C6F2483bef470C38e4816E371f6bc996FcF3"
         val ecKeyPair = Keys.createEcKeyPair()
 
@@ -233,8 +233,9 @@ class GenerateVerifiableCredential {
         }
     }
 
-    private fun createIdentity(context: Context, apiProvider: ApiProvider): Identity_ {
-        val identityRaw = SecureSharedPrefs.getIdentityData(context)!!
+
+    fun createIdentity(context: Context, apiProvider: ApiProvider): Identity_? {
+        val identityRaw = SecureSharedPrefs.getIdentityData(context) ?: return null
         val identityData = IdentityData.fromJson(identityRaw)
         val identity = Identity.newIdentityWithData(
             identityData.secretKeyHex,
@@ -247,11 +248,18 @@ class GenerateVerifiableCredential {
 
     @OptIn(ExperimentalStdlibApi::class)
     fun register(
-        context: Context, apiProvider: ApiProvider, votingAddress: String
+        context: Context, apiProvider: ApiProvider, votingAddress: String, contractToSave: String?
     ): Observable<Int> {
 
-        val identity = createIdentity(context, apiProvider)
+        val identity = createIdentity(context, apiProvider)!!
         val gson = Gson()
+
+        val savableContract: String
+        if (contractToSave != null) {
+            savableContract = contractToSave
+        }else {
+            savableContract = votingAddress
+        }
 
         return Observable.create {
 
@@ -339,6 +347,8 @@ class GenerateVerifiableCredential {
             }
 
             it.onNext(3)
+
+            SecureSharedPrefs.saveVotedAddress(context, identity.nullifierHex, savableContract)
 
             it.onComplete()
 

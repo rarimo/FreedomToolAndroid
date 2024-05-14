@@ -8,6 +8,8 @@ import io.noties.markwon.Markwon
 import org.freedomtool.data.models.VotingData
 import org.freedomtool.databinding.LayoutCardManifestBinding
 import org.freedomtool.databinding.LayoutCardVotingBinding
+import org.freedomtool.di.providers.ApiProvider
+import org.freedomtool.feature.onBoarding.logic.GenerateVerifiableCredential
 import org.freedomtool.logic.persistance.SecureSharedPrefs
 import org.freedomtool.utils.BaseAdapter
 import org.freedomtool.utils.ClickHelper
@@ -17,7 +19,8 @@ import org.freedomtool.utils.resolveDays
 class VoteAdapter(
     val clickHelper: ClickHelper,
     val navigator: Navigator,
-    val secureSharedPreferences: SecureSharedPrefs
+    val secureSharedPreferences: SecureSharedPrefs,
+    val apiProvider: ApiProvider
 ) : BaseAdapter<VotingData, RecyclerView.ViewHolder>() {
 
     private val manifestType = 1
@@ -129,7 +132,9 @@ class VoteAdapter(
         }
 
         private fun onClickAllowed() {
-            if (SecureSharedPrefs.checkIsVoted(context, data.contractAddress!!)) {
+            val identity =
+                GenerateVerifiableCredential().createIdentity(context, apiProvider = apiProvider)
+            if (SecureSharedPrefs.checkIsVoted(context, identity?.nullifierHex, data.contractAddress!!)) {
                 navigator.openSignedManifest(data)
                 return
             }
@@ -177,7 +182,10 @@ class VoteAdapter(
         }
 
         private fun onClickAllowed() {
-            if (SecureSharedPrefs.checkIsVoted(context, data.contractAddress!!)) {
+
+            val identity =
+                GenerateVerifiableCredential().createIdentity(context, apiProvider = apiProvider)
+            if (SecureSharedPrefs.checkIsVoted(context, identity?.nullifierHex, data.contractAddress!!)) {
                 navigator.openSignedManifest(data)
                 return
             }

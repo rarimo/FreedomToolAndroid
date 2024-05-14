@@ -188,4 +188,6 @@
     <string name="next_voter_title">Вы можете использовать это устройство, чтобы\nдать возможность другим голосовать.</string>
     <string name="next_voter_description">Устройство автоматически удалит предыдущие данные голосующего и отсканирует новый паспорт для голосования.</string>
     <string name="cancel">Отменить</string>
+    <string name="pin_code_dont_match">Пин-код не совпадает</string>
+    <string name="please_try_again">Пожалуйста, попробуйте еще раз</string>
 </resources>

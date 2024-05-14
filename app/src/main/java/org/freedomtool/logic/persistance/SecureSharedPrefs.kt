@@ -2,12 +2,11 @@ package org.freedomtool.logic.persistance
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.freedomtool.data.models.IdentityData
 import org.freedomtool.data.models.IdentityDataStored
 
 
@@ -32,6 +31,7 @@ object SecureSharedPrefs {
         "PIN_CODE" to "PIN_CODE",
         "IS_BIOMETRIC_ENABLED" to "IS_BIOMETRIC_ENABLED",
         "CACHED_KEYS" to "CACHED_KEYS",
+        "HASH_MAP_ADDRESSES" to "HASH_MAP_ADDRESSES",
     )
 
     private fun getSharedPreferences(context: Context): SharedPreferences {
@@ -58,11 +58,13 @@ object SecureSharedPrefs {
         return map.getOrDefault(key = hash, defaultValue = null)
     }
 
-    private fun loadCachedIdentity(context: Context): Map<String, IdentityDataStored> {
+    fun loadCachedIdentity(context: Context): Map<String, IdentityDataStored> {
         val json: String =
             getSharedPreferences(context).getString(tags["CACHED_KEYS"], null) ?: return emptyMap()
 
-        return Gson().fromJson(json, object : TypeToken<Map<String?, IdentityDataStored?>?>() {}.type)
+        return Gson().fromJson(
+            json, object : TypeToken<Map<String?, IdentityDataStored?>?>() {}.type
+        )
     }
 
     private fun saveCachedIdentity(context: Context, map: Map<String, IdentityDataStored>?) {
@@ -74,23 +76,22 @@ object SecureSharedPrefs {
 
 
     fun addCachedIdentity(context: Context, key: String, value: IdentityDataStored) {
-        val map =
-            loadCachedIdentity(context).toMutableMap()
+        val map = loadCachedIdentity(context).toMutableMap()
         map[key] = value
         saveCachedIdentity(context, map)
     }
 
-    fun addVoted(context: Context, address: String) {
-        val sharedPreferences = getSharedPreferences(context)
-        val editor = sharedPreferences.edit()
-        val currentSavedData =
-            sharedPreferences.getStringSet(tags["SAVED_VOTING"], HashSet<String>())
-
-        currentSavedData!!.add(address)
-
-        editor.putStringSet(tags["SAVED_VOTING"], currentSavedData)
-        editor.apply()
-    }
+//    fun addVoted(context: Context, address: String) {
+//        val sharedPreferences = getSharedPreferences(context)
+//        val editor = sharedPreferences.edit()
+//        val currentSavedData =
+//            sharedPreferences.getStringSet(tags["SAVED_VOTING"], HashSet<String>())
+//
+//        currentSavedData!!.add(address)
+//
+//        editor.putStringSet(tags["SAVED_VOTING"], currentSavedData)
+//        editor.apply()
+//    }
 
     private fun getFinalizationVote(context: Context): Set<String> {
         val sharedPreferences = getSharedPreferences(context)
@@ -101,10 +102,10 @@ object SecureSharedPrefs {
     fun addFinalizationVote(context: Context, address: String) {
         val sharedPreferences = getSharedPreferences(context)
         val editor = sharedPreferences.edit()
-        val currentSavedData =
-            sharedPreferences.getStringSet(tags["FINALIZATION_VOTE"], HashSet<String>())
+        val currentSavedData = getFinalizationVote(context).toMutableSet()
 
-        currentSavedData!!.add(address)
+        currentSavedData.add(address)
+
 
         editor.putStringSet(tags["SAVED_VOTING"], currentSavedData)
         editor.apply()
@@ -115,15 +116,15 @@ object SecureSharedPrefs {
         return set.contains(address)
     }
 
-    private fun getVoted(context: Context): Set<String> {
-        val sharedPreferences = getSharedPreferences(context)
-        return sharedPreferences.getStringSet(tags["SAVED_VOTING"], HashSet<String>()).orEmpty()
-    }
+//    private fun getVoted(context: Context): Set<String> {
+//        val sharedPreferences = getSharedPreferences(context)
+//        return sharedPreferences.getStringSet(tags["SAVED_VOTING"], HashSet<String>()).orEmpty()
+//    }
 
-    fun checkIsVoted(context: Context, address: String): Boolean {
-        val set = getVoted(context)
-        return set.contains(address)
-    }
+//    fun checkIsVoted(context: Context, address: String): Boolean {
+//        val set = getVoted(context)
+//        return set.contains(address)
+//    }
 
     fun getIssuerDid(context: Context): String? {
         val sharedPreferences = getSharedPreferences(context)
@@ -145,6 +146,7 @@ object SecureSharedPrefs {
             if (entry.value == tags["LOCALE"]) continue
             if (entry.value == tags["PIN_CODE"]) continue
             if (entry.value == tags["CACHED_KEYS"]) continue
+            if (entry.value == tags["HASH_MAP_ADDRESSES"]) continue
             editor.remove(entry.value)
         }
         editor.apply()
@@ -219,7 +221,7 @@ object SecureSharedPrefs {
 
     fun getIdentityData(context: Context): String? {
         val sharedPreferences = getSharedPreferences(context)
-        return sharedPreferences.getString(tags["IDENTITY"], "")
+        return sharedPreferences.getString(tags["IDENTITY"], null)
     }
 
     fun isFirstLaunch(context: Context): Boolean {
@@ -292,5 +294,38 @@ object SecureSharedPrefs {
         return sharedPreferences.getString(tags["CLAIM_ID"], "")
     }
 
+    private fun getVotedAddressesByDid(context: Context, nullifier: String): List<String> {
+        val addressMap: Map<String, List<String>> = getVotedAddressesMap(context = context)
+        return addressMap.getOrDefault(nullifier, ArrayList())
+    }
 
+     fun getVotedAddressesMap(context: Context): Map<String, List<String>> {
+        val json = getSharedPreferences(context).getString(tags["HASH_MAP_ADDRESSES"], "")
+        if (json.isNullOrEmpty()) {
+            return emptyMap()
+        }
+        val type = object : TypeToken<Map<String?, List<String?>?>?>() {}.type
+        return Gson().fromJson(json, type)
+    }
+    fun checkIsVoted(context: Context, nullifier: String?, address: String): Boolean {
+        if (nullifier == null) return false
+        val list = getVotedAddressesByDid(context, nullifier)
+        return list.contains(address)
+    }
+
+    fun saveVotedAddress(context: Context, nullifier: String, address: String) {
+        Log.i("nullifier", nullifier)
+        val addressMap: MutableMap<String, List<String>> =
+            getVotedAddressesMap(context).toMutableMap()
+        val addresses = addressMap.getOrDefault(nullifier, mutableListOf()).toMutableList()
+        addresses.add(address)
+        addressMap.put(nullifier, addresses)
+        saveAddressesMap(context, addressMap)
+    }
+
+    private fun saveAddressesMap(context: Context, addressMap: Map<String, List<String>>) {
+        val json: String = Gson().toJson(addressMap)
+        getSharedPreferences(context = context).edit().putString(tags["HASH_MAP_ADDRESSES"], json)
+            .apply()
+    }
 }

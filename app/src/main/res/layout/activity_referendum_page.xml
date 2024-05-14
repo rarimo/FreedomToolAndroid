@@ -39,6 +39,31 @@
             app:layout_constraintTop_toBottomOf="@+id/cancel_button"
             tools:text="Anti election manifest for presidential elections" />
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView10">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendar" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/date"
+                style="@style/Theme.Voting.SecondaryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                tools:text="ends in " />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
@@ -50,7 +75,7 @@
             app:layout_constraintBottom_toTopOf="@+id/view4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView10">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -71,56 +96,34 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="@{data.description}"
+                        android:text="@{data.metadata.question}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/materialTextView10"
                         tools:text="Amidst the scenic landscapes of Chile, an appalling scenario unfolds in Molina, where greyhounds are subjected to alleged racing and mistreatment, veiled under the guise of sport. Allegations pinpoint Mayor Priscilla Castillo, alongside council members Cristian Aguilera and Francisco Valdes, for inaugurating a greyhound racetrack, igniting widespread condemnation from animal rights organizations. This alleged act " />
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/linearLayoutCompat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/markdownText">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_calendar" />
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/date"
-                            style="@style/Theme.Voting.SecondaryText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            tools:text="ends in " />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/option_1"
-                        style="@style/Theme.Voting.ChooseButton.UnSelected"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/yes"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/data_of_voting" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/option_2"
                         style="@style/Theme.Voting.ChooseButton.UnSelected"
                         android:layout_width="match_parent"
                         android:layout_marginTop="16dp"
-                        android:text="@string/no"
+                        android:text="@{data.metadataNo.option}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/data_of_voting" />
+                        app:layout_constraintTop_toBottomOf="@+id/data_of_voting"
+                        tools:text="@string/button_no" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/option_1"
+                        style="@style/Theme.Voting.ChooseButton.UnSelected"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:text="@{data.metadataYes.option}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/data_of_voting"
+                        tools:text="@string/button_yes" />
                 </LinearLayout>
 
             </androidx.appcompat.widget.LinearLayoutCompat>

@@ -72,7 +72,7 @@ object VotingProvider {
                         header = registrationData.name,
                         excerpt = registrationData.excerpt,
                         description = registrationData.description,
-                        contractAddress = registrationAddress,
+                        contractAddress = resp[1] as String,
                         dueDate = time.commitmentEndTime.toLong(),
                         isPassportRequired = true,
                         requirements = RequirementsForVoting(
@@ -82,8 +82,9 @@ object VotingProvider {
                         isActive = registrationData.isActive == true && !isEnded(time.commitmentEndTime.toLong()),
                         votingCount = registeredCount.totalRegistrations.toLong(),
                         isReferendum = true,
-                        contractNo = resp[0] as String,
-                        contractYes = resp[1] as String,
+                        contractNo = resp[1] as String,
+                        contractYes = resp[0] as String,
+                        metadata = registrationData.metadata
                     )
                 }.compose(ObservableTransformers.defaultSchedulersSingle()).blockingGet()
             }.toList()
@@ -94,13 +95,24 @@ object VotingProvider {
 
                     voteListEnded.add(votingData)
                 } else {
-                    Log.i("YES", votingData.contractYes!!)
-                    Log.i("NO", votingData.contractNo!!)
                     voteList.add(votingData)
                 }
             }
 
-            Pair(listOf(voteList.reversed().first()), voteListEnded.reversed())
+            val prodContract = voteList.reversed().first()
+            prodContract.metadataNo = voteList[1].metadata
+            prodContract.metadataYes = voteList[0].metadata
+            
+            prodContract.votingCount = voteList[0].votingCount.plus(voteList[1].votingCount)
+
+            Log.i("Total Count", prodContract.votingCount.toString())
+            Log.i("voteList[0]", voteList[0].votingCount.toString())
+            Log.i("voteList[1]", voteList[1].votingCount.toString())
+
+            Log.i("YES", prodContract.metadataYes.toString())
+            Log.i("No", prodContract.metadataNo.toString())
+
+            Pair(listOf(prodContract), voteListEnded.reversed())
         }
     }
 

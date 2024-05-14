@@ -101,9 +101,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="16dp"
                     android:text="@string/you_and_x_other_people_already_signed"
                     app:layout_constraintEnd_toStartOf="@+id/appCompatImageView11"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/name">
 

@@ -9,7 +9,7 @@ data class IdentityDataStored(
     val nullifierHex: String,
     val issuer_did: String,
     val claim_id: String,
-    val timeStamp: String
+    val timeStamp: String,
 ){
     fun toJson(): String {
         val gson = Gson()

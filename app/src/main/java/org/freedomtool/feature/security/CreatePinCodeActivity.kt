@@ -152,8 +152,8 @@ class CreatePinCodeActivity : BaseActivity() {
     }
 
     private fun restartState() {
-        MaterialAlertDialogBuilder(this).setTitle("PassCode don't match")
-            .setMessage("Please try again").setPositiveButton("") { _, _ ->
+        MaterialAlertDialogBuilder(this).setTitle(getString(R.string.pin_code_dont_match))
+            .setMessage(getString(R.string.please_try_again)).setPositiveButton("") { _, _ ->
                 isChecking = false
                 binding.header.text = getString(R.string.enter_passcode)
                 pinCode = ""

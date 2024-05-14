@@ -175,5 +175,7 @@
     <string name="next_voter_title">You can use this device to\nenable others to vote</string>
     <string name="next_voter_description">This device automatically deletes previous voter data\nand scans new passports for voting</string>
     <string name="cancel">Cancel</string>
+    <string name="pin_code_dont_match">Pin code don\'t match</string>
+    <string name="please_try_again">Please try again</string>
 
 </resources>

@@ -18,11 +18,14 @@ data class VotingData(
     val requirements: RequirementsForVoting? = null,
     val isManifest: Boolean = false,
     val options: List<OptionsData>? = null,
-    val votingCount: Long = 0,
+    var votingCount: Long = 0,
     val isActive: Boolean = true,
     val isReferendum: Boolean = false,
     val contractYes : String?,
-    val contractNo : String?
+    val contractNo : String?,
+    val metadata: Metadata? = null,
+    var metadataYes: Metadata? = null,
+    var metadataNo : Metadata? = null
 ) : Parcelable {
 
 }

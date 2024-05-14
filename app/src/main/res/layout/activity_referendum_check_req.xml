@@ -39,14 +39,28 @@
             app:layout_constraintTop_toBottomOf="@+id/back_button"
             tools:text="@string/pool_1_header" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/data_of_voting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:drawableStart="@drawable/ic_calendar"
+            android:drawablePadding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header" />
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:paddingBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/vote_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header"
+            app:layout_constraintTop_toBottomOf="@+id/data_of_voting"
             app:layout_constraintVertical_bias="1.0">
 
 
@@ -64,20 +78,8 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
                     android:text="@{data.description}"
-                    tools:text="Amidst the scenic landscapes of Chile, an appalling scenario unfolds in Molina, where greyhounds are subjected to alleged racing and mistreatment, veiled under the guise of sport. Allegations pinpoint Mayor Priscilla Castillo, alongside council members Cristian Aguilera and Francisco Valdes, for inaugurating a greyhound racetrack, igniting widespread condemnation from animal rights organizations. This alleged act " />
+                    tools:text="asdkmalpkdlpkdakd oakop qkwdkql kqpodlk opqwkd opwkldpo[awlk p[akd, lwakpo" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/data_of_voting"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="24dp"
-                    android:drawableStart="@drawable/ic_calendar"
-                    android:drawablePadding="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/header" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/materialCardView2"
@@ -149,7 +151,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/vote_container"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

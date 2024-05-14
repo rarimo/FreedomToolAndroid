@@ -1,6 +1,5 @@
 package org.freedomtool.feature.voting
 
-import android.app.ActivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,20 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import io.reactivex.Completable
 import io.reactivex.rxkotlin.addTo
 import org.freedomtool.R
 import org.freedomtool.base.view.BaseActivity
 import org.freedomtool.data.datasource.api.VotingProvider
 import org.freedomtool.data.models.VotingData
 import org.freedomtool.databinding.ActivityVoteListBinding
+import org.freedomtool.feature.setings.SettingsFragment
 import org.freedomtool.feature.voting.logic.VoteAdapter
 import org.freedomtool.logic.persistance.SecureSharedPrefs
-import org.freedomtool.feature.setings.SettingsFragment
 import org.freedomtool.utils.Navigator
 import org.freedomtool.utils.ObservableTransformers
-import org.freedomtool.utils.ZKPTools
-import org.freedomtool.utils.ZKPUseCase
 import org.freedomtool.utils.unSafeLazy
 
 
@@ -37,13 +33,18 @@ class VoteListActivity : BaseActivity() {
 
 
     private val voteAdapter by unSafeLazy {
-        VoteAdapter(clickHelper, Navigator.from(this), SecureSharedPrefs)
+        VoteAdapter(clickHelper, Navigator.from(this), SecureSharedPrefs, apiProvider)
     }
 
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_vote_list)
         binding.lifecycleOwner = this
 
+
+        val t = SecureSharedPrefs.getVotedAddressesMap(this)
+        val g = SecureSharedPrefs.loadCachedIdentity(this)
+        Log.i("Vote", t.toString())
+        Log.i("CachedIden", g.toString())
         if (savedInstanceState != null && !voteAdapter.hasData) {
             restoreFromMemory(savedInstanceState)
         } else {
@@ -137,6 +138,7 @@ class VoteListActivity : BaseActivity() {
         }
 
     }
+
 
     private fun clearAllData() {
         MaterialAlertDialogBuilder(this).setTitle(getString(R.string.delete_all_data_header))

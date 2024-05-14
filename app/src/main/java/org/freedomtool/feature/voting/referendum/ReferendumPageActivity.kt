@@ -40,6 +40,18 @@ class ReferendumPageActivity : BaseActivity() {
         binding.signBtn.backgroundTintList =
             ContextCompat.getColorStateList(this, R.color.unselected_button_color)
 
+
+        if (votingData.metadata?.question == null) {
+            binding.markdownText.text = votingData.description
+        }
+
+        if (votingData.metadataYes?.option == null) {
+            binding.option1.text = getString(R.string.button_yes)
+        }
+
+        if (votingData.metadataNo?.option == null) {
+            binding.option2.text = getString(R.string.button_no)
+        }
         initButton()
     }
 
@@ -61,8 +73,7 @@ class ReferendumPageActivity : BaseActivity() {
             when (it.id) {
 
                 binding.signBtn.id -> {
-                    Navigator.from(this)
-                        .openVoteProcessing(voteData = votingData, selectedOption)
+                    Navigator.from(this).openVoteProcessing(voteData = votingData, selectedOption)
 
                 }
 
@@ -71,6 +82,7 @@ class ReferendumPageActivity : BaseActivity() {
                 }
 
                 binding.option1.id -> {
+                    Log.i("YES", votingData.contractYes!! + votingData.metadataYes!!.option)
                     clearButtons()
                     binding.option1.backgroundTintList =
                         ContextCompat.getColorStateList(this, R.color.primary_button_color)
@@ -82,6 +94,8 @@ class ReferendumPageActivity : BaseActivity() {
                 }
 
                 binding.option2.id -> {
+
+                    Log.i("No", votingData.contractNo!! + votingData.metadataNo!!.option)
                     clearButtons()
                     binding.option2.backgroundTintList =
                         ContextCompat.getColorStateList(this, R.color.primary_button_color)

@@ -53,6 +53,7 @@ class ReferendumCheckReqActivity : BaseActivity() {
             ContextCompat.getColorStateList(this, R.color.primary_button_color)
         binding.aprovedView.setTextColor(resources.getColor(R.color.black))
         binding.aprovedView.text = getString(R.string.you_can_vote)
+        binding.mainButton.text = getString(R.string.sign)
     }
 
     private fun declineToUser() {
@@ -232,9 +233,9 @@ class ReferendumCheckReqActivity : BaseActivity() {
         }
         if (SecureSharedPrefs.getIsPassportScanned(this)) {
             allowToUser()
+
         }
 
-        binding.mainButton.text = getString(R.string.sign)
 
     }
 

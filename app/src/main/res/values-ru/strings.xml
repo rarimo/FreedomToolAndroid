@@ -34,7 +34,7 @@
     <string name="confirm">Подтвердить</string>
     <string name="polls">Опросы</string>
     <string name="please_wait">Пожалуйста, подождите…</string>
-    <string name="comfirm_proof_description">Создаем анонимизированное\nудостоверения личности</string>
+    <string name="comfirm_proof_description">Создаем анонимизированное\nудостоверение личности</string>
     <string name="generating_proof_tip"><b>Помните:</b> Ваши данные хранятся только на этом устройстве, никогда не раскрываются и не передаются третьим лицам</string>
     <string name="all_done">Все готово !</string>
     <string name="all_done_description">Вы будете перенаправлены\nчерез 5 секунд</string>
@@ -186,6 +186,6 @@
     <string name="repeat_passcode">Повторите Пинкод</string>
     <string name="next_voter">Следующий голосующий</string>
     <string name="next_voter_title">Вы можете использовать это устройство, чтобы\nдать возможность другим голосовать.</string>
-    <string name="next_voter_description">Устройство автоматически удалит предыдущие данные голосующего и сосканирует новый паспорт для голосования.</string>
+    <string name="next_voter_description">Устройство автоматически удалит предыдущие данные голосующего и отсканирует новый паспорт для голосования.</string>
     <string name="cancel">Отменить</string>
 </resources>

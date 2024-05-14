@@ -61,7 +61,6 @@ class OtherVoterFragment : BaseBottomSheetDialog() {
 
                 binding.nextVoterButton.id -> {
                     dismiss()
-                    SecureSharedPrefs.clearAllData(requireContext())
                     requireActivity().finish()
                     Navigator.from(requireContext()).openScan()
                 }

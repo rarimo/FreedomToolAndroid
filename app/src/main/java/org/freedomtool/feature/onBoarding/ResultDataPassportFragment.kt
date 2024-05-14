@@ -51,14 +51,7 @@ class ResultDataPassportFragment : BaseFragment() {
         binding.dateOfBirth.text = eDocumentData!!.personDetails!!.birthDate
         binding.nationality.text = eDocumentData!!.personDetails!!.nationality
 
-        SecureSharedPrefs.saveDateOfBirth(
-            requireContext(),
-            eDocumentData!!.personDetails!!.birthDate!!
-        )
-        SecureSharedPrefs.saveIssuerAuthority(
-            requireContext(),
-            eDocumentData!!.personDetails!!.issuerAuthority!!
-        )
+
 
         if (checkExpiryDate(eDocumentData!!.personDetails!!.expiryDate!!)) {
             MaterialAlertDialogBuilder(requireActivity())
@@ -91,8 +84,20 @@ class ResultDataPassportFragment : BaseFragment() {
         clickHelper.setOnClickListener {
             when (it.id) {
                 binding.confirmButton.id -> {
+
+                    SecureSharedPrefs.clearAllData(requireContext())
+
+                    SecureSharedPrefs.saveDateOfBirth(
+                        requireContext(),
+                        eDocumentData!!.personDetails!!.birthDate!!
+                    )
+                    SecureSharedPrefs.saveIssuerAuthority(
+                        requireContext(),
+                        eDocumentData!!.personDetails!!.issuerAuthority!!
+                    )
                     Navigator.from(this).openConfirmation(eDocumentData!!)
                     requireActivity().finish()
+
                 }
             }
         }

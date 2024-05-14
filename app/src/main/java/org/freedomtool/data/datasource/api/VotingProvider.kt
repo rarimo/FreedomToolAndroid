@@ -88,10 +88,14 @@ object VotingProvider {
                 }.compose(ObservableTransformers.defaultSchedulersSingle()).blockingGet()
             }.toList()
 
+
             registrationDataListSingle.forEach { votingData ->
                 if (isEnded(votingData.dueDate!!)) {
+
                     voteListEnded.add(votingData)
                 } else {
+                    Log.i("YES", votingData.contractYes!!)
+                    Log.i("NO", votingData.contractNo!!)
                     voteList.add(votingData)
                 }
             }

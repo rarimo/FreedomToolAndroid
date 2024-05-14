@@ -20,11 +20,6 @@ import org.freedomtool.utils.Navigator
 import org.freedomtool.utils.nfc.PermissionUtil
 import org.freedomtool.utils.resolveDays
 
-
-private enum class ReferendumState {
-    DESCRIPTION, SIGNING
-}
-
 class ReferendumPageActivity : BaseActivity() {
 
     private lateinit var binding: ActivityReferendumPageBinding

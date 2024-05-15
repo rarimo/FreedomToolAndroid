@@ -62,20 +62,20 @@
             android:layout_width="0dp"
             android:layout_marginStart="34dp"
             android:layout_marginEnd="34dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="24dp"
             android:text="@string/let_s_start"
-            app:layout_constraintBottom_toTopOf="@+id/materialTextView"
+            app:layout_constraintBottom_toTopOf="@+id/privacy_policy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView"
+            android:id="@+id/privacy_policy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="24dp"
             android:drawableStart="@drawable/ic_shield_locked"
             android:drawablePadding="12dp"
-            android:text="@string/secure_and_decentralized"
+            android:text="@string/privacyPolicy"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

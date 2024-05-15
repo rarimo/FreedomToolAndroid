@@ -18,7 +18,7 @@
     <string name="title_activity_scan">ScanActivity</string>
     <!-- Strings used for fragments for navigation -->
 
-    <string name="scan_your_passport">Scan your Document or\nemployee card</string>
+    <string name="scan_your_passport">Scan your passport</string>
     <string name="scan_passport_description">Data is stored only on a device</string>
     <string name="passport_camera_tip">Move your PASSPORT card inside\nthe border</string>
     <string name="nfc_scan_tip">Move your passport inside the border</string>

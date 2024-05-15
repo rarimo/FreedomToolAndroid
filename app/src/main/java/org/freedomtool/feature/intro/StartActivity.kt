@@ -4,6 +4,7 @@ package org.freedomtool.feature.intro
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import org.freedomtool.R
+import org.freedomtool.base.BaseConfig
 import org.freedomtool.base.view.BaseActivity
 import org.freedomtool.databinding.ActivityStartBinding
 import org.freedomtool.utils.LocalizationManager
@@ -21,7 +22,7 @@ class StartActivity : BaseActivity() {
     }
 
     private fun initButton() {
-        clickHelper.addViews(binding.changeLanguage, binding.start)
+        clickHelper.addViews(binding.changeLanguage, binding.start, binding.privacyPolicy)
 
         clickHelper.setOnClickListener {
             when (it.id) {
@@ -33,6 +34,10 @@ class StartActivity : BaseActivity() {
                 binding.start.id -> {
                     finish()
                     Navigator.from(this).openIntro()
+                }
+
+                binding.privacyPolicy.id -> {
+                    Navigator.from(this).openBrowser(BaseConfig.PRIVACY_POLICY_URL)
                 }
 
             }

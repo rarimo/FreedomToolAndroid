@@ -20,7 +20,7 @@
     <string name="participate_description">Полностью защищенная конфиденциальная\nдецентрализованная система голосования</string>
     <string name="title_activity_scan">ScanActivity</string>
 
-    <string name="scan_your_passport">Отсканируйте ваш документ\nили служебную карту</string>
+    <string name="scan_your_passport">Отсканируйте ваш паспорт</string>
     <string name="scan_passport_description">Данные хранятся только на устройстве</string>
     <string name="passport_camera_tip">Наведите камеру на ваш паспорт</string>
     <string name="nfc_scan_tip">Приложите обложку Документа к\nзадней части телефона</string>

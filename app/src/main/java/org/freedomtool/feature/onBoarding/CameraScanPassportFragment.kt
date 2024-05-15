@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import org.freedomtool.R
+import org.freedomtool.base.BaseConfig
 import org.freedomtool.base.view.BaseFragment
 import org.freedomtool.databinding.FragmentCameraScanPassportBinding
 import org.freedomtool.mlkit.text.TextRecognitionProcessor.ResultListener
@@ -83,7 +84,7 @@ class CameraScanPassportFragment : BaseFragment(), ResultListener {
         clickHelper.setOnClickListener {
             when(it.id){
                 binding.privacyText.id -> {
-                    Navigator.from(this).openBrowser("https://russia2024.net/privacy-policy.html")
+                    Navigator.from(this).openBrowser(BaseConfig.PRIVACY_POLICY_URL)
                 }
             }
         }

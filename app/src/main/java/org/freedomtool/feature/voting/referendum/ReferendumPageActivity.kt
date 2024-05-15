@@ -43,14 +43,20 @@ class ReferendumPageActivity : BaseActivity() {
 
         if (votingData.metadata?.question == null) {
             binding.markdownText.text = votingData.description
+        }else {
+            binding.markdownText.text = votingData.metadata!!.question
         }
 
         if (votingData.metadataYes?.option == null) {
             binding.option1.text = getString(R.string.button_yes)
+        }else {
+            binding.option1.text = votingData.metadataYes!!.option
         }
 
         if (votingData.metadataNo?.option == null) {
             binding.option2.text = getString(R.string.button_no)
+        }else {
+            binding.option2.text = votingData.metadataNo?.option
         }
         initButton()
     }
@@ -82,7 +88,7 @@ class ReferendumPageActivity : BaseActivity() {
                 }
 
                 binding.option1.id -> {
-                    Log.i("YES", votingData.contractYes!! + votingData.metadataYes!!.option)
+                    Log.i("YES", votingData.contractYes!! + votingData.metadataYes?.option)
                     clearButtons()
                     binding.option1.backgroundTintList =
                         ContextCompat.getColorStateList(this, R.color.primary_button_color)
@@ -95,7 +101,7 @@ class ReferendumPageActivity : BaseActivity() {
 
                 binding.option2.id -> {
 
-                    Log.i("No", votingData.contractNo!! + votingData.metadataNo!!.option)
+                    Log.i("No", votingData.contractNo + votingData.metadataNo?.option)
                     clearButtons()
                     binding.option2.backgroundTintList =
                         ContextCompat.getColorStateList(this, R.color.primary_button_color)

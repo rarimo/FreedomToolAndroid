@@ -204,6 +204,51 @@
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/privacy_policy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/appCompatImageView19"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginTop="21dp"
+                        android:tint="@color/black"
+                        android:layout_marginBottom="21dp"
+                        android:src="@drawable/ic_shield_locked"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/materialTextView200"
+                        style="@style/Theme.Voting.PrimaryText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbars = "vertical"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/privacyPolicy"
+                        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView19"
+                        app:layout_constraintStart_toEndOf="@+id/appCompatImageView19"
+                        app:layout_constraintTop_toTopOf="@+id/appCompatImageView19" />
+
+
+                    <View
+                        android:id="@+id/view10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:background="#F2F2F2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/logout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

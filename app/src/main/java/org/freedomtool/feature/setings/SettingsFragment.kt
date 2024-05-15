@@ -11,6 +11,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import org.freedomtool.R
+import org.freedomtool.base.BaseConfig
 import org.freedomtool.base.view.BaseBottomSheetDialog
 import org.freedomtool.databinding.FragmentSettingsBinding
 import org.freedomtool.logic.persistance.SecureSharedPrefs
@@ -53,7 +54,7 @@ class SettingsFragment : BaseBottomSheetDialog() {
     }
 
     private fun initButtons() {
-        clickHelper.addViews(binding.logout, binding.closeBtn)
+        clickHelper.addViews(binding.logout, binding.closeBtn, binding.privacyPolicy)
 
         clickHelper.setOnClickListener {
             when (it.id) {
@@ -63,6 +64,10 @@ class SettingsFragment : BaseBottomSheetDialog() {
 
                 binding.closeBtn.id -> {
                     dismiss()
+                }
+
+                binding.privacyPolicy.id -> {
+                    Navigator.from(this).openBrowser(BaseConfig.PRIVACY_POLICY_URL)
                 }
             }
         }

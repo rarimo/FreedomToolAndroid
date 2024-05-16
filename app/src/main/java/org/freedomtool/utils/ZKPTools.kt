@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.AssetManager
 import android.util.Log
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import org.freedomtool.data.models.Proof
 import org.freedomtool.data.models.ZkProof
 
@@ -150,7 +151,6 @@ class ZKPUseCase(val context: Context) {
 
         val fTimeZKP = System.currentTimeMillis() / 1000
 
-
         Log.e("ZKP creation Time", (fTimeZKP - cTimeZKP).toString())
 
         val pubData = ByteArray(4 * 1024 * 1024)
@@ -211,9 +211,17 @@ class ZKPUseCase(val context: Context) {
         val foramtedProof = proofDataZip.toString(Charsets.UTF_8).slice(0..index)
         val proof = Proof.fromJson(foramtedProof)
 
-        return ZkProof(
+
+
+        val proofRes = ZkProof(
             proof = proof, pub_signals = getPubSignals(formatedPubData).toList()
         )
+
+        val gson = GsonBuilder().setPrettyPrinting().create()
+
+        Log.i(zkpId.toString(), gson.toJson(proofRes))
+
+        return proofRes
     }
 
     private fun findLastIndexOfSubstring(mainString: String, searchString: String): Int {

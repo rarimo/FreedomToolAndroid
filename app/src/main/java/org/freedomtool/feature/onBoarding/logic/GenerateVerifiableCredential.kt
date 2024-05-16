@@ -21,7 +21,6 @@ import org.freedomtool.data.models.Payload
 import org.freedomtool.data.models.SendCalldataRequest
 import org.freedomtool.data.models.SendCalldataRequestData
 import org.freedomtool.data.models.StateInfo
-import org.freedomtool.data.models.VotingInputs
 import org.freedomtool.data.models.ZkProof
 import org.freedomtool.di.providers.ApiProvider
 import org.freedomtool.logic.persistance.SecureSharedPrefs
@@ -200,39 +199,39 @@ class GenerateVerifiableCredential {
 
         return Completable.create {
             //val root = contract.root.send()
-            val commitmentIndex = identity.commitmentIndex
-
-            Log.i("commitmentIndex", commitmentIndex.toHexString())
-
-            val gistProof = apiProvider.circuitBackend.gistData(identity.did).blockingGet()
-
-
-            val votingInputs = VotingInputs(
-                root = gistProof.data.attributes.gist_proof.root,
-                vote = vote,
-                votingAddress = contractAddress,
-                secret = identity.secretIntStr,
-                nullifier = identity.nullifierIntStr,
-                siblings = gistProof.data.attributes.gist_proof.siblings
-            )
-
-            val gson = GsonBuilder().setPrettyPrinting().create()
-            val inputs = gson.toJson(votingInputs)
-
-            Log.i("INPUTS VOTE", inputs)
-
-            val zkp = ZKPUseCase(context).generateZKP(
-                R.raw.vote_smt_zkey, R.raw.vote_smt, inputs.toByteArray(), zkpTools::voteSMT
-            )
-
-            val root = gistProof.data.attributes.gist_proof.root
-            val nullifierHash_ = identity.nullifierHex
-            val candidate = "2"
-
-            Log.i("root_", root)
-            Log.i("nullifierHash_", nullifierHash_)
-            Log.i("candidate_", candidate)
-            Log.i("proof_", gson.toJson(zkp))
+//            val commitmentIndex = identity.commitmentIndex
+//
+//            Log.i("commitmentIndex", commitmentIndex.toHexString())
+//
+            //val gistProof = apiProvider.circuitBackend.gistData(identity.did, ).blockingGet()
+//
+//
+//            val votingInputs = VotingInputs(
+//                root = gistProof.data.attributes.gist_proof.root,
+//                vote = vote,
+//                votingAddress = contractAddress,
+//                secret = identity.secretIntStr,
+//                nullifier = identity.nullifierIntStr,
+//                siblings = gistProof.data.attributes.gist_proof.siblings
+//            )
+//
+//            val gson = GsonBuilder().setPrettyPrinting().create()
+//            val inputs = gson.toJson(votingInputs)
+//
+//            Log.i("INPUTS VOTE", inputs)
+//
+//            val zkp = ZKPUseCase(context).generateZKP(
+//                R.raw.vote_smt_zkey, R.raw.vote_smt, inputs.toByteArray(), zkpTools::voteSMT
+//            )
+//
+//            val root = gistProof.data.attributes.gist_proof.root
+//            val nullifierHash_ = identity.nullifierHex
+//            val candidate = "2"
+//
+//            Log.i("root_", root)
+//            Log.i("nullifierHash_", nullifierHash_)
+//            Log.i("candidate_", candidate)
+//            Log.i("proof_", gson.toJson(zkp))
 
         }
     }
@@ -333,6 +332,8 @@ class GenerateVerifiableCredential {
                     getIssuingAuthorityCode(issuerAuthority!!),
                     Gson().toJson(stateInfo).toByteArray()
                 )
+
+                Log.i("STATE INFO", Gson().toJson(stateInfo))
                 val calldataRequest =
                     SendCalldataRequest(SendCalldataRequestData("0x" + callData.toHexString()))
 

@@ -22,19 +22,18 @@ interface CircuitBackendApi {
     fun createIdentity(@Body body: Payload): Single<ClaimId>
 
     @GET(BaseConfig.GIST_DATA_LINK)
-    fun gistData(@Query("user_did") user_did: String): Single<GistData>
+    fun gistData(
+        @Query("user_did") user_did: String, @Query("block_number") block_number: String
+    ): Single<GistData>
 
     @GET
     fun fetchForProofGet(
-        @Url url: String,
-        @HeaderMap headers: Map<String, String>
+        @Url url: String, @HeaderMap headers: Map<String, String>
     ): Single<ResponseBody>
 
     @POST
     fun fetchForProofPost(
-        @Url url: String,
-        @Body body: String,
-        @HeaderMap headers: Map<String, String>
+        @Url url: String, @Body body: String, @HeaderMap headers: Map<String, String>
     ): Single<ResponseBody>
 
 

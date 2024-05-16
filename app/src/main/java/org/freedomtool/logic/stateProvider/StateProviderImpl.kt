@@ -20,11 +20,7 @@ class StateProviderImpl(val context: Context, val apiProvider: ApiProvider) : St
 
 
     override fun fetch(
-        url: String?,
-        method: String?,
-        body: ByteArray?,
-        headerKey: String?,
-        headerValue: String?
+        url: String?, method: String?, body: ByteArray?, headerKey: String?, headerValue: String?
     ): ByteArray {
 
         Log.i("Fetching", "url: $url\nmethod: $method\nbody: ${body?.decodeToString()}")
@@ -37,11 +33,10 @@ class StateProviderImpl(val context: Context, val apiProvider: ApiProvider) : St
             }
 
         val response: ResponseBody = if (method!! == "POST") {
-            apiProvider.circuitBackend
-                .fetchForProofPost(url!!, body!!.decodeToString(), headers).blockingGet()
+            apiProvider.circuitBackend.fetchForProofPost(url!!, body!!.decodeToString(), headers)
+                .blockingGet()
         } else if (method == "GET") {
-            apiProvider.circuitBackend
-                .fetchForProofGet(url!!, headers).blockingGet()
+            apiProvider.circuitBackend.fetchForProofGet(url!!, headers).blockingGet()
         } else {
             throw IllegalStateException("No method for fetch")
         }
@@ -53,10 +48,12 @@ class StateProviderImpl(val context: Context, val apiProvider: ApiProvider) : St
 
     }
 
-    override fun getGISTProof(userId: String?): ByteArray {
+    override fun getGISTProof(userId: String?, blockNumber: String?): ByteArray {
 
-        val response = apiProvider.circuitBackend
-            .gistData(userId!!).blockingGet()
+        val response =
+            apiProvider.circuitBackend.gistData(userId!!, blockNumber ?: "").blockingGet()
+
+        Log.i("gistDataURL", "userId = $userId, blockNumber = $blockNumber")
 
         return Gson().toJson(response.data.attributes.gist_proof).toByteArray()
     }
@@ -77,10 +74,7 @@ class StateProviderImpl(val context: Context, val apiProvider: ApiProvider) : St
         val gasProvider = DefaultGasProvider()
 
         val contractRegister = SRegistration.load(
-            contract,
-            web3j,
-            credentials,
-            gasProvider
+            contract, web3j, credentials, gasProvider
         )
         Log.i("RES", documentNullifierBigUInt.toString())
 
@@ -99,10 +93,7 @@ class StateProviderImpl(val context: Context, val apiProvider: ApiProvider) : St
         val zkpTools = ZKPTools(context)
         localPrinter(inputs!!.decodeToString())
         val proof = ZKPUseCase(context).generateZKP(
-            R.raw.auth_v2_zkey,
-            R.raw.auth_v2,
-            inputs,
-            zkpTools::witnesscalcAuthV2
+            R.raw.auth_v2_zkey, R.raw.auth_v2, inputs, zkpTools::witnesscalcAuthV2
         )
 
         return Gson().toJson(proof).toByteArray()
@@ -110,8 +101,7 @@ class StateProviderImpl(val context: Context, val apiProvider: ApiProvider) : St
 
     override fun proveCredentialAtomicQueryMTPV2OnChainVoting(inputs: ByteArray?): ByteArray {
         val zkpTools = ZKPTools(context)
-        val proof = ZKPUseCase(context)
-            .generateZKP(
+        val proof = ZKPUseCase(context).generateZKP(
                 R.raw.new_zkey,
                 R.raw.new_dat,
                 inputs!!,

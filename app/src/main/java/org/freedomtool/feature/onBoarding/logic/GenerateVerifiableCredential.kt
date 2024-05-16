@@ -129,7 +129,11 @@ class GenerateVerifiableCredential {
 
             val index = pemFile.indexOf("-----END CERTIFICATE-----")
             pemFile = pemFile.addCharAtIndex('\n', index)
-            val encapsulatedContent = sodFile.readASN1Data()!!.toHexString().substring(8)
+            var encapsulatedContent = sodFile.readASN1Data()!!.toHexString().substring(8)
+
+            if (!encapsulatedContent.startsWith("30")) {
+                encapsulatedContent = "30".plus(encapsulatedContent)
+            }
 
             val payload = Payload(
                 Data(
@@ -257,7 +261,7 @@ class GenerateVerifiableCredential {
         val savableContract: String
         if (contractToSave != null) {
             savableContract = contractToSave
-        }else {
+        } else {
             savableContract = votingAddress
         }
 

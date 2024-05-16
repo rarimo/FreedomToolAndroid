@@ -236,11 +236,11 @@ class NfcReaderTask(
 
 class SODFileOwn(inputStream: InputStream?) : SODFile(inputStream) {
     fun readASN1Data(): ByteArray? {
-        val a = SODFile::class.java.getDeclaredField("signedData");
-        a.isAccessible = true
+        val raw = SODFile::class.java.getDeclaredField("signedData");
+        raw.isAccessible = true
 
-        val v: SignedData = a.get(this) as SignedData
+        val signedData: SignedData = raw.get(this) as SignedData
 
-        return v.encapContentInfo.content.toASN1Primitive().encoded
+        return signedData.encapContentInfo.content.toASN1Primitive().encoded
     }
 }

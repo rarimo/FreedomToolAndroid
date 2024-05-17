@@ -177,5 +177,6 @@
     <string name="cancel">Cancel</string>
     <string name="pin_code_dont_match">Pin code don\'t match</string>
     <string name="please_try_again">Please try again</string>
+    <string name="no_completed_votes">No completed votes</string>
 
 </resources>

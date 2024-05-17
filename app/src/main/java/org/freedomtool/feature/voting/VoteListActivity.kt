@@ -40,22 +40,12 @@ class VoteListActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_vote_list)
         binding.lifecycleOwner = this
 
-
-        val t = SecureSharedPrefs.getVotedAddressesMap(this)
-        val g = SecureSharedPrefs.loadCachedIdentity(this)
-        Log.i("Vote", t.toString())
-        Log.i("CachedIden", g.toString())
         if (savedInstanceState != null && !voteAdapter.hasData) {
             restoreFromMemory(savedInstanceState)
         } else {
             subscribeToVotes()
         }
 
-        val date = SecureSharedPrefs.getDateOfBirth(this)!!
-        val issuerAuythority = SecureSharedPrefs.getIssuerAuthority(this)!!
-
-        Log.i("age", issuerAuythority)
-        Log.i("date", date)
 
         val window: Window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -66,8 +56,6 @@ class VoteListActivity : BaseActivity() {
         binding.recyclerViewVote.layoutManager = manager
 
         initButtons()
-
-
     }
 
     private fun subscribeToVotes() {
@@ -131,10 +119,21 @@ class VoteListActivity : BaseActivity() {
             if (it == 0) {
                 voteAdapter.clear()
                 voteAdapter.addAll(voteList)
+                if (voteList.isEmpty()) {
+                    binding.noPollsText.visibility = View.VISIBLE
+                    binding.noPollsText.text = getString(R.string.no_votes)
+                } else {
+                    binding.noPollsText.visibility = View.GONE
+                }
                 return@setOnPositionChangedListener
             }
+
             voteAdapter.clear()
             voteAdapter.addAll(voteListEnded)
+            if (voteListEnded.isEmpty()) {
+                binding.noPollsText.visibility = View.VISIBLE
+                binding.noPollsText.text = getString(R.string.no_completed_votes)
+            }
         }
 
     }

@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import identity.Identity
 import identity.Identity_
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import org.freedomtool.R
@@ -184,58 +183,6 @@ class GenerateVerifiableCredential {
             it.onSuccess(true)
         }
     }
-
-    //TODO implement this method
-    @OptIn(ExperimentalStdlibApi::class)
-    fun vote(context: Context, apiProvider: ApiProvider, vote: String): Completable {
-        val identity = createIdentity(context, apiProvider)!!
-        val contractAddress = "0xFc86C6F2483bef470C38e4816E371f6bc996FcF3"
-        val ecKeyPair = Keys.createEcKeyPair()
-
-        val credentials = Credentials.create(ecKeyPair)
-        val gasProvider = DefaultGasProvider()
-
-        val zkpTools = ZKPTools(context)
-
-        return Completable.create {
-            //val root = contract.root.send()
-//            val commitmentIndex = identity.commitmentIndex
-//
-//            Log.i("commitmentIndex", commitmentIndex.toHexString())
-//
-            //val gistProof = apiProvider.circuitBackend.gistData(identity.did, ).blockingGet()
-//
-//
-//            val votingInputs = VotingInputs(
-//                root = gistProof.data.attributes.gist_proof.root,
-//                vote = vote,
-//                votingAddress = contractAddress,
-//                secret = identity.secretIntStr,
-//                nullifier = identity.nullifierIntStr,
-//                siblings = gistProof.data.attributes.gist_proof.siblings
-//            )
-//
-//            val gson = GsonBuilder().setPrettyPrinting().create()
-//            val inputs = gson.toJson(votingInputs)
-//
-//            Log.i("INPUTS VOTE", inputs)
-//
-//            val zkp = ZKPUseCase(context).generateZKP(
-//                R.raw.vote_smt_zkey, R.raw.vote_smt, inputs.toByteArray(), zkpTools::voteSMT
-//            )
-//
-//            val root = gistProof.data.attributes.gist_proof.root
-//            val nullifierHash_ = identity.nullifierHex
-//            val candidate = "2"
-//
-//            Log.i("root_", root)
-//            Log.i("nullifierHash_", nullifierHash_)
-//            Log.i("candidate_", candidate)
-//            Log.i("proof_", gson.toJson(zkp))
-
-        }
-    }
-
 
     fun createIdentity(context: Context, apiProvider: ApiProvider): Identity_? {
         val identityRaw = SecureSharedPrefs.getIdentityData(context) ?: return null

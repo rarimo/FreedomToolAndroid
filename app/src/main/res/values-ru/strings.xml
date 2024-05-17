@@ -112,7 +112,7 @@
     <string name="you_can_vote">Подходящий</string>
     <string name="no_votes">Нет доступных голосований</string>
 
-     <string name="male">Мужчина</string>
+    <string name="male">Мужчина</string>
     <string name="female">Женщина</string>
     <string name="you_are_already_authorized">Вы уже отсканировали свой паспорт</string>
     <string name="pool_2_header">Популярность спорта</string>
@@ -190,4 +190,5 @@
     <string name="cancel">Отменить</string>
     <string name="pin_code_dont_match">Пин-код не совпадает</string>
     <string name="please_try_again">Пожалуйста, попробуйте еще раз</string>
+    <string name="no_completed_votes">Нет завершенных голосований</string>
 </resources>

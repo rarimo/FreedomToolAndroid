@@ -43,10 +43,10 @@
 
     <string name="pool_1">Начинаются выборы нового генерального директора компании</string>
     <plurals name="endx_in_x_hours">
-        <item quantity="one">Заканчивается через %1$s час</item>
-        <item quantity="few">Заканчивается через %1$s часа</item>
-        <item quantity="many">Заканчивается через %1$s часов</item>
-        <item quantity="other">Заканчивается через %1$s часов</item>
+        <item quantity="one">Осталось: %1$s час</item>
+        <item quantity="few">Осталось: %1$s часа</item>
+        <item quantity="many">Осталось: %1$s часов</item>
+        <item quantity="other">Осталось: %1$s часов</item>
     </plurals>
 
     <!-- Plural for "starts in X hours" -->
@@ -59,10 +59,10 @@
 
     <!-- Plural for "ends in X days" -->
     <plurals name="ends_in_x_days">
-        <item quantity="one">Заканчивается через %1$s день</item>
-        <item quantity="few">Заканчивается через %1$s дня</item>
-        <item quantity="many">Заканчивается через %1$s дней</item>
-        <item quantity="other">Заканчивается через %1$s дней</item>
+        <item quantity="one">Осталось: %1$s день</item>
+        <item quantity="few">Осталось: %1$s дня</item>
+        <item quantity="many">Осталось: %1$s дней</item>
+        <item quantity="other">Осталось: %1$s дней</item>
     </plurals>
 
     <!-- Plural for "begins in X days" -->
@@ -75,10 +75,10 @@
 
     <!-- Plural for "ends in X days Y hours" -->
     <plurals name="ends_in_x_days_y_hours">
-        <item quantity="one">Заканчивается через %1$s день %2$s час</item>
-        <item quantity="few">Заканчивается через %1$s дня %2$s часа</item>
-        <item quantity="many">Заканчивается через %1$s дней %2$s часов</item>
-        <item quantity="other">Заканчивается через %1$s дней %2$s часов</item>
+        <item quantity="one">Осталось: %1$s день %2$s час</item>
+        <item quantity="few">Осталось: %1$s дня %2$s часа</item>
+        <item quantity="many">Осталось: %1$s дней %2$s часов</item>
+        <item quantity="other">Осталось: %1$s дней %2$s часов</item>
     </plurals>
 
     <!-- Plural for "begins in X days Y hours" -->

@@ -15,8 +15,8 @@ android {
         applicationId = "org.freedomtool"
         minSdk = 27
         targetSdk = 34
-        versionCode = 16
-        versionName = "1.3.6"
+        versionCode = 17
+        versionName = "1.3.7"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

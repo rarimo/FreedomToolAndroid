@@ -9,9 +9,9 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         style="@style/Widget.Material3.BottomSheet"
-        android:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:elevation="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <FrameLayout
@@ -91,6 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="@string/language"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView14"
                         app:layout_constraintStart_toEndOf="@+id/appCompatImageView14"
                         app:layout_constraintTop_toTopOf="@+id/appCompatImageView14" />
@@ -176,6 +177,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="@string/fingerprint"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView15"
                         app:layout_constraintStart_toEndOf="@+id/appCompatImageView15"
                         app:layout_constraintTop_toTopOf="@+id/appCompatImageView15" />
@@ -212,11 +214,11 @@
                         android:id="@+id/appCompatImageView19"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginStart="21dp"
+                        android:layout_marginStart="18dp"
                         android:layout_marginTop="21dp"
-                        android:tint="@color/black"
                         android:layout_marginBottom="21dp"
                         android:src="@drawable/ic_shield_locked"
+                        android:tint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -224,12 +226,15 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/materialTextView200"
                         style="@style/Theme.Voting.PrimaryText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:scrollbars = "vertical"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="20dp"
+                        android:scrollbars="vertical"
                         android:text="@string/privacyPolicy"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView19"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/appCompatImageView19"
                         app:layout_constraintTop_toTopOf="@+id/appCompatImageView19" />
 
@@ -245,7 +250,6 @@
                         app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -275,6 +279,7 @@
                         android:layout_marginStart="16dp"
                         android:text="@string/logout"
                         android:textColor="#DD1414"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView16"
                         app:layout_constraintStart_toEndOf="@+id/appCompatImageView16"
                         app:layout_constraintTop_toTopOf="@+id/appCompatImageView16" />

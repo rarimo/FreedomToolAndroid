@@ -2,7 +2,7 @@ package org.freedomtool.base
 
 
 //Main
-object MainNet {
+object BaseConfig {
     const val CREATE_IDENTITY_LINK =
         "https://kyc.freedomtool.org/integrations/identity-provider-service/v1/create-identity"
 
@@ -26,7 +26,7 @@ object MainNet {
 }
 
 //TestNet
-object BaseConfig {
+object TestNet {
 
     const val CREATE_IDENTITY_LINK =
         "https://api.stage.freedomtool.org/integrations/identity-provider-service/v1/create-identity"

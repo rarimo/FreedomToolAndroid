@@ -2,7 +2,6 @@ package org.freedomtool.feature.onBoarding.logic
 
 import android.content.Context
 import android.util.Log
-import android.util.TimeFormatException
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import identity.Identity
@@ -136,6 +135,11 @@ class GenerateVerifiableCredential {
             pemFile = pemFile.addCharAtIndex('\n', index)
             val encapsulatedContent = sodFile.readASN1Data()!!.toHexString()
 
+            val target = "30"
+            val startIndex = encapsulatedContent.indexOf(target)
+            val encapsulatedContentCut = encapsulatedContent.substring(startIndex)
+
+
             val payload = Payload(
                 Data(
                     id = identity.did, zkproof = zkp, document_sod = IdCardSod(
@@ -143,7 +147,7 @@ class GenerateVerifiableCredential {
                         algorithm = algorithm,
                         signature = sodFile.encryptedDigest.toHexString(),
                         pem_file = pemFile,
-                        encapsulated_content = encapsulatedContent
+                        encapsulated_content = encapsulatedContentCut
                     )
                 )
             )
@@ -316,8 +320,7 @@ class GenerateVerifiableCredential {
         val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
         val parsedExpiryDate = LocalDate.parse(expiryDate, formatter).atStartOfDay()
 
-        if (currentDateTime.isAfter(parsedExpiryDate))
-            throw IllegalStateException("Expiry date is out")
+        if (currentDateTime.isAfter(parsedExpiryDate)) throw IllegalStateException("Expiry date is out")
 
         val maxDuration = Duration.ofDays(365L) // one year
 

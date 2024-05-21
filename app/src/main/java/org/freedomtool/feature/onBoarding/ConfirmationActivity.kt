@@ -40,7 +40,7 @@ class ConfirmationActivity : BaseActivity() {
     }
 
     private fun errorHandler(throwable: Throwable) {
-        Log.i("ERROR", throwable.toString())
+        throwable.printStackTrace()
         when (throwable) {
             is HttpException -> {
                 when (throwable.code()) {

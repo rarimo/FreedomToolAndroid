@@ -103,11 +103,12 @@ object VotingProvider {
             prodContract.metadataNo = voteList[1].metadata
             prodContract.metadataYes = voteList[0].metadata
             
-            prodContract.votingCount = voteList[0].votingCount.plus(voteList[1].votingCount)
+            val totalCount  = (voteList[0].votingCount + voteList[1].votingCount)
 
-            Log.i("Total Count", prodContract.votingCount.toString())
+            Log.i("Total Count", totalCount.toString())
             Log.i("voteList[0]", voteList[0].votingCount.toString())
             Log.i("voteList[1]", voteList[1].votingCount.toString())
+            prodContract.votingCount = totalCount
 
             Log.i("YES", prodContract.metadataYes.toString())
             Log.i("No", prodContract.metadataNo.toString())

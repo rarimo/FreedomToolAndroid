@@ -145,7 +145,12 @@ class Navigator private constructor() {
 
     fun openConfirmation(eDocument: EDocument) {
         val intent = Intent(context, ConfirmationActivity::class.java)
-        eDocument.personDetails = null
+        eDocument.personDetails?.faceImageBase64 = null
+        eDocument.personDetails?.faceImage = null
+        eDocument.personDetails?.portraitImage = null
+        eDocument.personDetails?.portraitImageBase64 = null
+        eDocument.personDetails?.signature = null
+        eDocument.personDetails?.signatureBase64 = null
         intent.putExtra(ConfirmationActivity.E_DOCUMENT, eDocument)
         performIntent(intent)
     }

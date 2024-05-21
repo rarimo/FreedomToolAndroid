@@ -2,6 +2,7 @@ package org.freedomtool.feature.onBoarding.logic
 
 import android.content.Context
 import android.util.Log
+import android.util.TimeFormatException
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import identity.Identity
@@ -35,7 +36,12 @@ import org.freedomtool.utils.toBitArray
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
 import org.web3j.tx.gas.DefaultGasProvider
+import java.time.Duration
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 
 class GenerateVerifiableCredential {
@@ -73,9 +79,10 @@ class GenerateVerifiableCredential {
                 it.onSuccess(true)
             }
 
-            val current = LocalDate.now()
+            val currentDateTimeInGMT = ZonedDateTime.now(ZoneOffset.UTC)
+            val current: LocalDate = currentDateTimeInGMT.toLocalDate()
 
-            val nextDate = current.plusYears(1)
+            val nextDate = processDateForProof(eDocument.personDetails!!.expiryDate!!)
             val inputs = InputsPassport(
                 `in` = (dg1!!).toBitArray().toCharArray().map { it1 -> it1.digitToInt() },
                 currDateDay = current.dayOfMonth,
@@ -127,11 +134,7 @@ class GenerateVerifiableCredential {
 
             val index = pemFile.indexOf("-----END CERTIFICATE-----")
             pemFile = pemFile.addCharAtIndex('\n', index)
-            var encapsulatedContent = sodFile.readASN1Data()!!.toHexString().substring(8)
-
-            if (!encapsulatedContent.startsWith("30")) {
-                encapsulatedContent = "30".plus(encapsulatedContent)
-            }
+            val encapsulatedContent = sodFile.readASN1Data()!!.toHexString()
 
             val payload = Payload(
                 Data(
@@ -306,6 +309,29 @@ class GenerateVerifiableCredential {
 
         }
     }
+
+    private fun processDateForProof(expiryDate: String): LocalDateTime {
+        val currentDateTimeInGMT = ZonedDateTime.now(ZoneOffset.UTC)
+        val currentDateTime: LocalDateTime = currentDateTimeInGMT.toLocalDateTime()
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+        val parsedExpiryDate = LocalDate.parse(expiryDate, formatter).atStartOfDay()
+
+        if (currentDateTime.isAfter(parsedExpiryDate))
+            throw IllegalStateException("Expiry date is out")
+
+        val maxDuration = Duration.ofDays(365L) // one year
+
+        var duration = maxDuration
+        var permissionEndDateTime = currentDateTime.plus(duration)
+
+        while (permissionEndDateTime.isAfter(parsedExpiryDate)) {
+            duration = duration.dividedBy(2)
+            permissionEndDateTime = currentDateTime.plus(duration)
+        }
+
+        return permissionEndDateTime
+    }
+
 
     private fun isFinalized(
         identity: Identity_, identityData: IdentityData, issuerDid: String, stateInfo: StateInfo?

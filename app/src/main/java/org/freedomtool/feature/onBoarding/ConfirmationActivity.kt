@@ -32,6 +32,7 @@ class ConfirmationActivity : BaseActivity() {
                 SecureSharedPrefs.saveIsPassportScanned(this)
                 setReady()
             }, {
+                it.printStackTrace()
                 errorHandler(it)
                 finish()
             })

@@ -15,6 +15,8 @@ import org.freedomtool.utils.Navigator
 import org.freedomtool.utils.nfc.ImageUtil
 import org.freedomtool.utils.nfc.model.EDocument
 import java.time.LocalDate
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class ResultDataPassportFragment : BaseFragment() {
@@ -25,8 +27,7 @@ class ResultDataPassportFragment : BaseFragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
 
@@ -54,16 +55,14 @@ class ResultDataPassportFragment : BaseFragment() {
 
 
         if (checkExpiryDate(eDocumentData!!.personDetails!!.expiryDate!!)) {
-            MaterialAlertDialogBuilder(requireActivity())
-                .setTitle(getString(R.string.expiry_date_error))
+            MaterialAlertDialogBuilder(requireActivity()).setTitle(getString(R.string.expiry_date_error))
                 .setPositiveButton(resources.getString(R.string.button_ok)) { dialog, which ->
 
                     requireActivity().finish()
                 }.setOnDismissListener {
 
                     requireActivity().finish()
-                }
-                .show()
+                }.show()
             binding.confirmButton.visibility = View.INVISIBLE
         }
 
@@ -73,7 +72,10 @@ class ResultDataPassportFragment : BaseFragment() {
     }
 
     private fun checkExpiryDate(expiryDate: String): Boolean {
-        val currentDate = LocalDate.now()
+        val currentDateTimeInGMT = ZonedDateTime.now(ZoneOffset.UTC)
+
+        // Extract the current date
+        val currentDate: LocalDate = currentDateTimeInGMT.toLocalDate()
         val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
         val parsedExpiryDate = LocalDate.parse(expiryDate, formatter)
         return parsedExpiryDate.isBefore(currentDate)
@@ -88,12 +90,10 @@ class ResultDataPassportFragment : BaseFragment() {
                     SecureSharedPrefs.clearAllData(requireContext())
 
                     SecureSharedPrefs.saveDateOfBirth(
-                        requireContext(),
-                        eDocumentData!!.personDetails!!.birthDate!!
+                        requireContext(), eDocumentData!!.personDetails!!.birthDate!!
                     )
                     SecureSharedPrefs.saveIssuerAuthority(
-                        requireContext(),
-                        eDocumentData!!.personDetails!!.issuerAuthority!!
+                        requireContext(), eDocumentData!!.personDetails!!.issuerAuthority!!
                     )
                     Navigator.from(this).openConfirmation(eDocumentData!!)
                     requireActivity().finish()
@@ -106,7 +106,6 @@ class ResultDataPassportFragment : BaseFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            ResultDataPassportFragment()
+        fun newInstance() = ResultDataPassportFragment()
     }
 }

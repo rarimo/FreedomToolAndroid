@@ -8,15 +8,15 @@ plugins {
 
 android {
     namespace = "org.freedomtool"
-    compileSdk = 34
+    compileSdk = 35
 
 
     defaultConfig {
         applicationId = "org.freedomtool"
         minSdk = 27
-        targetSdk = 34
-        versionCode = 18
-        versionName = "1.3.8"
+        targetSdk = 35
+        versionCode = 19
+        versionName = "1.3.9"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -97,7 +97,7 @@ dependencies {
     implementation("org.jmrtd:jmrtd:0.7.27")
     implementation("net.sf.scuba:scuba-sc-android:0.0.20")
     implementation("com.github.mhshams:jnbis:1.1.0")
-    implementation("com.gemalto.jp2:jp2-android:1.0.3")
+    implementation("dev.keiji.jp2:jp2-android:1.0.4")
     implementation("com.google.mlkit:text-recognition:16.0.0")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
 

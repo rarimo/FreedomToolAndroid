@@ -126,14 +126,19 @@ class VoteListActivity : BaseActivity() {
                     binding.noPollsText.visibility = View.GONE
                 }
                 return@setOnPositionChangedListener
+            } else {
+                voteAdapter.clear()
+                voteAdapter.addAll(voteListEnded)
+                if (voteListEnded.isEmpty()) {
+                    binding.noPollsText.visibility = View.VISIBLE
+                    binding.noPollsText.text = getString(R.string.no_completed_votes)
+                }else {
+                    binding.noPollsText.visibility = View.GONE
+
+                }
             }
 
-            voteAdapter.clear()
-            voteAdapter.addAll(voteListEnded)
-            if (voteListEnded.isEmpty()) {
-                binding.noPollsText.visibility = View.VISIBLE
-                binding.noPollsText.text = getString(R.string.no_completed_votes)
-            }
+
         }
 
     }

@@ -99,11 +99,15 @@ object VotingProvider {
                 }
             }
 
+            if (voteList.isEmpty()) {
+                return@fromCallable Pair(listOf(), voteListEnded.reversed())
+            }
+
             val prodContract = voteList.reversed().first()
             prodContract.metadataNo = voteList[1].metadata
             prodContract.metadataYes = voteList[0].metadata
-            
-            val totalCount  = (voteList[0].votingCount + voteList[1].votingCount)
+
+            val totalCount = (voteList[0].votingCount + voteList[1].votingCount)
 
             Log.i("Total Count", totalCount.toString())
             Log.i("voteList[0]", voteList[0].votingCount.toString())

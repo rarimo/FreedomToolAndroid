@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import io.reactivex.disposables.CompositeDisposable
 import org.freedomtool.App
 import org.freedomtool.di.providers.ApiProvider
@@ -33,6 +34,7 @@ abstract class BaseActivity: AppCompatActivity() {
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         super.onCreate(savedInstanceState)
         (application as App).appComponent.inject(this)
         onCreateAllowed(savedInstanceState)
